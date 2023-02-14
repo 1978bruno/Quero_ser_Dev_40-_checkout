@@ -28,25 +28,17 @@ rspec:
     - yarn build
     - bundle exec rspec
 
-rspec:
-  stage: test
-
-  script:
-    - bundle install
-    - yarn install
-    - yarn build
-    - bundle exec rspec
-
 
 rubocop:
   stage: quality
 
   script:
-    - bundle exec rubocop --config .rubocop.yml
+    - bundle install
+    - rubocop --config .rubocop.yml
 
 audit:
   stage: security
 
   script: 
     - gem install bundler-audit
-    - bundle exec bundle-audit
+    - bundle-audit --update
