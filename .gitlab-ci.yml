@@ -1,0 +1,52 @@
+image: git-qsd.campuscode.com.br:5050/qsd8/ruby-node-ci:3.2.0
+
+cache:
+  key: 
+    files:
+      - Gemfile.lock
+    prefix: $CI_COMMIT_REF_SLUG
+  paths:
+    - vendor/ruby
+
+stages:
+  - build
+  - test
+  - quality
+  - security
+
+setup:
+  stage: build
+  script: 
+    - bin/setup
+
+rspec:
+  stage: test
+
+  script:
+    - bundle install
+    - yarn install
+    - yarn build
+    - bundle exec rspec
+
+rspec:
+  stage: test
+
+  script:
+    - bundle install
+    - yarn install
+    - yarn build
+    - bundle exec rspec
+
+
+rubocop:
+  stage: quality
+
+  script:
+    - bundle exec rubocop --config .rubocop.yml
+
+audit:
+  stage: security
+
+  script: 
+    - gem install bundler-audit
+    - bundle exec bundle-audit
