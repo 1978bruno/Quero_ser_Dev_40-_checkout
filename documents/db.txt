@@ -1,0 +1,65 @@
+// Creating tables
+Table Users {
+  id            int     [pk, increment] // auto-increment
+  name          string  [not null]
+  email           string  [not null, unique]
+  cpf            string  [not null, unique]       
+  is_admin       boolean [default: false]
+  active        boolean [default: true]
+  created_at    timestamp
+  updated_at    timestamp
+  
+}
+
+Table customers{
+  id                      int [pk, increment] // auto-increment
+  
+  doc_ident               string    [not null, unique]      
+  blacklisted             boolean   [default: false]
+  blacklisted_reason      string    [default: null]
+  created_at              timestamp
+  updated_at              timestamp
+}
+
+Table orders {
+  id                                int     [pk, increment] // auto-increment
+  salesman_id                       integer [ref: > Users.id]
+  customer_id                       integer [ref: > customers.id]
+  product_plan_id                   integer [note: 'fk API']
+  product_plan_frequency_id         integer [note: 'fk API']
+  price                             decimal [not null]
+  discount                          decimal [default: null]
+  payment_mode                      string  [default: null]
+  status                            integer [default: 0, note: '0=pending, 1=cancelled, 2=processed']
+  cancel_reason                     string  [default: null]
+  created_at                        timestamp
+  updated_at                        timestamp
+}
+
+Table paid_comissions {
+  id            int [pk, increment] // auto-increment
+  
+  salesman_id   integer   [ref: > Users.id]
+  paid_at       datetime [not null]
+  amount        decimal   [not null]
+  order_id      integer   [ref: - orders.id]
+  bonus_comissions_id      integer   [ref: - bonus_comissions.id, default:null]
+  created_at    timestamp
+  updated_at    timestamp
+}
+
+// THE BONUS IS ALWAYS THE BIGGEST ONE
+// WE SAVE STANDARD BONUS HERE TOO
+Table bonus_comissions {
+  id                  int [ pk, increment] // auto-increment
+  
+  description         string
+  start_date          datetime
+  end_date            datetime
+  comission_perc      decimal [note:'Percent of total sale']
+  amount_limit        decimal [note: 'Total amount per salesman']
+  active              boolean
+  created_at          timestamp
+  updated_at          timestamp
+  
+}

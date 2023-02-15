@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_14_185053) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_124501) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,9 +34,55 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_185053) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bonus_commissions", force: :cascade do |t|
+    t.string "description", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.decimal "commission_perc", precision: 8, scale: 2
+    t.decimal "amount_limit", precision: 8, scale: 2
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "doc_ident", null: false
+    t.boolean "blacklisted", default: false
+    t.string "blacklisted_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "product_plan_id"
+    t.integer "product_plan_frequency_id"
+    t.decimal "price", precision: 8, scale: 2, null: false
+    t.decimal "discount", precision: 8, scale: 2
+    t.string "payment_mode"
+    t.integer "status", default: 0
+    t.string "cancel_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "salesman_id"
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["salesman_id"], name: "index_orders_on_salesman_id"
+  end
+
+  create_table "paid_commissions", force: :cascade do |t|
+    t.datetime "paid_at", null: false
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.integer "bonus_commission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "salesman_id"
+    t.index ["bonus_commission_id"], name: "index_paid_commissions_on_bonus_commission_id"
+    t.index ["salesman_id"], name: "index_paid_commissions_on_salesman_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,4 +99,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_185053) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "users", column: "salesman_id"
+  add_foreign_key "paid_commissions", "bonus_commissions"
+  add_foreign_key "paid_commissions", "users", column: "salesman_id"
 end
