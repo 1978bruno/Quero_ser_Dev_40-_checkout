@@ -7,6 +7,7 @@ cache:
     prefix: $CI_COMMIT_REF_SLUG
   paths:
     - vendor/ruby
+    - cache/bundler
 
 stages:
   - build
@@ -26,6 +27,7 @@ rspec:
     - bundle install
     - yarn install
     - yarn build
+    - rails db:drop db:create db:migrate
     - bundle exec rspec
 
 
