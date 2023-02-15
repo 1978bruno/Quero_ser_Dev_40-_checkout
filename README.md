@@ -1,5 +1,8 @@
 # README
 
+## Database diagram:
+<img src="./documents/db.png">
+
 ## Instalação:
   - bin/setup
   - yarn install
