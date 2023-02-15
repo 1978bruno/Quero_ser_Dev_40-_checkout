@@ -1,0 +1,2 @@
+class BonusCommission < ApplicationRecord
+end
