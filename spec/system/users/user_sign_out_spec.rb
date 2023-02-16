@@ -4,7 +4,7 @@ describe 'User faz logout' do
   it 'com sucesso' do
     # Arrange
     create(:user, name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678')
-    
+
     # Act
     visit root_path
 
