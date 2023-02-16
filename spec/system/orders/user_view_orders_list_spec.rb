@@ -11,6 +11,6 @@ describe 'Seller user view only orders created by him' do
     login_as(salesman)
     visit(orders_path)
 
-    expect(page).to have_css('tr', count: 10)
+    expect(page).to have_css('.order_info', count: 10)
   end
 end

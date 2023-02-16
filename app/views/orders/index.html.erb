@@ -1,0 +1,38 @@
+<h2>My orders</h2>
+
+<% if @orders.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Salesman</th>
+        <th>Customer</th>
+        <th>Product Plan</th>
+        <th>Frequency</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Payment Mode</th>
+        <th>Status</th>
+        <th>Cancel Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class='order_info'>
+          <td><%= link_to order_path(order.id) %></td>
+          <td><%= order.salesman.email %></td>
+          <td><%= order.customer.doc_ident %></td>
+          <td><%= order.product_plan_id %></td>
+          <td><%= order.product_plan_frequency_id %></td>
+          <td><%= order.price %></td>
+          <td><%= order.discount %></td>
+          <td><%= order.payment_mode %></td>
+          <td><%= I18n.t(order.status) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Não existem pedidos de entrega cadastrados.</p>
+<% end %>
+
+<p><%= link_to 'Voltar', root_path %></p>
