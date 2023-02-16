@@ -13,4 +13,20 @@ class User < ApplicationRecord
                               class_name: 'PaidCommission',
                               dependent: :destroy,
                               inverse_of: :salesman
+
+  validates :name, presence: true
+  validates :email, presence: true
+  validate  :domain_check
+
+  APPROVED_DOMAINS = %w[@locaweb.com.br].freeze
+
+  def domain_check
+    return if APPROVED_DOMAINS.any? { |domain| email.end_with?(domain) }
+
+    errors.add(:email, 'não pertence a um domínio válido')
+  end
+
+  def active_for_authentication?
+    super and active?
+  end
 end
