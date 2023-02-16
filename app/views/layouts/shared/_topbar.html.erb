@@ -1,0 +1,41 @@
+<div class="ls-topbar">
+
+  <!-- Barra de Notificações -->
+  <div class="ls-notification-topbar">
+    <!-- Dropdown com detalhes da conta de usuário -->
+    <div id="user-account" data-ls-module="dropdown" class="ls-dropdown ls-user-account">
+      <% if user_signed_in? %>
+        <a href="#" class="ls-ico-user">
+          <span class="ls-name"><%= current_user.name %></span>
+          (<%= current_user.email %>)
+        </a>
+
+        <nav class="ls-dropdown-nav ls-user-menu">
+          <ul>
+            <li><%= button_to 'Trocar senha', root_path(current_user), method: :get, class: "ls-btn-primary ls-btn-block" %>
+            <li><%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "ls-btn-primary ls-btn-block" %></li>
+          </ul>
+        </nav>
+      <% else %>
+        <a href="#" class="ls-ico-user">
+          <span class="ls-name">Não conectado</span>
+        </a>
+
+        <nav class="ls-dropdown-nav ls-user-menu">
+          <ul>
+            <li><%= button_to 'Login', new_user_session_path, method: :get, class: "ls-btn-primary ls-btn-block" %></li>
+          </ul>
+        </nav>
+      <% end %>
+    </div>
+  </div>
+
+  <span class="ls-show-sidebar ls-ico-menu"></span>
+
+  <!-- Nome do produto/marca com sidebar -->
+  <h1 class="ls-brand-name">
+    <a href="<%= root_path %>" class="ls-ico-chart-bar-up">Sistema de Vendas</a>
+  </h1>
+
+  <!-- Nome do produto/marca sem sidebar quando for o pre-painel  -->
+</div>
