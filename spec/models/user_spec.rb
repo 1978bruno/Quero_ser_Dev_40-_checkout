@@ -1,5 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe '#valid?' do
+    context 'presence' do
+      it 'false when name is empty' do
+        # Arrange
+        user = User.new(name: '', email: 'name@locaweb.com.br', password: 'password')
+        # Act
+        # Assert
+        expect(user).not_to be_valid
+        expect(user.errors.include?(:name)).to be true
+      end
+    end
+
+    context 'values' do
+      it 'false when domain is not valid' do
+        # Arrange
+        user = User.new(name: 'Name', email: 'name@gmail.com', password: 'password')
+        # Act
+        # Assert
+        expect(user).not_to be_valid
+        expect(user.errors.include?(:email)).to be true
+      end
+    end
+  end
 end
