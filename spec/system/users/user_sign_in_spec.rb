@@ -2,7 +2,10 @@ require 'rails_helper'
 
 describe 'User faz login' do
   it 'com sucesso' do
+    # Arrange
     create(:user, name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678')
+
+    # Act
     visit root_path
 
     within('div#user-account') do
@@ -15,10 +18,15 @@ describe 'User faz login' do
       click_on 'Login'
     end
 
+    # Assert
     expect(page).to have_css('div.notice', text: 'Login efetuado com sucesso.')
+    expect(page).to have_content('Usuário Teste (user@locaweb.com.br)')
   end
 
   it 'com e-mail não cadastrado' do
+    # Arrange
+
+    # Act
     visit root_path
 
     within('div#user-account') do
@@ -31,12 +39,16 @@ describe 'User faz login' do
       click_on 'Login'
     end
 
+    # Assert
     expect(page).to have_css('div.alert', text: 'E-mail ou senha inválidos.')
   end
 
   it 'não estando ativo no sistema' do
+    # Arrange
     create(:user, name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678',
                   active: false)
+
+    # Act
     visit root_path
 
     within('div#user-account') do
@@ -49,6 +61,7 @@ describe 'User faz login' do
       click_on 'Login'
     end
 
+    # Assert
     expect(page).to have_css('div.alert', text: 'A sua conta não está ativada.')
   end
 end
