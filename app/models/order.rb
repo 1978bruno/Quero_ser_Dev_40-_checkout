@@ -14,7 +14,6 @@ class Order < ApplicationRecord
             :status,
             presence: true
 
-
   private
 
   def gen_order_code

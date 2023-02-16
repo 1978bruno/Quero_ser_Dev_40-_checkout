@@ -5,6 +5,5 @@ class OrdersController < ApplicationController
     @orders = current_user.admin? ? Order.all : current_user.orders
   end
 
-  def show
-  end
+  def show; end
 end
