@@ -23,6 +23,7 @@ Table customers{
 
 Table orders {
   id                                int     [pk, increment] // auto-increment
+  order_code                        string
   salesman_id                       integer [ref: > Users.id]
   customer_id                       integer [ref: > customers.id]
   product_plan_id                   integer [note: 'fk API']
