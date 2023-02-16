@@ -3,8 +3,7 @@ Table Users {
   id            int     [pk, increment] // auto-increment
   name          string  [not null]
   email           string  [not null, unique]
-  cpf            string  [not null, unique]       
-  is_admin       boolean [default: false]
+  admin       boolean [default: false]
   active        boolean [default: true]
   created_at    timestamp
   updated_at    timestamp
