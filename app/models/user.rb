@@ -25,8 +25,8 @@ class User < ApplicationRecord
 
     errors.add(:email, 'não pertence a um domínio válido')
   end
-  
+
   def active_for_authentication?
-    super and self.active?
+    super and active?
   end
 end
