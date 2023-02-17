@@ -1,3 +1,4 @@
 pt-BR:
   user:
     msg_record_created: 'Usuário cadastrado com sucesso'
+    msg_user_changed: 'Alterado com sucesso'

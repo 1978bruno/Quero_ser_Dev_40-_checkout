@@ -1,18 +1,13 @@
-<h1 class= "ls-title-intro">Lista de Usuários</h1>
-</br>
-</br>
-</br>
-</br>
-<%= link_to 'Criar Usuário', new_users_admin_path, class: '' %>
-</br>
-</br>
-</br>
-</br>
+<h1 class= "ls-title-intro ls-lg-margin-bottom">Lista de Usuários</h1>
+
+<%= link_to 'Criar Usuário', new_users_admin_path, class: 'ls-btn-primary ls-md-margin-bottom' %>
+
 <% @users.each do |user|%>
-  <div>
+  <div class= "ls-md-margin-bottom" id="<%= dom_id(user) %>">
   <p><strong><%= user.name %></strong></p>
   <p><%= user.email %></p>
   <p>Administrador: <%= user.admin %></p>
+  <%= link_to 'Editar usuário', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %>
   </div>
 </br>
 <% end %>
