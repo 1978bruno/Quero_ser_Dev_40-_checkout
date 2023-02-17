@@ -1,6 +1,9 @@
 pt-BR:
   not_found: 'Pedido não encontrado'
   cant_cancel_order: 'Pedido não pode ser cancelado'
+  pending: 'Pendente'
+  paid: 'Pago'
+  cancelled: 'Cancelado'
   activerecord:
     models:
       order:
