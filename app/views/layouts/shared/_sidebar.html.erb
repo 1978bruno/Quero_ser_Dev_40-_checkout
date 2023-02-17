@@ -4,7 +4,7 @@
       <ul>
         <% if user_signed_in? %>
           <% if current_user.try(:admin?) %>
-            <li><%= link_to 'Usuários', root_path, class: "ls-ico-users", title: 'Usuários' %></li>
+            <li><%= link_to 'Usuários', users_admin_index_path, class: "ls-ico-users", title: 'Usuários' %></li>
           <% end %>
 
           <li><%= link_to 'Opção 1', root_path, class: "ls-ico-text", title: 'Opção 1' %></li>
