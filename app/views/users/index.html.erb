@@ -1,8 +1,18 @@
-<h1>Lista de Usuários</h1>
-
-<%= link_to 'Criar Usuário', new_users_admin_path %>
-
-<%= @users.each do |user|%>
-  <p><%= user.name %></p>
+<h1 class= "ls-title-intro">Lista de Usuários</h1>
+</br>
+</br>
+</br>
+</br>
+<%= link_to 'Criar Usuário', new_users_admin_path, class: '' %>
+</br>
+</br>
+</br>
+</br>
+<% @users.each do |user|%>
+  <div>
+  <p><strong><%= user.name %></strong></p>
   <p><%= user.email %></p>
+  <p>Administrador: <%= user.admin %></p>
+  </div>
+</br>
 <% end %>

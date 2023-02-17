@@ -27,7 +27,7 @@
         <div class="ls-prefix-group">
           <%= f.password_field :password, class: "ls-login-bg-password", autocomplete: "new-password" %>
           <a class="ls-label-text-prefix ls-toggle-pass ls-ico-eye" data-toggle-class="ls-ico-eye, ls-ico-eye-blocked"
-              data-target="#@user_password" href="#"></a>
+              data-target="#user_password" href="#"></a>
         </div>
         <% if ! @user.errors[:password].empty? %>
           <small class="ls-help-message"><%= @user.errors.where(:password).first.full_message %></small>
@@ -38,7 +38,7 @@
         <div class="ls-prefix-group">
           <%= f.password_field :password_confirmation, class: "ls-login-bg-password", autocomplete: "new-password" %>
           <a class="ls-label-text-prefix ls-toggle-pass ls-ico-eye" data-toggle-class="ls-ico-eye, ls-ico-eye-blocked"
-              data-target="#@user_password_confirmation" href="#"></a>
+              data-target="#user_password_confirmation" href="#"></a>
         </div>
         <% if ! @user.errors[:password_confirmation].empty? %>
           <small class="ls-help-message"><%= @user.errors.where(:password_confirmation).first.full_message %></small>
