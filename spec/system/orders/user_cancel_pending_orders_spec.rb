@@ -10,18 +10,18 @@ describe 'Orders Cancel' do
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem GO',
                    product_plan_periodicity: 'Mensal',
-                   status: Orders.statuses[:pending])
+                   status: Order.statuses[:pending])
     create(:order, customer_id: customer.id,
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem XYZ',
                    product_plan_periodicity: 'Anual',
-                   status: Orders.statuses[:paid])
+                   status: Order.statuses[:paid])
     create(:order, customer_id: customer.id,
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem XYZ',
                    product_plan_periodicity: 'Anual',
-                   status: Orders.statuses[:cancelled])
-   
+                   status: Order.statuses[:cancelled])
+
     expect(page).to have_css('.button_cancel', count: 1)
   end
 
@@ -34,19 +34,19 @@ describe 'Orders Cancel' do
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem GO',
                    product_plan_periodicity: 'Mensal',
-                   status: Orders.statuses[:pending])
+                   status: Order.statuses[:pending])
     create(:order, customer_id: customer.id,
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem XYZ',
                    product_plan_periodicity: 'Anual',
-                   status: Orders.statuses[:paid])
+                   status: Order.statuses[:paid])
     create(:order, customer_id: customer.id,
                    salesman_id: salesman.id,
                    product_plan_name: 'Hospedagem XYZ',
                    product_plan_periodicity: 'Anual',
-                   status: Orders.statuses[:cancelled])
+                   status: Order.statuses[:cancelled])
     click_on('Cancelar')
-    
+
     expect(current_path).to eq(order_cancel_path_reason)
   end
 end
