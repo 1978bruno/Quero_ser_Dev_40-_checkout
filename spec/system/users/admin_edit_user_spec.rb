@@ -116,4 +116,30 @@ describe 'Administrador edita um usuário' do
 
     expect(page).to have_content 'E-mail já está em uso'
   end
+  it 'e altera usuário para administrador' do
+    create(:user, name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678', admin: true)
+    create(:user, name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '12345678')
+    create(:user, name: 'Pedro Santos', email: 'psantos@locaweb.com.br', password: '12345678')
+
+    visit root_path
+    within('div#user-account') do
+      click_on 'Login'
+    end
+    within('form#new_user') do
+      fill_in 'E-mail', with: 'user@locaweb.com.br'
+      fill_in 'Senha', with: '12345678'
+      click_on 'Login'
+    end
+    click_on 'Usuários'
+    within('div#user_3') do
+      click_on 'Editar usuário'
+    end
+    find(:css, '#user_admin').set(true)
+    click_on 'Salvar'
+
+    expect(page).to have_content 'Alterado com sucesso'
+    within('div#user_3') do
+      expect(page).to have_content 'Administrador: true'
+    end
+  end
 end

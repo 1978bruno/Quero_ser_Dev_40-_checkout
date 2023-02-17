@@ -24,6 +24,7 @@ describe 'administrador cadastra um usuário' do
     expect(page).to have_content 'Usuário cadastrado com sucesso'
     expect(page).to have_content 'José Silva'
     expect(page).to have_content 'jsilva@locaweb.com.br'
+    expect(page).to have_content 'Administrador: false'
   end
   it 'e falha com um domínio inválido' do
     create(:user, name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678', admin: true)
