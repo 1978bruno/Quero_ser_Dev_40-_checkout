@@ -20,6 +20,6 @@ Order.create!(salesman_id: seller.id, customer_id: customer_one.id, product_plan
 Order.create!(salesman_id: seller.id, customer_id: customer_two.id, product_plan_name: 'Plano Prata',
               product_plan_periodicity: 'Mensal',  price: 50.00)
 Order.create!(salesman_id: seller.id, customer_id: customer_three.id, product_plan_name: 'Plano Ouro',
-              product_plan_periodicity: 'Anual',  price: 70.00)
+              product_plan_periodicity: 'Anual', price: 70.00)
 Order.create!(salesman_id: seller.id, customer_id: customer_four.id, product_plan_name: 'Plano Platinum',
               product_plan_periodicity: 'Anual', price: 90.00)

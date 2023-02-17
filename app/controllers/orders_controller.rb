@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :retrieve_id, only: %i[order_cancel, order_cancel_reason]
+  before_action :retrieve_id, only: %i[order_cancel_reason]
 
   def index
     @orders = current_user.admin? ? Order.all : current_user.orders
@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
   def order_cancel_post
     @order.cancel_reason = params[:order][:cancel_reason]
     redirect_to orders_path, notice: "Ordem #{@order.code} cancelada" and return if @order.save
+
     redirect_to orders_path, alert: I18n.t(:cant_cancel_order) and return
   end
 
