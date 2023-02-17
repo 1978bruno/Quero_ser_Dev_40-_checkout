@@ -1,32 +1,36 @@
-<h2>My orders</h2>
+<h2>Pedidos</h2>
 
 <% if @orders.any? %>
-  <table>
+  <table class="ls-table ls-table-striped">
     <thead>
       <tr>
-        <th>Salesman</th>
-        <th>Customer</th>
-        <th>Product Plan</th>
-        <th>Frequency</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Payment Mode</th>
-        <th>Status</th>
-        <th>Cancel Reason</th>
+        <th><%= I18n.t(@orders[0].salesman)%></th>
+        <th class="hidden-xs"><%= I18n.t(@orders[0].customer)%></th>
+        <th><%= I18n.t(@orders[0].product_plan_name)%></th>
+        <th class="hidden-xs"><%= I18n.t(@orders[0].product_plan_periodicity)%></th>
+        <th><%= I18n.t(@orders[0].price)%></th>
+        <th class="hidden-xs"><%= I18n.t(@orders[0].discount)%></th>
+        <th><%= I18n.t(@orders[0].payment_mode)%></th>
+        <th class="hidden-xs"><%= I18n.t(@orders[0].status)%></th>
       </tr>
     </thead>
     <tbody>
       <% @orders.each do |order| %>
-        <tr class='order_info'>
+        <tr class='order_info' id='order_id_<%=order.id%>'>
           <td><%= link_to order_path(order.id) %></td>
           <td><%= order.salesman.email %></td>
-          <td><%= order.customer.doc_ident %></td>
-          <td><%= order.product_plan_id %></td>
-          <td><%= order.product_plan_frequency_id %></td>
-          <td><%= order.price %></td>
-          <td><%= order.discount %></td>
+          <td class="hidden-xs"><%= order.customer.doc_ident %></td>
+          <td><%= order.product_plan_name %></td>
+          <td class="hidden-xs"><%= order.product_plan_periodicity %></td>
+          <td><%= number_to_currency(order.price) %></td>
+          <td class="hidden-xs"><%= order.discount %></td>
           <td><%= order.payment_mode %></td>
-          <td><%= I18n.t(order.status) %></td>
+          <td class="hidden-xs"><%= I18n.t(order.status) %></td>
+          <% if @order.pending? %>
+            <td>
+              <%= button_to 'Cancelar', order_cancel_reason(order.id), method: :get %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

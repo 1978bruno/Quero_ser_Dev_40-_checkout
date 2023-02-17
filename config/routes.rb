@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :orders, only: %i[index show] do
-    member { post :cancel_order }
+    member do
+      post :order_cancel_post
+      get  :order_cancel_reason
+    end
   end
 end

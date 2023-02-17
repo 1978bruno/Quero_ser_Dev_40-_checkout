@@ -8,8 +8,8 @@ RSpec.describe Order, type: :model do
       salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
       customer = create(:customer, doc_ident: '22200022201')
       order = Order.new({
-                          product_plan_id: 1,
-                          product_plan_frequency_id: 2,
+                          product_plan_name: 'Hospedagem GO',
+                          product_plan_periodicity: 'Mensal',
                           price: 99.00,
                           customer:,
                           salesman:
