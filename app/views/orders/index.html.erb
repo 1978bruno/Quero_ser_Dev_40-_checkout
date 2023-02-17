@@ -4,14 +4,15 @@
   <table class="ls-table ls-table-striped">
     <thead>
       <tr>
-        <th><%= I18n.t(@orders[0].salesman)%></th>
-        <th class="hidden-xs"><%= I18n.t(@orders[0].customer)%></th>
-        <th><%= I18n.t(@orders[0].product_plan_name)%></th>
-        <th class="hidden-xs"><%= I18n.t(@orders[0].product_plan_periodicity)%></th>
-        <th><%= I18n.t(@orders[0].price)%></th>
-        <th class="hidden-xs"><%= I18n.t(@orders[0].discount)%></th>
-        <th><%= I18n.t(@orders[0].payment_mode)%></th>
-        <th class="hidden-xs"><%= I18n.t(@orders[0].status)%></th>
+        <th><%= Order.human_attribute_name(:order_id) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:salesman) %></th>
+        <th><%= Order.human_attribute_name(:customer) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:product_plan_name) %></th>
+        <th><%= Order.human_attribute_name(:product_plan_periodicity) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:price) %></th>
+        <th><%= Order.human_attribute_name(:discount) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:payment_mode) %></th>
+        <th><%= Order.human_attribute_name(:status) %></th>
       </tr>
     </thead>
     <tbody>
@@ -26,9 +27,9 @@
           <td class="hidden-xs"><%= order.discount %></td>
           <td><%= order.payment_mode %></td>
           <td class="hidden-xs"><%= I18n.t(order.status) %></td>
-          <% if @order.pending? %>
-            <td>
-              <%= button_to 'Cancelar', order_cancel_reason(order.id), method: :get %>
+          <% if order.pending? %>
+            <td class=''>
+              <%= button_to 'Cancelar', order_cancel_reason_order_path(order.id), class: 'button_cancel', method: :get %>
             </td>
           <% end %>
         </tr>
