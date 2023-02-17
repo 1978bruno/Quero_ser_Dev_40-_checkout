@@ -27,11 +27,11 @@
           <td class="hidden-xs"><%= order.discount %></td>
           <td><%= order.payment_mode %></td>
           <td class="hidden-xs"><%= I18n.t(order.status) %></td>
-          <% if order.pending? %>
-            <td class=''>
-              <%= button_to 'Cancelar', order_cancel_reason_order_path(order.id), class: 'button_cancel', method: :get %>
-            </td>
-          <% end %>
+          <td>
+            <% if order.pending? %>
+                <%= button_to 'Cancelar', order_cancel_reason_order_path(order.id), class: "button_cancel ls-btn-primary ls-btn-block", method: :get %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

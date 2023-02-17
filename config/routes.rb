@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :orders, only: %i[index show] do
     member do
-      post :order_cancel_post
+      patch :order_cancel_post
       get  :order_cancel_reason
     end
   end

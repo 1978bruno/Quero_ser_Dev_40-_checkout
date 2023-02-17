@@ -9,10 +9,14 @@ class OrdersController < ApplicationController
   def show; end
 
   def order_cancel_post
+    @order = Order.find(params[:id])
     @order.cancel_reason = params[:order][:cancel_reason]
-    redirect_to orders_path, notice: "Ordem #{@order.code} cancelada" and return if @order.save
+    @order.cancelled!
+    @order.save
+    # redirect_to orders_path, notice: "Ordem #{@order.code} cancelada" and return if @order.save
 
-    redirect_to orders_path, alert: I18n.t(:cant_cancel_order) and return
+    # redirect_to orders_path, alert: I18n.t(:cant_cancel_order) and return
+    redirect_to orders_path, notice: "Ordem #{@order.order_code} cancelada"
   end
 
   def order_cancel_reason; end
