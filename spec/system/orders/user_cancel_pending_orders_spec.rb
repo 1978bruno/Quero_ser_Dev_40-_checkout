@@ -47,6 +47,6 @@ describe 'Orders Cancel' do
                    status: Order.statuses[:cancelled])
     click_on('Cancelar')
 
-    expect(current_path).to eq(order_cancel_path_reason)
+    expect(current_path).to eq(order_cancel_reason_order_path)
   end
 end
