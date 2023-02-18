@@ -14,7 +14,7 @@ class Order < ApplicationRecord
             :status,
             presence: true
 
-  validates_presence_of :cancel_reason, if: :cancelled?
+  validates :cancel_reason, if: :cancelled?, presence: true
 
   private
 
