@@ -25,8 +25,8 @@ Table orders {
   order_code                        string
   salesman_id                       integer [ref: > Users.id]
   customer_id                       integer [ref: > customers.id]
-  product_plan_id                   integer [note: 'fk API']
-  product_plan_frequency_id         integer [note: 'fk API']
+  product_plan_name                   string [note: 'fk API']
+  product_plan_periodicity         string [note: 'fk API']
   price                             decimal [not null]
   discount                          decimal [default: null]
   payment_mode                      string  [default: null]
