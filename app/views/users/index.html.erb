@@ -1,8 +1,8 @@
 <h1>Lista de Vendedores</h1>
-<% if @user_log %>
+<% if current_user.admin %>
   <div class="ls-box-filter">
-    <%= form_with url: users_path, method: :get, :class => "ls-form ls-form-inline ls-float-right"  do %>
-      <%= label_tag :query, 'Busca', {for: "name", class: "ls-label-text ls-hidden-accessible"} %>
+    <%= form_with url: users_path, method: :get, :class => 'ls-form ls-form-inline ls-float-right'  do %>
+      <%= label_tag :query, 'Busca', {for: 'name', class: 'ls-label-text ls-hidden-accessible'} %>
         <%= text_field_tag :query %>
       <%= submit_tag 'Buscar', {class: "ls-btn"} %>
     <% end %>
