@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :retrieve_id, only: %i[order_cancel_reason]
+  before_action :retrieve_id, only: %i[order_cancel_reason order_cancel_post]
 
   def index
     @orders = current_user.admin? ? Order.all : current_user.orders
@@ -9,14 +9,13 @@ class OrdersController < ApplicationController
   def show; end
 
   def order_cancel_post
-    @order = Order.find(params[:id])
     @order.cancel_reason = params[:order][:cancel_reason]
     @order.cancelled!
     @order.save
-    # redirect_to orders_path, notice: "Ordem #{@order.code} cancelada" and return if @order.save
-
-    # redirect_to orders_path, alert: I18n.t(:cant_cancel_order) and return
     redirect_to orders_path, notice: "Ordem #{@order.order_code} cancelada"
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = 'O motivo do cancelamento precisa ser preenchido'
+    render :order_cancel_reason
   end
 
   def order_cancel_reason; end

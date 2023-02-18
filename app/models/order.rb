@@ -14,6 +14,8 @@ class Order < ApplicationRecord
             :status,
             presence: true
 
+  validates_presence_of :cancel_reason, :if => :cancelled?
+
   private
 
   def gen_order_code
