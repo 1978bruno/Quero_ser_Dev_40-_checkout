@@ -3,32 +3,23 @@
 ## Database diagram:
 <img src="./documents/db.png">
 
+<br />
+
 ## Instalação:
   - bin/setup
   - yarn install
   - yarn build
 
 
+## Pré-populando o DB (Seeds):
+  - Após instalação rodar `rails db:seed` para pré-popular o db.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Testes:
+  - RSpec
+    ```bash
+    bundler exec rspec
+    ```
+    
+## Executando a aplicação pela primeira vez (Modo desenvolvedor):
+  - Execute o comando `bin/dev`
+  - Login: admin@locaweb.com.br | Senha: 12345678
