@@ -7,6 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 User.create!(name: 'admin', email: 'admin@locaweb.com.br', password: '12345678', admin: true, active: true)
+User.create!(name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '87654321')
 selesman_one = User.create!(name: 'vendedor', email: 'vendedor@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
 selesman_two = User.create!(name: 'vendedor2', email: 'vendedor2@locaweb.com.br', password: '12345678',

@@ -28,5 +28,18 @@ RSpec.describe User, type: :model do
         expect(user.errors.messages[:email][0]).to eq('não pertence a um domínio válido')
       end
     end
+    context 'status' do
+      it 'false when active is false' do
+        # Arrange
+        user = User.new(name: 'Name', email: 'name@gmail.com', password: 'password')
+        user.active = false
+
+        # Act
+
+        # Assert
+        expect(user).not_to be_valid
+        expect(user.active_for_authentication?).to be false
+      end
+    end
   end
 end

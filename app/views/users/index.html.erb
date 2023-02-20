@@ -1,4 +1,5 @@
 <h1>Lista de Vendedores</h1>
+
 <% if current_user.admin %>
   <div class="ls-box-filter">
     <%= form_with url: users_path, method: :get, :class => 'ls-form ls-form-inline ls-float-right'  do %>
@@ -12,7 +13,7 @@
   <% @users.each do |user|%>
     <table class="ls-table ls-table-striped">
       <thead>
-        <tr>
+        <tr id="<%= dom_id(user) %>">
           <th><%= User.human_attribute_name(:name)%>: <%= user.name%><br></th>
           <th><%= User.human_attribute_name(:email)%>: <%= user.email%><br></th>
         </tr>
@@ -22,6 +23,3 @@
 <% else %>
   <p>Não existem vendedores cadastrados.</p>
 <% end %>
-
-
-</div>
