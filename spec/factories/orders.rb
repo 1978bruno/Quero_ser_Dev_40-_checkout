@@ -1,12 +1,10 @@
 FactoryBot.define do
   factory :order do
     customer { nil }
-    product_plan_id { 1 }
-    product_plan_frequency_id { 1 }
-    price { '9.99' }
-    discount { '9.99' }
-    payment_mode { 'MyString' }
-    status { 1 }
-    cancel_reason { 'MyString' }
+    price { rand(1..99.99).round(2) }
+    discount { rand(1..99.99).round(2) }
+    payment_mode { nil }
+    status { 0 }
+    cancel_reason { nil }
   end
 end

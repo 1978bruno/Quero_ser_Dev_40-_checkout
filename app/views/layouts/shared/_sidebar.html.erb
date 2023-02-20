@@ -6,9 +6,8 @@
           <% if current_user.try(:admin?) %>
             <li><%= link_to 'Usuários', users_admin_index_path, class: "ls-ico-users", title: 'Usuários' %></li>
           <% end %>
-
-          <li><%= link_to 'Opção 1', root_path, class: "ls-ico-text", title: 'Opção 1' %></li>
-          <li><%= link_to 'Opção 2', root_path, class: "ls-ico-text", title: 'Opção 2' %></li>
+          <li><%= link_to 'Vendedores', users_path, class: "ls-ico-text", title: 'Vendedores' %></li>
+          <li><%= link_to 'Vendas', orders_path, class: "ls-ico-text", title: 'Vendas' %></li>
         <% end %>
       </ul>
     </nav>
