@@ -11,12 +11,18 @@
     <% end %>
   </div>
 <% end %>
-<div>
+<% if @users.any? %>
   <% @users.each do |user|%>
-    <div class= "ls-md-margin-bottom" id="<%= dom_id(user) %>">
-      <%= User.human_attribute_name(:name)%>: <%= user.name%><br>
-      <%= User.human_attribute_name(:email)%>: <%= user.email%><br>
-      <%= link_to 'Editar usuário', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %>
-    </div>
+    <table class="ls-table ls-table-striped">
+      <thead>
+        <tr id="<%= dom_id(user)>
+          <th><%= User.human_attribute_name(:name)%>: <%= user.name%><br></th>
+          <th><%= User.human_attribute_name(:email)%>: <%= user.email%><br></th>
+          <th><%= link_to 'Editar usuário', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %></th>
+        </tr>
+      </thead>
+    </table>
   <% end %>
-</div>
+<% else %>
+  <p>Não existem vendedores cadastrados.</p>
+<% end %>
