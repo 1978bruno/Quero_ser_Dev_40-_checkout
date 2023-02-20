@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_16_155920) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_16_230316) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_155920) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -60,8 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_155920) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "product_plan_id"
-    t.integer "product_plan_frequency_id"
     t.decimal "price", precision: 8, scale: 2, null: false
     t.decimal "discount", precision: 8, scale: 2
     t.string "payment_mode"
@@ -70,6 +68,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_155920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "salesman_id"
+    t.string "order_code"
+    t.string "product_plan_name", null: false
+    t.string "product_plan_periodicity", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["salesman_id"], name: "index_orders_on_salesman_id"
   end

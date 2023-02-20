@@ -1,0 +1,23 @@
+pt-BR:
+  not_found: 'Pedido não encontrado'
+  cant_cancel_order: 'Pedido não pode ser cancelado'
+  pending: 'Pendente'
+  paid: 'Pago'
+  cancelled: 'Cancelado'
+  activerecord:
+    models:
+      order:
+        one: Pedido
+        other: Pedidos
+    attributes:
+      order:
+        price: Preço
+        product_plan_name: Nome do produto
+        product_plan_periodicity: Periodicidade do produto
+        status: Status
+        product_code: Código do produto
+        discount: Desconto
+        payment_mode: Modo de pagamento
+        cancel_reason: Motivo do cancelamento
+        salesman: Vendedor
+        customer: Cliente

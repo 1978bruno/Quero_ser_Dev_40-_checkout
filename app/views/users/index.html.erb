@@ -1,0 +1,18 @@
+<h1>Lista de Vendedores</h1>
+<% if current_user.admin %>
+  <div class="ls-box-filter">
+    <%= form_with url: users_path, method: :get, :class => 'ls-form ls-form-inline ls-float-right'  do %>
+      <%= label_tag :query, 'Busca', {for: 'name', class: 'ls-label-text ls-hidden-accessible'} %>
+        <%= text_field_tag :query %>
+      <%= submit_tag 'Buscar', {class: "ls-btn"} %>
+    <% end %>
+  </div>
+<% end %>
+<div>
+  <% @users.each do |user|%>
+    <div>
+      <%= User.human_attribute_name(:name)%>: <%= user.name%><br>
+      <%= User.human_attribute_name(:email)%>: <%= user.email%><br>
+    </div>
+  <% end %>
+</div>
