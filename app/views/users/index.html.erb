@@ -8,11 +8,20 @@
     <% end %>
   </div>
 <% end %>
-<div>
+<% if @users.any? %>
   <% @users.each do |user|%>
-    <div>
-      <%= User.human_attribute_name(:name)%>: <%= user.name%><br>
-      <%= User.human_attribute_name(:email)%>: <%= user.email%><br>
-    </div>
+    <table class="ls-table ls-table-striped">
+      <thead>
+        <tr>
+          <th><%= User.human_attribute_name(:name)%>: <%= user.name%><br></th>
+          <th><%= User.human_attribute_name(:email)%>: <%= user.email%><br></th>
+        </tr>
+      </thead>
+    </table>
   <% end %>
+<% else %>
+  <p>Não existem vendedores cadastrados.</p>
+<% end %>
+
+
 </div>
