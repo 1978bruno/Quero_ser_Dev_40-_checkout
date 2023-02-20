@@ -1,0 +1,46 @@
+<h2>Pedidos</h2>
+
+<% if @orders.any? %>
+  <table class="ls-table ls-table-striped">
+    <thead>
+      <tr>
+        <th><%= Order.human_attribute_name(:order_id) %></th>
+        <th><%= Order.human_attribute_name(:salesman) %></th>
+        <th><%= Order.human_attribute_name(:customer) %></th>
+        <th><%= Order.human_attribute_name(:product_plan_name) %></th>
+        <th><%= Order.human_attribute_name(:product_plan_periodicity) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:price) %></th>
+        <th><%= Order.human_attribute_name(:discount) %></th>
+        <th class="hidden-xs"><%= Order.human_attribute_name(:payment_mode) %></th>
+        <th><%= Order.human_attribute_name(:status) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class='order_info' id='order_id_<%=order.id%>'>
+          <td><%= link_to order_path(order.id) %></td>
+          <td><%= order.salesman.email %></td>
+          <td><%= order.customer.doc_ident %></td>
+          <td><%= order.product_plan_name %></td>
+          <td class="hidden-xs"><%= order.product_plan_periodicity %></td>
+          <td><%= number_to_currency(order.price) %></td>
+          <td class="hidden-xs"><%= order.discount %></td>
+          <td><%= order.payment_mode %></td>
+          <td class="hidden-xs">
+          <% status_tag = {pending:'ls-tag-warning', cancelled:'ls-tag-danger' , paid:'ls-tag-success' }%>
+            <span class="<%=status_tag[order.status.to_sym]%>"><%= I18n.t(order.status) %></span>            
+          </td>
+          <td>
+            <% if order.pending? %>
+                <%= button_to 'Cancelar', order_cancel_reason_order_path(order.id), class: "button_cancel ls-btn-primary ls-btn-block", method: :get %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Não existem pedidos cadastrados.</p>
+<% end %>
+
+<p><%= link_to 'Voltar', root_path %></p>
