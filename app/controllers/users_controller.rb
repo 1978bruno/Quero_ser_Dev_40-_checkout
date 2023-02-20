@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :redirect_unless_admin, only: [:index]
-  before_action :set_user, only: %i[edit update]
+  before_action :authenticate_user!, :redirect_unless_admin, only: %i[index new create edit update]
+  before_action :authenticate_user!, only: %i[edit_password update_password]
+  before_action :set_user, only: %i[edit update edit_password update_password]
 
   def index
     @users = User.all
@@ -32,6 +33,21 @@ class UsersController < ApplicationController
       redirect_to users_admin_index_path, notice: I18n.t('user.msg_user_changed')
     else
       render :edit
+    end
+  end
+
+  def edit_password
+    redirect_to root_path unless @user == current_user
+  end
+
+  def update_password
+    redirect_to root_path unless @user == current_user
+    user_params_edit = params.require(:user).permit(:password, :password_confirmation)
+
+    if @user.update(user_params_edit)
+      redirect_to root_path, notice: I18n.t('user.msg_password_changed')
+    else
+      render :edit_password
     end
   end
 
