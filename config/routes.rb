@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users_admin, :controller => 'users' do
     get 'edit_password', on: :member
     post 'update_password', on: :member
+    get 'index_admin', on: :collection
   end
   resources :users, only: [:index]
   resources :orders, only: %i[index show] do

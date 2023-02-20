@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :redirect_unless_admin, only: %i[index new create edit update]
-  before_action :authenticate_user!, only: %i[edit_password update_password]
+  before_action :authenticate_user!, :redirect_unless_admin, only: %i[new create edit update]
+  before_action :authenticate_user!, only: %i[index edit_password update_password]
   before_action :set_user, only: %i[edit update edit_password update_password]
 
   def index
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_admin_index_path, notice: I18n.t('user.msg_record_created')
+      redirect_to index_admin_users_admin_index_path, notice: I18n.t('user.msg_record_created')
     else
       render :new
     end
@@ -38,10 +38,14 @@ class UsersController < ApplicationController
                        end
 
     if @user.update(user_params_edit)
-      redirect_to users_admin_index_path, notice: I18n.t('user.msg_user_changed')
+      redirect_to index_admin_users_admin_index_path, notice: I18n.t('user.msg_user_changed')
     else
       render :edit
     end
+  end
+
+  def index_admin
+    @users = User.all
   end
 
   def edit_password

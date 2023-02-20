@@ -59,7 +59,7 @@
       <% if (@user == current_user) && (! current_user.try(:admin?)) %>
         <%= link_to 'Cancelar', root_path, class: "ls-btn-primary" %>
       <% else %>
-        <%= link_to 'Cancelar', users_admin_index_path, class: "ls-btn-primary" %>
+        <%= link_to 'Cancelar', index_admin_users_admin_index_path, class: "ls-btn-primary" %>
       <% end %>
     </div>
   <% end %>

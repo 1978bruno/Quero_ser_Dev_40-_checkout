@@ -1,7 +1,5 @@
 <h1>Lista de Vendedores</h1>
 
-<%= link_to 'Criar Usuário', new_users_admin_path, class: 'ls-btn-primary ls-md-margin-bottom' %>
-
 <% if current_user.admin %>
   <div class="ls-box-filter">
     <%= form_with url: users_path, method: :get, :class => 'ls-form ls-form-inline ls-float-right'  do %>
@@ -15,10 +13,9 @@
   <% @users.each do |user|%>
     <table class="ls-table ls-table-striped">
       <thead>
-        <tr id="<%= dom_id(user)>
+        <tr id="<%= dom_id(user) %>">
           <th><%= User.human_attribute_name(:name)%>: <%= user.name%><br></th>
           <th><%= User.human_attribute_name(:email)%>: <%= user.email%><br></th>
-          <th><%= link_to 'Editar usuário', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %></th>
         </tr>
       </thead>
     </table>

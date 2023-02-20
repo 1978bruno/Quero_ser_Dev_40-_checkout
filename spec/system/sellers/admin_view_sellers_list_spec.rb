@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Admin vê a lista de usuários' do
   it 'a partir da página principal' do
-    User.create!(name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678')
+    User.create!(name: 'Usuário Teste', email: 'user@locaweb.com.br', password: '12345678', admin: true)
     visit root_path
     within('div#user-account') do
       click_on 'Login'

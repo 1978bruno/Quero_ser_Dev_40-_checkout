@@ -15,7 +15,7 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_2') do
+    within('tr#user_2') do
       click_on 'Editar usuário'
     end
     fill_in 'Nome', with: 'José da Silva'
@@ -38,7 +38,7 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_2') do
+    within('tr#user_2') do
       click_on 'Editar usuário'
     end
     fill_in 'E-mail', with: 'jsilva@gmail.com'
@@ -60,7 +60,7 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_2') do
+    within('tr#user_2') do
       click_on 'Editar usuário'
     end
     fill_in 'E-mail', with: ''
@@ -84,7 +84,7 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_2') do
+    within('tr#user_2') do
       click_on 'Editar usuário'
     end
     fill_in 'Senha', with: 'password'
@@ -108,7 +108,7 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_2') do
+    within('tr#user_2') do
       click_on 'Editar usuário'
     end
     fill_in 'E-mail', with: 'psantos@locaweb.com.br'
@@ -131,15 +131,15 @@ describe 'Administrador edita um usuário' do
       click_on 'Login'
     end
     click_on 'Usuários'
-    within('div#user_3') do
+    within('tr#user_3') do
       click_on 'Editar usuário'
     end
     find(:css, '#user_admin').set(true)
     click_on 'Salvar'
 
     expect(page).to have_content 'Alterado com sucesso'
-    within('div#user_3') do
-      expect(page).to have_content 'Administrador: true'
+    within('tr#user_3') do
+      expect(page).to have_css '.ls-ico-checkmark'
     end
   end
 end
