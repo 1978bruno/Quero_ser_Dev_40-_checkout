@@ -16,12 +16,12 @@ describe 'Administrador altera status de um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Bloquear usuário'
+      click_on 'Bloquear'
     end
 
     expect(page).to have_content 'Usuário bloqueado com sucesso'
     within('tr#user_2') do
-      expect(page).to have_button 'Desbloquear usuário'
+      expect(page).to have_button 'Desbloquear'
     end
   end
 
@@ -40,12 +40,12 @@ describe 'Administrador altera status de um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Desbloquear usuário'
+      click_on 'Desbloquear'
     end
 
     expect(page).to have_content 'Usuário desbloqueado com sucesso'
     within('tr#user_2') do
-      expect(page).to have_button 'Bloquear usuário'
+      expect(page).to have_button 'Bloquear'
     end
   end
 end
