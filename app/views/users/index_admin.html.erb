@@ -1,7 +1,5 @@
-<h1>Lista de Usuários</h1>
-
+<h1 class="ls-title-intro ls-md-margin-bottom">Lista de Usuários</h1>
 <%= link_to 'Criar Usuário', new_users_admin_path, class: 'ls-btn-primary ls-md-margin-bottom' %>
-
 <% if @users.any? %>
   <table class="ls-table ls-table-striped">
     <thead>
@@ -22,7 +20,16 @@
               <span class="ls-ico-checkmark"></span>
             <% end %>
           </td>
-          <td><%= link_to 'Editar usuário', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %></td>
+          <td>
+            <div class="ls-display-inline-block ls-md-margin-right">
+              <%= link_to 'Editar', edit_users_admin_path(user), class: 'ls-btn-primary-sm' %>
+            </div>
+            <div class="ls-display-inline-block">
+              <% unless user.try(:admin?) %>
+                <%= button_to (user.active)?'Bloquear':'Desbloquear', lock_unlock_users_admin_path(user), method: :patch, class: 'ls-btn-primary-sm' %>
+              <% end %>
+            </div>
+          </td>
         </tr>
       <% end %>
     </tbody>
