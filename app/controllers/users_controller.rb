@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, :redirect_unless_admin, only: %i[new create edit update]
   before_action :authenticate_user!, only: %i[index edit_password update_password]
-  before_action :set_user, only: %i[edit update edit_password update_password]
+  before_action :set_user, only: %i[edit update edit_password update_password lock_unlock]
 
   def index
     if current_user.admin == false
@@ -61,6 +61,14 @@ class UsersController < ApplicationController
     else
       render :edit_password
     end
+  end
+
+  def lock_unlock
+    @user.active = !@user.active
+    @user.save
+    flash[:notice] = I18n.t('user.msg_user_locked') unless @user.active
+    flash[:notice] = I18n.t('user.msg_user_unlocked') if @user.active
+    redirect_to index_admin_users_admin_index_path
   end
 
   private
