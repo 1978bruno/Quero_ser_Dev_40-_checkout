@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :users_admin, :controller => 'users' do
+    patch 'lock_unlock', on: :member
     get 'edit_password', on: :member
     post 'update_password', on: :member
     get 'index_admin', on: :collection

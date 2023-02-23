@@ -3,3 +3,6 @@ pt-BR:
     msg_record_created: 'Usuário cadastrado com sucesso'
     msg_user_changed: 'Alterado com sucesso'
     msg_password_changed: 'Senha alterada com sucesso'
+    msg_user_locked: 'Usuário bloqueado com sucesso'
+    msg_user_unlocked: 'Usuário desbloqueado com sucesso'
+    

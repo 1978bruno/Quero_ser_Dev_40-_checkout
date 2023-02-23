@@ -16,7 +16,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     fill_in 'Nome', with: 'José da Silva'
     click_on 'Salvar'
@@ -39,7 +39,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     fill_in 'E-mail', with: 'jsilva@gmail.com'
     click_on 'Salvar'
@@ -61,7 +61,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     fill_in 'E-mail', with: ''
     fill_in 'Nome', with: ''
@@ -85,7 +85,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     fill_in 'Senha', with: 'password'
     fill_in 'Confirme sua senha', with: 'erq34erwe'
@@ -109,7 +109,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_2') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     fill_in 'E-mail', with: 'psantos@locaweb.com.br'
     click_on 'Salvar'
@@ -132,7 +132,7 @@ describe 'Administrador edita um usuário' do
     end
     click_on 'Usuários'
     within('tr#user_3') do
-      click_on 'Editar usuário'
+      click_on 'Editar'
     end
     find(:css, '#user_admin').set(true)
     click_on 'Salvar'
