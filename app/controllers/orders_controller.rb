@@ -15,24 +15,24 @@ class OrdersController < ApplicationController
 
     if customer_search.blank?
       flash.now[:alert] = 'Deve ser informado um número de documento'
-      render :new
+      render :new and return
     end
     customer_search = customer_search.gsub(/[^0-9]/, '')
     blacklisted_customer = BlacklistedCustomer.find_by(doc_ident: customer_search)
-    if blacklisted_customer.nil?
+    unless blacklisted_customer.nil?
       flash.now[:alert] = 'Este cliente está bloqueado'
-      render :new
+      render :new and return
     end
     customer_api = CustomerService.get_customer(customer_search)
     redirect_to new_customer_path if customer_api.nil?
     if customer_api.include?(:erro)
       flash.now[:alert] = 'Problema de acesso à base de dados'
-      render :new
+      render :new and return
     end
     products = ProductService.list_products
     if products.include?(:erro)
       flash.now[:alert] = 'Problema de acesso à lista de produtos'
-      render :new
+      render :new and return
     end
     render :new, locals: { customer: customer_api, products: }
   end
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
     redirect_to orders_path, notice: "Ordem #{@order.order_code} cancelada"
   rescue ActiveRecord::RecordInvalid
     flash.now[:alert] = 'O motivo do cancelamento precisa ser preenchido'
-    render :order_cancel_reason
+    render :order_cancel_reason and return
   end
 
   def order_cancel_reason; end
