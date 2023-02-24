@@ -6,5 +6,7 @@ FactoryBot.define do
     payment_mode { nil }
     status { 0 }
     cancel_reason { nil }
+    product_plan_name { 'Hospedagem Go' }
+    product_plan_periodicity { 'Mensal' }
   end
 end
