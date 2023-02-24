@@ -1,0 +1,12 @@
+<%unless defined?(customer) %>
+  <%= form_with url: customer_search_orders_path, method: :get, class: "ls-form ls-form-horizontal row" do | f | %>
+    <label class="ls-label col-md-5">
+      <%= f.label 'Cliente', class: "ls-label-text" %>
+      <%= f.text_field :customer_ident %> 
+    </label>
+    <%= f.submit 'Pesquisar cliente', class: "ls-btn-primary" %>
+  <% end %>
+<% else %>
+  <p>renderize o form de pedido usando os dados de customer p/ pre-preencher o form</p> 
+  <%= customer %>
+<% end %>
