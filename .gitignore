@@ -40,3 +40,8 @@
 /node_modules
 
 .yarn/
+.pnp.*
+
+coverage
+
+
