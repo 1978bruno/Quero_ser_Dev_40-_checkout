@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
   resources :orders, only: %i[index new show] do
     collection do
-      get :customer_search
+      get :prefil_order_form
     end
     member do
       patch :order_cancel_post

@@ -12,26 +12,30 @@ class OrdersController < ApplicationController
 
   def prefil_order_form
     customer_search = params[:customer_ident]
-    # # pesquis no blocked list (model scope blocked)
-    # # flash.now[:alert] = 'Cliente bloqueado'
-    # # render :new 
-    # customeApiResponse = CustomerService.get_customer(customer_search)
-    # if (customeApiResponse.nil?)
-      # redirect_to cadastrar novo cliente
-    # if customeApiResponse.include?(:erro)
-    #   flash.now[:alert] = 'Cliente bloqueado'
-      # render :new 
 
-    # # if true render new with alert usuario bloqueado
-    # # chama service cliente
-    # # if error in response render new with msg
-    # # if nil redirect to cadastro 
-    # # servico de produtos
-    # products = ProductsService.list_products()
-    # render :new, locals: { customer: customer_search, products: products }
-    # flash.now[:alert] = 'Cliente bloqueado'
+    if customer_search.blank?
+      flash.now[:alert] = 'Deve ser informado um número de documento'
+      render :new
+    end
+    customer_search = customer_search.gsub(/[^0-9]/, '')
+    blacklisted_customer = BlacklistedCustomer.find_by(doc_ident: customer_search)
+    if blacklisted_customer.nil?
+      flash.now[:alert] = 'Este cliente está bloqueado'
+      render :new
+    end
+    customer_api = CustomerService.get_customer(customer_search)
+    redirect_to new_customer_path if customer_api.nil?
+    if customer_api.include?(:erro)
+      flash.now[:alert] = 'Problema de acesso à base de dados'
+      render :new
+    end
+    products = ProductService.list_products
+    if products.include?(:erro)
+      flash.now[:alert] = 'Problema de acesso à lista de produtos'
+      render :new
+    end
+    render :new, locals: { customer: customer_api, products: }
   end
-
 
   def order_cancel_post
     @order.cancel_reason = params[:order][:cancel_reason]
