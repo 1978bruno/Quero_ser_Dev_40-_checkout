@@ -31,16 +31,10 @@ describe 'Orders Cancel' do
     customer = create(:customer, doc_ident: '22200022201')
 
     order_pending = create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                                   product_plan_name: 'Hospedagem GO', price: '30.00',
-                                   product_plan_periodicity: 'Mensal',
                                    status: Order.statuses[:pending])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    status: Order.statuses[:paid])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    cancel_reason: 'Cliente desistiu',
                    status: Order.statuses[:cancelled])
 
@@ -57,16 +51,10 @@ describe 'Orders Cancel' do
     customer = create(:customer, doc_ident: '22200022201')
 
     order_pending = create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                                   product_plan_name: 'Hospedagem GO', price: '30.00',
-                                   product_plan_periodicity: 'Mensal',
                                    status: Order.statuses[:pending])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    status: Order.statuses[:paid])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    cancel_reason: 'Cliente desistiu',
                    status: Order.statuses[:cancelled])
 
@@ -86,16 +74,10 @@ describe 'Orders Cancel' do
     customer = create(:customer, doc_ident: '22200022201')
 
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem GO', price: '30.00',
-                   product_plan_periodicity: 'Mensal',
                    status: Order.statuses[:pending])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    status: Order.statuses[:paid])
     create(:order, customer_id: customer.id, salesman_id: salesman.id,
-                   product_plan_name: 'Hospedagem XYZ', price: '50.00',
-                   product_plan_periodicity: 'Anual',
                    cancel_reason: 'Cliente desistiu',
                    status: Order.statuses[:cancelled])
 
