@@ -1,7 +1,7 @@
 <% unless defined?(customer) %>
   <%= form_with url: prefil_order_form_orders_path, method: :get, class: "ls-form ls-form-horizontal row" do | f | %>
     <label class="ls-label col-md-5">
-      <%= f.label 'Cliente', class: "ls-label-text" %>
+      <%= f.label 'CPF ou CNPJ do cliente', class: "ls-label-text" %>
       <%= f.text_field :customer_ident %> 
     </label>
     <%= f.submit 'Pesquisar cliente', class: "ls-btn-primary" %>
