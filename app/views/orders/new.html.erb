@@ -8,5 +8,15 @@
   <% end %>
 <% else %>
   <p>renderize o form de pedido usando os dados de customer p/ pre-preencher o form</p>
+  <div>
+    <h4 class="ls-title-md">Cliente:</h4>
   <%= customer %>
+  <p></p>
+  </div>
+    <h4 class="ls-title-md" >Produtos:</h4>
+  <% products.each do |product| %>
+  <div>
+  <%= product %>
+  </div>
+  <% end %>
 <% end %>

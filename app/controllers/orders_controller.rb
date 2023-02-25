@@ -17,13 +17,14 @@ class OrdersController < ApplicationController
     return render_new_with_alert(invalid_customer_msg) unless invalid_customer_msg.nil?
 
     customer_api = CustomerService.get_customer(customer_search)
-    # redirect_to new_customer_path if customer_api.nil?
-    # return render_new_with_alert('Problema de acesso à base de dados de clientes') if customer_api.include?(:erro)
+    # redirect_to form_cadastro_cliente_path if customer_api.nil?
+    return render_new_with_alert('Mensagem temporaria: criar form de cadastro de cliente') if customer_api.nil?
+    return render_new_with_alert('Problema de acesso à base de dados de clientes') if customer_api.include?(:erro)
 
-    # products = ProductService.list_products
-    # return render_new_with_alert('Problema de acesso à base de dados de produtos') if products.include?(:erro)
+    products = ProductService.list_products
+    return render_new_with_alert('Problema de acesso à base de dados de produtos') if products.include?(:erro)
 
-    render :new, locals: { customer: customer_api }
+    render :new, locals: { customer: customer_api, products: }
   end
 
   def order_cancel_post
