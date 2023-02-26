@@ -15,4 +15,6 @@ Rails.application.routes.draw do
       get  :order_cancel_reason
     end
   end
+
+  resources :creation_orders, only: %i[new create]
 end
