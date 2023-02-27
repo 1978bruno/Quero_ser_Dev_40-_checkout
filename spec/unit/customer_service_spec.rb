@@ -20,14 +20,13 @@ RSpec.describe CustomerService do
                                  })
     end
 
-    # it 'not found' do
-    #   allow(Faraday).to receive(:get).and_return(double({ status: 200, body: '' }))
+    it 'not found' do
+      allow(Faraday).to receive(:get).and_return(double({ status: 404, body: '' }))
 
-    #   api_customer = CustomerService.get_customer('11122233345')
-    #   abrir formulario de cadastro...(teste não unitário)
+      api_customer = CustomerService.get_customer('11122233345')
 
-    #   expect(api_customer).to eq('')
-    # end
+      expect(api_customer).to eq(nil)
+    end
 
     it 'fail to access API' do
       allow(Faraday).to receive(:get).and_return(double({ status: 500 }))

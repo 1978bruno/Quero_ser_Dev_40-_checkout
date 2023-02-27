@@ -4,13 +4,13 @@ RSpec.describe ProductService do
   describe '#list_products' do
     it 'list with product' do
       mocked_answer = double({ status: 200,
-                               body: '{ "products": [{ "plan_name": "Hospedagem GO",
+                               body: '[{ "plan_name": "Hospedagem GO",
                                                     "periodicity": "Anual",
-                                                    "price": 9.90 }] }' })
+                                                    "price": 9.90 }]' })
 
       allow(Faraday).to receive(:get).and_return(mocked_answer)
 
-      produtos_listados = ProductService.list_products
+      produtos_listados = ProductService.list_product_group
       expect(produtos_listados).to eq([{ product_plan_name: 'Hospedagem GO',
                                          product_plan_periodicity: 'Anual',
                                          price: 9.90 }])

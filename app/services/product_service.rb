@@ -1,30 +1,45 @@
 class ProductService
   class << self
-    def list_products
-      response = Faraday.get(ENV.fetch('PRODUCTS_API_URL', nil))
-      return { erro: 'Não foi possível acessar a API de produtos' } if response.status != 200
-
-      products = JSON.parse(response.body)['products']
-      map_values(products)
-    rescue StandardError => e
-      { erro: e.message }
-    end
-
-    private
-
-    def map_values(products)
-      products.map do |product|
-        raise StandardError, 'Conteúdo inválido na API' unless check_response(product)
-
-        { product_plan_name: product['plan_name'],
-          product_plan_periodicity: product['periodicity'],
-          price: product['price'] }
+    def list_product_group
+      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL')}/product_groups"
+      if response.status != 200
+        return { success: false, data: { status_message: 'Não foi possível acessar a API de grupos de produto' } }
       end
+
+      products = JSON.parse(response.body)
+      products.map do |prod|
+        { success: true, data: { id: prod[:id], name: prod[:name], description: prod[:description] } }
+      end
+    rescue StandardError => e
+      { success: false, data: { status_message: e } }
     end
 
-    def check_response(product)
-      product.include?('plan_name') && product.include?('periodicity') &&
-        product.include?('price')
+    def list_plans(group_id)
+      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL', nil)}/product_groups/#{group_id}/plans"
+      if response.status != 200
+        return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
+      end
+
+      products = JSON.parse(response.body)
+      products.map do |prod|
+        { success: true, data: { id: prod[:id], name: prod[:name], description: prod[:description] } }
+      end
+    rescue StandardError => e
+      { success: false, data: { status_message: e } }
+    end
+
+    def list_prices(plan_id)
+      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL', nil)}/plans/#{plan_id}/prices"
+      if response.status != 200
+        return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
+      end
+
+      JSON.parse(response.body).map do |prod|
+        { success: true, data: { price: prod[:price], plan: prod[:plan], periodicity: prod[:periodicity],
+                                 product_group: prod[:product_group] } }
+      end
+    rescue StandardError => e
+      { success: false, data: { status_message: e } }
     end
   end
 end
