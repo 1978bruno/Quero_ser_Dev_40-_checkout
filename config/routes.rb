@@ -22,6 +22,9 @@ Rails.application.routes.draw do
         collection do
           post  :list_by_doc
         end
+        member do
+          patch  :set_paid
+        end
       end
     end
   end
