@@ -31,7 +31,7 @@ class ProductService
     def list_prices(plan_id)
       response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL', nil)}/plans/#{plan_id}/prices"
       if response.status != 200
-        return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
+        return { success: false, data: { status_message: 'Não foi possível acessar a API de preços' } }
       end
 
       prices = parse_prices(response.body)
