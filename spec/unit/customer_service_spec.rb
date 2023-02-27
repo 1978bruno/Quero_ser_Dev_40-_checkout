@@ -13,11 +13,11 @@ RSpec.describe CustomerService do
 
       api_customer = CustomerService.get_customer('11122233345')
 
-      expect(api_customer).to eq({
+      expect(api_customer).to eq({ success: true, data: {
                                    name: 'PINEAPLE LTDA',
                                    doc_ident: '11122233345',
                                    email: 'contato@pineaple.com.br'
-                                 })
+                                 } })
     end
 
     it 'not found' do
@@ -25,14 +25,15 @@ RSpec.describe CustomerService do
 
       api_customer = CustomerService.get_customer('11122233345')
 
-      expect(api_customer).to eq(nil)
+      expect(api_customer).to eq({ success: false, data: {} })
     end
 
     it 'fail to access API' do
       allow(Faraday).to receive(:get).and_return(double({ status: 500 }))
 
       api_customer = CustomerService.get_customer('11122233345')
-      expect(api_customer).to eq({ erro: 'Não foi possível acessar a API de clientes' })
+      expect(api_customer).to eq({ success: false,
+                                   data: { status_message: 'Não foi possível acessar a API de clientes' } })
     end
 
     it 'return error from raised exceptions' do
@@ -40,7 +41,7 @@ RSpec.describe CustomerService do
 
       api_customer = CustomerService.get_customer('11122233345')
 
-      expect(api_customer).to eq({ erro: 'timeout' })
+      expect(api_customer).to eq({ success: false, data: { status_message: 'timeout' } })
     end
   end
 end

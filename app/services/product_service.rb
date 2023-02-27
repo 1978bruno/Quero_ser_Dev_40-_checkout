@@ -6,12 +6,12 @@ class ProductService
         return { success: false, data: { status_message: 'Não foi possível acessar a API de grupos de produto' } }
       end
 
-      products = JSON.parse(response.body)
-      products.map do |prod|
-        { success: true, data: { id: prod[:id], name: prod[:name], description: prod[:description] } }
+      products = JSON.parse(response.body).map do |prod|
+        { id: prod['id'], name: prod['name'], description: prod['description'] }
       end
+      { success: true, data: products }
     rescue StandardError => e
-      { success: false, data: { status_message: e } }
+      { success: false, data: { status_message: e.message } }
     end
 
     def list_plans(group_id)
@@ -20,12 +20,12 @@ class ProductService
         return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
       end
 
-      products = JSON.parse(response.body)
-      products.map do |prod|
-        { success: true, data: { id: prod[:id], name: prod[:name], description: prod[:description] } }
+      plans = JSON.parse(response.body).map do |prod|
+        { id: prod['id'], name: prod['name'], description: prod['description'], details: prod['details'] }
       end
+      { success: true, data: plans }
     rescue StandardError => e
-      { success: false, data: { status_message: e } }
+      { success: false, data: { status_message: e.message } }
     end
 
     def list_prices(plan_id)
@@ -34,12 +34,19 @@ class ProductService
         return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
       end
 
-      JSON.parse(response.body).map do |prod|
-        { success: true, data: { price: prod[:price], plan: prod[:plan], periodicity: prod[:periodicity],
-                                 product_group: prod[:product_group] } }
-      end
+      prices = parse_prices(response.body)
+      { success: true, data: prices }
     rescue StandardError => e
-      { success: false, data: { status_message: e } }
+      { success: false, data: { status_message: e.message } }
+    end
+
+    private
+
+    def parse_prices(json_response)
+      JSON.parse(json_response).map do |prod|
+        { price: prod['price'], plan: prod['plan']['name'],
+          periodicity: prod['periodicity']['name'] }
+      end
     end
   end
 end
