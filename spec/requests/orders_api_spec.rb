@@ -18,14 +18,15 @@ describe 'Order API' do
       expect(response.content_type).to include 'application/json'
       json_response = JSON.parse(response.body)
       expect(json_response.length).to eq 2
+      expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
     end
 
     it 'falha se não houver pedidos' do
       post '/api/v1/orders/list_by_doc', params: { doc_ident: '999999999' }
 
-      expect(response.status).to eq 406
+      expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
-      expect(response.body).to include 'nenhum registro encontrado'
+      expect(response.body).to include 'Nenhum registro encontrado'
     end
 
     it 'falha se não for informado o documento' do
@@ -33,7 +34,7 @@ describe 'Order API' do
 
       expect(response.status).to eq 404
       expect(response.content_type).to include 'application/json'
-      expect(response.body).to include 'documento do cliente não informado'
+      expect(response.body).to include 'Documento do cliente não informado'
     end
 
     it 'e existe um erro interno' do
