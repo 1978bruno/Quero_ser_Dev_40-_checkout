@@ -1,21 +1,22 @@
 <%= render "stepper" %>
 
 <div class="ls-box">
-  <h3 class="ls-md-margin-bottom"><%= @creation_order.product_group %></h3>
+  <h3 class="ls-md-margin-bottom"><%= @creation_order.product_group_name %></h3>
 
   <% if @creation_order.errors.any? %>
     <div class="ls-alert-danger ls-dismissable">
       <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
-      <p><%= @creation_order.errors.where(:product_plan).first.full_message %></p>
+      <p><%= I18n.t('creation_order.msg_order_created_select_one_option') %></p>
     </div>
   <% end %>
 
+  <% @creation_order.skip_field_error_wrapper = true %>
   <%= form_for @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
     <fieldset>
       <% @product_plans.each do |plan| %>
         <div class="col-md-4 col-lg-4 col-sm-4">
           <label>
-            <%= f.radio_button :product_plan, plan[:name], class: "card-input-element" %>
+            <%= f.radio_button :product_plan_form, "#{plan[:id]}##{plan[:name]}", class: "card-input-element" %>
               <div class="card-input">
                 <h3 class="ls-txt-center"><%= plan[:name] %></h3>
                 <div class="ls-md-margin-top ls-txt-center"><%= plan[:description] %></div>

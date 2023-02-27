@@ -2,7 +2,7 @@ module CreationOrdersControllerShared
   extend ActiveSupport::Concern
 
   def initialize_controller
-    session[:creation_order_params].deep_merge!(creation_order_params) if params[:creation_order]
+    session_merge(creation_order_params) if params[:creation_order]
 
     @creation_order = CreationOrder.new(session[:creation_order_params])
     @creation_order.current_step = session[:creation_order_step]
@@ -57,7 +57,7 @@ module CreationOrdersControllerShared
   def decides_next_view
     if @end_process
       session[:creation_order_step] = session[:creation_order_params] = nil
-      flash[:notice] = 'Order saved!'
+      flash[:notice] = I18n.t('creation_order.msg_order_created')
       redirect_to orders_path
     else
       render :new
@@ -66,20 +66,41 @@ module CreationOrdersControllerShared
 
   def handle_customer
     search_customer
-
-    @show_customer = @customer_exists
   end
 
   def handle_customer_data; end
 
-  def handle_product; end
+  def handle_product
+    product_group_form = @creation_order.product_group_form.split('#')
+    @creation_order.product_group_id = product_group_form[0]
+    @creation_order.product_group_name = product_group_form[1]
 
-  def handle_plans; end
+    product_group_params = { product_group_id: @creation_order.product_group_id,
+                             product_group_name: @creation_order.product_group_name }
+
+    session_merge(product_group_params)
+  end
+
+  def handle_plans
+    product_plan_form = @creation_order.product_plan_form.split('#')
+    @creation_order.product_plan_id = product_plan_form[0]
+    @creation_order.product_plan_name = product_plan_form[1]
+
+    product_plan_params = { product_plan_id: @creation_order.product_plan_id,
+                            product_plan_name: @creation_order.product_plan_name }
+
+    session_merge(product_plan_params)
+  end
 
   def handle_prices
-    price_component = @creation_order.product_price_component.split
-    @creation_order.product_periodicity = price_component[0]
-    @creation_order.product_price = price_component[1]
+    price_form = @creation_order.product_price_form.split('#')
+    @creation_order.product_periodicity = price_form[0]
+    @creation_order.product_price = price_form[1]
+
+    product_price_params = { product_periodicity: @creation_order.product_periodicity,
+                             product_price: @creation_order.product_price }
+
+    session_merge(product_price_params)
   end
 
   def handle_confirmation; end
@@ -91,62 +112,55 @@ module CreationOrdersControllerShared
                   phone: '11-99999-8888', birth_date: '1980-01-01', corporate_name: '' }
     @creation_order.customer_exists = true
 
-    if @creation_order.customer_exists
-      @creation_order.customer_name = @customer[:name]
-      @creation_order.customer_email = @customer[:email]
-      @creation_order.customer_address = @customer[:address]
-      @creation_order.customer_city = @customer[:city]
-      @creation_order.customer_state = @customer[:state]
-      @creation_order.customer_zipcode = @customer[:zipcode]
-      @creation_order.customer_phone = @customer[:phone]
-      @creation_order.customer_birth_date = @customer[:birth_date]
-      @creation_order.customer_corporate_name = @customer[:corporate_name]
+    return unless @creation_order.customer_exists
 
-      customer_params = { customer_name: @customer[:name],
-                          customer_email: @customer[:email],
-                          customer_address: @customer[:address],
-                          customer_city: @customer[:city],
-                          customer_state: @customer[:state],
-                          customer_zipcode: @customer[:zipcode],
-                          customer_phone: @customer[:phone],
-                          customer_birth_date: @customer[:birth_date],
-                          customer_corporate_name: @customer[:corporate_name] }
+    @creation_order.customer_name = @customer[:name]
+    @creation_order.customer_email = @customer[:email]
+    @creation_order.customer_address = @customer[:address]
+    @creation_order.customer_city = @customer[:city]
+    @creation_order.customer_state = @customer[:state]
+    @creation_order.customer_zipcode = @customer[:zipcode]
+    @creation_order.customer_phone = @customer[:phone]
+    @creation_order.customer_birth_date = @customer[:birth_date]
+    @creation_order.customer_corporate_name = @customer[:corporate_name]
 
-      session[:creation_order_params].deep_merge!(customer_params)
-    end
+    customer_params = { customer_name: @customer[:name],
+                        customer_email: @customer[:email],
+                        customer_address: @customer[:address],
+                        customer_city: @customer[:city],
+                        customer_state: @customer[:state],
+                        customer_zipcode: @customer[:zipcode],
+                        customer_phone: @customer[:phone],
+                        customer_birth_date: @customer[:birth_date],
+                        customer_corporate_name: @customer[:corporate_name] }
 
-    logger.info "@creation_order: #{session[:creation_order_params]}"
+    session_merge(customer_params)
   end
 
   def before_product
-    @products = [{ name: 'Hospedagem de Sites', description: 'Domínio e SSL grátis com sites ilimitados e o melhor custo-benefício' },
-                 { name: 'E-mail Locaweb',
+    @products = [{ id: 1, name: 'Hospedagem de Sites',
+                   description: 'Domínio e SSL grátis com sites ilimitados e o melhor custo-benefício' },
+                 { id: 2, name: 'E-mail Locaweb',
                    description: 'Tenha um e-mail profissional e passe mais credibilidade' },
-                 { name: 'Criador de Sites',
+                 { id: 3, name: 'Criador de Sites',
                    description: 'Crie um site incrível com e-mails e domínio grátis!' }]
-
-    @products.each do |product|
-      logger.info "product = #{product[:name]} - #{product[:description]}"
-    end
   end
 
   def before_plans
-    @product_plans = [{ name: 'Hospedagem GO', description: '1 Site, 3 Contas de e-mails(10GB cada), 1 ano de domínio grátis',
+    @product_plans = [{ id: 1, name: 'Hospedagem GO',
+                        description: '1 Site, 3 Contas de e-mails(10GB cada), 1 ano de domínio grátis',
                         details: '1 usuário FTP, Armazenamento e Transferencia ilimitada' },
-                      { name: 'Hospedagem I', description: 'Sites ilimitados, 25 Contas de e-mails(10GB cada), 1 ano de domínio grátis',
+                      { id: 2, name: 'Hospedagem I',
+                        description: 'Sites ilimitados, 25 Contas de e-mails(10GB cada), 1 ano de domínio grátis',
                         details: '1 usuário FTP, Armazenamento e Transferencia ilimitada' }]
-
-    @product_plans.each do |product_plan|
-      logger.info "product_plan = #{product_plan[:name]} - #{product_plan[:description]} - #{product_plan[:details]}"
-    end
   end
 
   def before_prices
     @product_plan_prices = [{ periodicity: 'Trimestral', price: 59.97 },
                             { periodicity: 'Anual', price: 191.88 }]
+  end
 
-    @product_plan_prices.each do |product_plan|
-      logger.info "product_plan = #{product_plan[:periodicity]} - #{product_plan[:price]}"
-    end
+  def session_merge(params)
+    session[:creation_order_params].deep_merge!(params)
   end
 end

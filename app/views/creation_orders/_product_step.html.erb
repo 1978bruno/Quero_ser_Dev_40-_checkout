@@ -6,16 +6,17 @@
   <% if @creation_order.errors.any? %>
     <div class="ls-alert-danger ls-dismissable">
       <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
-      <p><%= @creation_order.errors.where(:product_group).first.full_message %></p>
+      <p><%= I18n.t('creation_order.msg_order_created_select_one_option') %></p>
     </div>
   <% end %>
 
+  <% @creation_order.skip_field_error_wrapper = true %>
   <%= form_for @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
     <fieldset>
       <% @products.each do |product| %>
         <div class="col-md-3 col-lg-3 col-sm-3">
           <label>
-            <%= f.radio_button :product_group, product[:name], class: "card-input-element" %>
+            <%= f.radio_button :product_group_form, "#{product[:id]}##{product[:name]}", class: "card-input-element" %>
               <div class="card-input">
                 <div class="ls-txt-center"><%= product[:name] %></div>
               </div>

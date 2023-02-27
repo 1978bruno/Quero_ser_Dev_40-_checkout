@@ -14,9 +14,13 @@ class CreationOrder
                 :customer_phone,
                 :customer_birth_date,
                 :customer_corporate_name,
-                :product_group,
-                :product_plan,
-                :product_price_component,
+                :product_group_form,
+                :product_group_id,
+                :product_group_name,
+                :product_plan_form,
+                :product_plan_id,
+                :product_plan_name,
+                :product_price_form,
                 :product_periodicity,
                 :product_price
   attr_writer :current_step
@@ -46,11 +50,11 @@ class CreationOrder
 
   #  validates :customer_corporate_name, presence: { if: ->(o) { o.current_step == 'customer_data' } }
 
-  validates :product_group, presence:
+  validates :product_group_form, presence:
             { if: ->(o) { o.current_step == 'product' } }
-  validates :product_plan, presence:
+  validates :product_plan_form, presence:
             { if: ->(o) { o.current_step == 'plans' } }
-  validates :product_price_component, presence:
+  validates :product_price_form, presence:
             { if: ->(o) { o.current_step == 'prices' } }
 
   def current_step

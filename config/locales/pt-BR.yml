@@ -1,11 +1,13 @@
 pt-BR:
   user:
-    msg_record_created: 'Usuário cadastrado com sucesso'
-    msg_user_changed: 'Alterado com sucesso'
-    msg_password_changed: 'Senha alterada com sucesso'
-    msg_user_locked: 'Usuário bloqueado com sucesso'
-    msg_user_unlocked: 'Usuário desbloqueado com sucesso'
+    msg_record_created: Usuário cadastrado com sucesso
+    msg_user_changed: Alterado com sucesso
+    msg_password_changed: Senha alterada com sucesso
+    msg_user_locked: Usuário bloqueado com sucesso
+    msg_user_unlocked: Usuário desbloqueado com sucesso
   creation_order:
-    msg_invalid_cpf: 'CPF inválido'
-    msg_invalid_cnpj: 'CNPJ inválido'
-    msg_invalid_value: 'Deve ser informado um CPF ou CNPJ válido'
+    msg_invalid_cpf: CPF inválido
+    msg_invalid_cnpj: CNPJ inválido
+    msg_invalid_value: Deve ser informado um CPF ou CNPJ válido
+    msg_order_created: Pedido criado com sucesso
+    msg_order_created_select_one_option: Deve ser selecionada uma das opções

@@ -20,7 +20,7 @@
       <label class="ls-label col-md-5 <%= (@user.errors[:password].empty?)? '':'ls-error' %>">
         <%= f.label :password, class: "ls-label-text" %>
         <% if @minimum_password_length %>
-          <em>(<%= I18n.translate('devise.registrations.new.characters_min', count: @minimum_password_length) %>)</em><br />
+          <em>(<%= I18n.t('devise.registrations.new.characters_min', count: @minimum_password_length) %>)</em><br />
         <% end %>
         <div class="ls-prefix-group">
           <%= f.password_field :password, class: "ls-login-bg-password", autocomplete: "new-password" %>

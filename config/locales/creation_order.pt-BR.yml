@@ -11,7 +11,7 @@ pt-BR:
         other: Pedidos
     attributes:
       creation_order:
-        customer_identification: Identificação do cliente
+        customer_identification: CPF (ou CNPJ)
         customer_name: Nome
         customer_address: Endereço
         customer_city: Cidade
@@ -21,7 +21,8 @@ pt-BR:
         customer_phone: Telefone
         customer_birth_date: Data Nascimento
         customer_corporate_name: Nome Corporativo
-        product_group: Grupo de Produtos
-        product_plan: Plano
+        product_group_form: Grupo de Produtos
+        product_plan_form: Plano
+        product_price_form: Preço
         product_periodicity: Periodicidade
         product_price: Preço
