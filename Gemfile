@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.0'
 
 gem 'bootsnap', require: false
+gem 'cpf_cnpj'
 gem 'devise'
 gem 'image_processing', '~> 1.2'
 gem 'jbuilder'

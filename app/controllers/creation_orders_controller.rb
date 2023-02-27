@@ -4,19 +4,24 @@ class CreationOrdersController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    session[:creation_order_params] ||= {}
+    logger.info 'Creation Order -> new'
+    #    session[:creation_order_params] ||= {}
+    #    session[:creation_order_step] =
+    session[:creation_order_params] = {}
+    session[:creation_order_step] = nil
     @creation_order = CreationOrder.new(session[:creation_order_params])
+    # @creation_order.current_step = session[:creation_order_step]
     @creation_order.current_step = session[:creation_order_step]
   end
 
   def create
     initialize_controller
-   
+
     logger.info "Current Step: #{@creation_order.current_step}"
     logger.info "Valid?: #{@creation_order.valid?}"
     logger.info "Errors: #{@creation_order.errors.full_messages}"
 
-    handle_each_step
+    handle_form_step
     control_flow
     before_each_step
     decides_next_view

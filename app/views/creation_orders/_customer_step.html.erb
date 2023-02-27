@@ -1,11 +1,11 @@
 <%= render "stepper" %>
 
-<h1>Customer Step</h1>
-
 <div class="ls-box">
+  <h3 class="ls-md-margin-bottom">Cliente</h3>
+
   <%= form_with model: @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
     <fieldset>
-      <label class="ls-label col-md-2 <%= (@creation_order.errors[:customer_identification].empty?)? '':'ls-error' %>">
+      <label class="ls-label col-md-3 <%= (@creation_order.errors[:customer_identification].empty?)? '':'ls-error' %>">
         <%= f.label :customer_identification, class: "ls-label-text" %>
         <%= f.text_field :customer_identification %>
         <% if ! @creation_order.errors[:customer_identification].empty? %>

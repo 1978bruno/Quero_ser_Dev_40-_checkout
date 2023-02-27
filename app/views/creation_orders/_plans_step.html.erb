@@ -1,33 +1,30 @@
 <%= render "stepper" %>
 
-<h1>Plans Step</h1>
-
 <div class="ls-box">
+  <h3 class="ls-md-margin-bottom"><%= @creation_order.product_group %></h3>
+
+  <% if @creation_order.errors.any? %>
+    <div class="ls-alert-danger ls-dismissable">
+      <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
+      <p><%= @creation_order.errors.where(:product_plan).first.full_message %></p>
+    </div>
+  <% end %>
+
   <%= form_for @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
-    <% if @product_plans.any? %>
-      <table class="ls-table ls-table-striped">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Detalhes</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @product_plans.each do |plan| %>
-            <tr>
-              <td><%= plan[:name] %></td>
-              <td><%= plan[:description] %></td>
-              <td><%= plan[:details] %></td>
-              <td><%= f.radio_button :product_plan, plan[:name], class: "ls-label-text" %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>Não existem planos disponíveis para o produto</p>
-    <% end %>
+    <fieldset>
+      <% @product_plans.each do |plan| %>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+          <label>
+            <%= f.radio_button :product_plan, plan[:name], class: "card-input-element" %>
+              <div class="card-input">
+                <h3 class="ls-txt-center"><%= plan[:name] %></h3>
+                <div class="ls-md-margin-top ls-txt-center"><%= plan[:description] %></div>
+                <div class="ls-md-margin-top ls-txt-center"><%= plan[:details] %></div>
+              </div>
+          </label>
+        </div>
+      <% end %>
+    </fieldset>
 
     <div class="ls-actions-btn">
       <%= f.submit 'Continuar', class: "ls-btn-primary" %>
