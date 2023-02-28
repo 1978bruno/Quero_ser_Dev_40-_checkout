@@ -19,12 +19,14 @@ describe 'Order API' do
       json_response = JSON.parse(response.body)
       expect(json_response.length).to eq 2
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
+      expect(json_response[0].keys).not_to include('created_at')
+      expect(json_response[0].keys).not_to include('updated_at')
     end
 
     it 'falha se não houver pedidos' do
       post '/api/v1/orders/list_by_doc', params: { doc_ident: '999999999' }
 
-      expect(response.status).to eq 200
+      expect(response.status).to eq 404
       expect(response.content_type).to include 'application/json'
       expect(response.body).to include 'Nenhum registro encontrado'
     end
