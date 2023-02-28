@@ -1,0 +1,9 @@
+development:
+  products_api_url: 'https://www.seek4k.com.br/v1'
+  customer_api_url: 'https://www.seek4k.com.br/v1/customers'
+test:
+  products_api_url: 'https://www.seek4k.com.br/v1'
+  customer_api_url: 'https://www.seek4k.com.br/v1/customers'
+production:
+  products_api_url: 'https://www.seek4k.com.br/v1'
+  customer_api_url: 'https://www.seek4k.com.br/v1/customers'

@@ -1,7 +1,8 @@
 class ProductService
+  BASE_URL = Rails.configuration.external_apis['products_api_url']
   class << self
     def list_product_group
-      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL')}/product_groups"
+      response = Faraday.get "#{BASE_URL}/product_groups"
       if response.status != 200
         return { success: false, data: { status_message: 'Não foi possível acessar a API de grupos de produto' } }
       end
@@ -15,7 +16,7 @@ class ProductService
     end
 
     def list_plans(group_id)
-      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL', nil)}/product_groups/#{group_id}/plans"
+      response = Faraday.get "#{BASE_URL}/product_groups/#{group_id}/plans"
       if response.status != 200
         return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
       end
@@ -29,7 +30,7 @@ class ProductService
     end
 
     def list_prices(plan_id)
-      response = Faraday.get "#{ENV.fetch('PRODUCTS_API_URL', nil)}/plans/#{plan_id}/prices"
+      response = Faraday.get "#{BASE_URL}/plans/#{plan_id}/prices"
       if response.status != 200
         return { success: false, data: { status_message: 'Não foi possível acessar a API de preços' } }
       end
