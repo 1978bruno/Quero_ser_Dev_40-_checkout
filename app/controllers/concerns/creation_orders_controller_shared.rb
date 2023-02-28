@@ -103,9 +103,15 @@ module CreationOrdersControllerShared
     session_merge(product_price_params)
   end
 
-  def handle_confirmation; end
+  def handle_confirmation
+    ## TODO
+    ## Neste ponto será gravado o novo pedido no BD
+  end
 
   def search_customer
+    ## TODO
+    ## Buscar via API os dados de um cliente e verificar se ele está liberado
+
     @customer = { identification: '12345678901', name: 'José da Silva',
                   email: 'jose.silva@email.com.br', address: 'Rua das Palmeiras, 100',
                   city: 'São Paulo', state: 'SP', zipcode: '11111-111',
@@ -138,6 +144,8 @@ module CreationOrdersControllerShared
   end
 
   def before_product
+    ## TODO
+    ## Buscar via API os grupos de produtos
     @products = [{ id: 1, name: 'Hospedagem de Sites',
                    description: 'Domínio e SSL grátis com sites ilimitados e o melhor custo-benefício' },
                  { id: 2, name: 'E-mail Locaweb',
@@ -147,6 +155,8 @@ module CreationOrdersControllerShared
   end
 
   def before_plans
+    ## TODO
+    ## Buscar via API os planos disponíveis para um grupo de produtos
     @product_plans = [{ id: 1, name: 'Hospedagem GO',
                         description: '1 Site, 3 Contas de e-mails(10GB cada), 1 ano de domínio grátis',
                         details: '1 usuário FTP, Armazenamento e Transferencia ilimitada' },
@@ -156,6 +166,8 @@ module CreationOrdersControllerShared
   end
 
   def before_prices
+    ## TODO
+    ## Buscar via API os preços e periodicidades de um plano
     @product_plan_prices = [{ periodicity: 'Trimestral', price: 59.97 },
                             { periodicity: 'Anual', price: 191.88 }]
   end
