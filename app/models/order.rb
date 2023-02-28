@@ -1,7 +1,6 @@
 require 'securerandom'
 
 class Order < ApplicationRecord
-  belongs_to :customer
   belongs_to :salesman, class_name: 'User'
 
   enum status: { pending: 0, paid: 3, cancelled: 5 }
@@ -12,6 +11,7 @@ class Order < ApplicationRecord
             :product_plan_name,
             :product_plan_periodicity,
             :status,
+            :customer_doc_ident,
             presence: true
 
   validates :cancel_reason, if: :cancelled?, presence: true
@@ -19,6 +19,6 @@ class Order < ApplicationRecord
   private
 
   def gen_order_code
-    self.order_code = "order_#{SecureRandom.alphanumeric(10)}"
+    self.order_code = SecureRandom.alphanumeric(10)
   end
 end
