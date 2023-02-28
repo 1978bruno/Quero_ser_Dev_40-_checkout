@@ -6,6 +6,7 @@ ruby '3.2.0'
 gem 'bootsnap', require: false
 gem 'cpf_cnpj'
 gem 'devise'
+gem 'faraday'
 gem 'image_processing', '~> 1.2'
 gem 'jbuilder'
 gem 'jsbundling-rails'

@@ -10,11 +10,9 @@ Table Users {
   
 }
 
-Table customers{
+Table customers_blacklisted{
   id                      int [pk, increment] // auto-increment
-  
   doc_ident               string    [not null, unique]      
-  blacklisted             boolean   [default: false]
   blacklisted_reason      string    [default: null]
   created_at              timestamp
   updated_at              timestamp
@@ -24,8 +22,8 @@ Table orders {
   id                                int     [pk, increment] // auto-increment
   order_code                        string
   salesman_id                       integer [ref: > Users.id]
-  customer_id                       integer [ref: > customers.id]
-  product_plan_name                   string [note: 'fk API']
+  customer_doc_ident                string
+product_plan_name                   string [note: 'fk API']
   product_plan_periodicity         string [note: 'fk API']
   price                             decimal [not null]
   discount                          decimal [default: null]

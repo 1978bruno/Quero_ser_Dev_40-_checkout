@@ -1,0 +1,2 @@
+class BlacklistedCustomer < ApplicationRecord
+end
