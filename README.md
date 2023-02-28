@@ -26,47 +26,62 @@
 
 <br>
 
-## API - Endpoints
-### `POST` http://localhost:3000/api/v1/orders/list_by_doc
+## API - Endpoints:
+<br>
 
-#### Parâmetros
-##### Content-Type
+### **Lista de pedidos pendentes**
+#### `POST` http://localhost:3000/api/v1/orders/list_by_doc
 
-``` sh
-application/json
-```
-##### Body (obrigatório)
+
+#### **Parâmetros**
+
+- Content-Type: `application/json`
+
+- Body (obrigatório)
 
 ```sh
 {
   "doc_ident": "22200022201"
 }
 ```
-#### Respostas
-##### Sucesso
-##### Code
+#### **Respostas**
+
+*Sucesso:*
+
+- Código `200`
 ``` sh
-200
+[
+  {
+	"id": 7,
+	"customer_id": 1,
+	"price": "30.0",
+	"discount": null,
+	"payment_mode": null,
+	"status": "pending",
+	"cancel_reason": null,
+	"salesman_id": 1,
+	"order_code": "order_C8lg2dJv60",
+	"product_plan_name": "Plano Bronze",
+	"product_plan_periodicity": "Mensal"
+  }
+]
 ```
 
-##### Caso não sejam encontrados pedidos
-##### Code
-``` sh
-200
-```
+*Caso não sejam encontrados pedidos*
+
+- Código: `404`
 
 ```sh
 {
-	"response": "Nenhum registro encontrado"
+  "response": "Nenhum registro encontrado"
 }
 ```
-##### Caso não seja enviado um documento no corpo da requisição
-##### Code
-``` sh
-404
-```
+*Caso não seja enviado um documento no corpo da requisição*
+
+- Código: `404`
+
 ```sh
 {
-	"error": "Documento do cliente não informado"
+  "error": "Documento do cliente não informado"
 }
 ```
