@@ -13,20 +13,17 @@ selesman_one = User.create!(name: 'vendedor', email: 'vendedor@locaweb.com.br', 
 selesman_two = User.create!(name: 'vendedor2', email: 'vendedor2@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
 
-customer_one = Customer.create!(doc_ident: '22200022201')
-customer_two = Customer.create!(doc_ident: '32100022201')
-customer_three = Customer.create!(doc_ident: '42600022201')
-customer_four = Customer.create!(doc_ident: '92220022201')
-
-Order.create!(salesman_id: selesman_one.id, customer_id: customer_one.id, product_plan_name: 'Plano Bronze',
+Order.create!(salesman_id: selesman_one.id, customer_doc_ident: '22200022201', product_plan_name: 'Plano Bronze',
               product_plan_periodicity: 'Mensal', price: 30.00)
-Order.create!(salesman_id: selesman_one.id, customer_id: customer_two.id, product_plan_name: 'Plano Prata',
+Order.create!(salesman_id: selesman_one.id, customer_doc_ident: '32100022201', product_plan_name: 'Plano Prata',
               product_plan_periodicity: 'Mensal', price: 50.00)
-Order.create!(salesman_id: selesman_one.id, customer_id: customer_three.id, product_plan_name: 'Plano Ouro',
+Order.create!(salesman_id: selesman_one.id, customer_doc_ident: '42600022201', product_plan_name: 'Plano Ouro',
               product_plan_periodicity: 'Anual', price: 70.00)
-Order.create!(salesman_id: selesman_one.id, customer_id: customer_four.id, product_plan_name: 'Plano Platinum',
+Order.create!(salesman_id: selesman_one.id, customer_doc_ident: '92220022201', product_plan_name: 'Plano Platinum',
               product_plan_periodicity: 'Anual', price: 90.00)
-Order.create!(salesman_id: selesman_two.id, customer_id: customer_two.id, product_plan_name: 'Plano Prata',
+Order.create!(salesman_id: selesman_two.id, customer_doc_ident: '22200022201', product_plan_name: 'Plano Prata',
               product_plan_periodicity: 'Mensal', price: 50.00)
-Order.create!(salesman_id: selesman_two.id, customer_id: customer_three.id, product_plan_name: 'Plano Ouro',
+Order.create!(salesman_id: selesman_two.id, customer_doc_ident: '32100022201', product_plan_name: 'Plano Ouro',
               product_plan_periodicity: 'Anual', price: 70.00)
+
+BlacklistedCustomer.create!(doc_ident: '12345678901', blacklisted_reason: 'Processo judicial em andamento.')

@@ -4,9 +4,9 @@
   <table class="ls-table ls-table-striped">
     <thead>
       <tr>
-        <th><%= Order.human_attribute_name(:order_id) %></th>
+        <th><%= Order.human_attribute_name(:order_code) %></th>
         <th><%= Order.human_attribute_name(:salesman) %></th>
-        <th><%= Order.human_attribute_name(:customer) %></th>
+        <th><%= Order.human_attribute_name(:customer_doc_ident) %></th>
         <th><%= Order.human_attribute_name(:product_plan_name) %></th>
         <th><%= Order.human_attribute_name(:product_plan_periodicity) %></th>
         <th class="hidden-xs"><%= Order.human_attribute_name(:price) %></th>
@@ -20,7 +20,7 @@
         <tr class='order_info' id='order_id_<%=order.id%>'>
           <td><u><%= link_to order.order_code, order_path(order.id) %></u></td>
           <td><%= order.salesman.email %></td>
-          <td><%= order.customer.doc_ident %></td>
+          <td><%= order.customer_doc_ident %></td>
           <td><%= order.product_plan_name %></td>
           <td class="hidden-xs"><%= order.product_plan_periodicity %></td>
           <td><%= number_to_currency(order.price) %></td>
