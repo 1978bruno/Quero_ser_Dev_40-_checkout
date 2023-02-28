@@ -5,18 +5,32 @@ RSpec.describe CustomerService do
     it 'with success' do
       mocked_answer = double({ status: 200,
                                body: '{
-                                        "name": "PINEAPLE LTDA",
-                                        "identification": "11122233345",
-                                        "email": "contato@pineaple.com.br"
+                                "doc_ident":"87591438786",
+                                "name":"José da Silva",
+                                "email":"jose.silva@email.com.br",
+                                "address":"Rua das Palmeiras, 100",
+                                "city":"São Paulo",
+                                "state":"SP",
+                                "zipcode":"11111-111",
+                                "phone":"11-99999-8888",
+                                "birthdate":"1980-01-01",
+                                "corporate_name":""
                                       }' })
       allow(Faraday).to receive(:get).and_return(mocked_answer)
 
-      api_customer = CustomerService.get_customer('11122233345')
+      api_customer = CustomerService.get_customer('87591438786')
 
       expect(api_customer).to eq({ success: true, data: {
-                                   name: 'PINEAPLE LTDA',
-                                   doc_ident: '11122233345',
-                                   email: 'contato@pineaple.com.br'
+                                   doc_ident: '87591438786',
+                                   name: 'José da Silva',
+                                   email: 'jose.silva@email.com.br',
+                                   address: 'Rua das Palmeiras, 100',
+                                   city: 'São Paulo',
+                                   state: 'SP',
+                                   zipcode: '11111-111',
+                                   phone: '11-99999-8888',
+                                   birthdate: '1980-01-01',
+                                   corporate_name: ''
                                  } })
     end
 

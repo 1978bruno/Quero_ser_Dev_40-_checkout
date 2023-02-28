@@ -8,8 +8,7 @@ class CustomerService
       end
 
       customer = JSON.parse(response.body)
-      { success: true, data: { name: customer['name'],
-                               doc_ident: customer['identification'], email: customer['email'] } }
+      convert_customer(customer)
     rescue StandardError => e
       { success: false, data: { status_message: e.message } }
     end
@@ -21,7 +20,15 @@ class CustomerService
     private
 
     def check_response(response)
-      response.body.include?('name') && response.body.include?('identification') && response.body.include?('email')
+      response.body.include?('name') && response.body.include?('doc_ident') && response.body.include?('email')
+    end
+
+    def convert_customer(customer)
+      { success: true, data: { doc_ident: customer['doc_ident'], name: customer['name'],
+                               email: customer['email'], address: customer['address'],
+                               city: customer['city'], state: customer['state'],
+                               zipcode: customer['zipcode'], phone: customer['phone'],
+                               birthdate: customer['birthdate'], corporate_name: customer['corporate_name'] } }
     end
   end
 end

@@ -65,11 +65,15 @@
           <small class="ls-help-message"><%= @creation_order.errors.where(:customer_phone).first.full_message %></small>
         <% end %>
       </label>
-      <label class="ls-label col-md-2 <%= (@creation_order.errors[:customer_birth_date].empty?)? '':'ls-error' %>">
-        <%= f.label :customer_birth_date, class: "ls-label-text" %>
-        <%= f.date_field :customer_birth_date, value: Date.parse(@creation_order.customer_birth_date), disabled: @creation_order.customer_exists %>
-        <% if ! @creation_order.errors[:customer_birth_date].empty? %>
-          <small class="ls-help-message"><%= @creation_order.errors.where(:customer_birth_date).first.full_message %></small>
+      <label class="ls-label col-md-2 <%= (@creation_order.errors[:customer_birthdate].empty?)? '':'ls-error' %>">
+        <%= f.label :customer_birthdate, class: "ls-label-text" %>
+        <% if @creation_order.customer_birthdate.nil? || @creation_order.customer_birthdate.empty? %>
+          <input type="date" name="creation_order[customer_birthdate]" id="creation_order_customer_birthdate" />
+        <% else %>
+          <%= f.date_field :customer_birthdate, value: Date.parse(@creation_order.customer_birthdate), disabled: @creation_order.customer_exists %>
+        <% end %>
+        <% if ! @creation_order.errors[:customer_birthdate].empty? %>
+          <small class="ls-help-message"><%= @creation_order.errors.where(:customer_birthdate).first.full_message %></small>
         <% end %>
       </label>
     </fieldset>

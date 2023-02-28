@@ -1,7 +1,7 @@
 <%= render "stepper" %>
 
 <div class="ls-box">
-  <h3 class="ls-md-margin-bottom">Grupo de produtos</h3>
+  <h3 class="ls-md-margin-bottom">Produtos</h3>
 
   <% if @creation_order.errors.any? %>
     <div class="ls-alert-danger ls-dismissable">
@@ -26,7 +26,7 @@
     </fieldset>
 
     <div class="ls-actions-btn">
-      <%= f.submit 'Continuar', class: "ls-btn-primary" %>
+      <%= f.submit 'Continuar', disabled: @disable_submit_button, class: "ls-btn-primary" %>
       <%= f.submit "Voltar", name: "back_button", class: "ls-btn-primary" unless @creation_order.first_step? %>
     </div>
   <% end %>

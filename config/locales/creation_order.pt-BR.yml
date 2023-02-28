@@ -19,10 +19,10 @@ pt-BR:
         customer_zipcode: CEP
         customer_email: E-mail
         customer_phone: Telefone
-        customer_birth_date: Data Nascimento
+        customer_birthdate: Data Nascimento
         customer_corporate_name: Nome Corporativo
         product_group_form: Grupo de Produtos
         product_plan_form: Plano
         product_price_form: Preço
-        product_periodicity: Periodicidade
-        product_price: Preço
+        product_plan_periodicity: Periodicidade
+        product_plan_price: Preço

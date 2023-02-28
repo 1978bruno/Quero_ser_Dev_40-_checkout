@@ -28,7 +28,7 @@
     </fieldset>
 
     <div class="ls-actions-btn">
-      <%= f.submit 'Continuar', class: "ls-btn-primary" %>
+      <%= f.submit 'Continuar', disabled: @disable_submit_button, class: "ls-btn-primary" %>
       <%= f.submit "Voltar", name: "back_button", class: "ls-btn-primary" unless @creation_order.first_step? %>
     </div>
   <% end %>

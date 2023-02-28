@@ -19,6 +19,6 @@ class Order < ApplicationRecord
   private
 
   def gen_order_code
-    self.order_code = SecureRandom.alphanumeric(10)
+    self.order_code = SecureRandom.alphanumeric(10).upcase
   end
 end

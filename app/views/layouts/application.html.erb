@@ -27,7 +27,15 @@
         <% if alert %>
           <div class="alert ls-alert-danger ls-dismissable">
             <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
-            <p><%= alert %></p>
+            <p>
+              <% if alert.class == String %>
+                <%= alert %>
+              <% else %>
+                <% flash[:alert].each do |msg| %>
+                  <%= msg %><br>
+                <% end %>
+              <% end %>
+            </p>
           </div>
         <% end %>
 
