@@ -19,11 +19,11 @@ class CustomerService
       response = Faraday.post(Rails.configuration.external_apis['customer_api_url'],
                               customer_data.to_json, { 'Content-Type' => 'application/json' })
 
-      return Response.error('Não foi possível cadastrar o cliente') if response.status != 201
+      return ResponseHelper.error('Não foi possível cadastrar o cliente') if response.status != 201
 
-      Response.success(JSON.parse(response.body, symbolize_names: true))
+      ResponseHelper.success(JSON.parse(response.body, symbolize_names: true))
     rescue StandardError => e
-      Response.error(e.message)
+      ResponseHelper.error(e.message)
     end
 
     private
