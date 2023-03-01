@@ -38,7 +38,7 @@ class CreationOrder
   #  validates :customer_corporate_name, presence: { if: ->(o) { o.current_step == 'customer_data' } }
 
   validates :product_group_form, presence:
-            { if: ->(o) { o.current_step == 'product' && o.no_error_found } }
+            { if: ->(o) { o.current_step == 'products' && o.no_error_found } }
   validates :product_plan_form, presence:
             { if: ->(o) { o.current_step == 'plans' && o.no_error_found } }
   validates :product_price_form, presence:

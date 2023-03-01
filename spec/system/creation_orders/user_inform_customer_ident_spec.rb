@@ -27,6 +27,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
 
       expect(page).to have_content 'Dados do cliente'
       expect(page).to have_field 'creation_order[customer_identification]', disabled: true, with: '87591438786'
+      expect(page).to have_field 'creation_order[customer_name]', disabled: true, with: 'José da Silva'
     end
 
     it 'sem sucesso quando informa um CPF faltando dígitos' do
@@ -53,6 +54,20 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
 
       expect(page).not_to have_content 'Dados do cliente'
       expect(page).to have_content 'CPF inválido'
+    end
+
+    it 'sem sucesso quando o CPF estiver bloqueado' do
+      BlacklistedCustomer.create!(doc_ident: '87591438786', blacklisted_reason: 'Motivo do bloqueio')
+      salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
+      login_as(salesman)
+
+      visit root_path
+      click_on 'Criar Pedido'
+      fill_in 'CPF (ou CNPJ)', with: '87591438786'
+      click_on 'Pesquisar Cliente'
+
+      expect(page).not_to have_content 'Dados do cliente'
+      expect(page).to have_content 'Este cliente está bloqueado para solicitar novos pedidos'
     end
   end
 
@@ -82,6 +97,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
 
       expect(page).to have_content 'Dados do cliente'
       expect(page).to have_field 'creation_order[customer_identification]', disabled: true, with: '88212849000170'
+      expect(page).to have_field 'creation_order[customer_name]', disabled: true, with: 'Acme Ltda'
     end
 
     it 'sem sucesso quando informa um CNPJ faltando dígitos ' do
@@ -108,6 +124,20 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
 
       expect(page).not_to have_content 'Dados do cliente'
       expect(page).to have_content 'CNPJ inválido'
+    end
+
+    it 'sem sucesso quando o CNPJ estiver bloqueado' do
+      BlacklistedCustomer.create!(doc_ident: '88212849000170', blacklisted_reason: 'Motivo do bloqueio')
+      salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
+      login_as(salesman)
+  
+      visit root_path
+      click_on 'Criar Pedido'
+      fill_in 'CPF (ou CNPJ)', with: '88212849000170'
+      click_on 'Pesquisar Cliente'
+  
+      expect(page).not_to have_content 'Dados do cliente'
+      expect(page).to have_content 'Este cliente está bloqueado para solicitar novos pedidos'
     end
   end
 end
