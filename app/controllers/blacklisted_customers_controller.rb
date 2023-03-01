@@ -11,9 +11,9 @@ class BlacklistedCustomersController < ApplicationController
     customer_id = params[:id]
     customer = BlacklistedCustomer.find(customer_id)
     customer.destroy!
-    redirect_to blacklisted_customers_path, notice: 'Cliente desbloqueado' and return
+    redirect_to blacklisted_customers_path, notice: I18n.t(msg_customer_unblocked) and return
   rescue ActiveRecord::RecordNotDestroyed
-    redirect_to price_weights_path, alert: 'Não foi possível desbloquear o cliente'
+    redirect_to price_weights_path, alert: I18n.t(msg_customer_unblock_fail)
   end
 
   private
