@@ -14,7 +14,6 @@ module CreationOrdersControllerInitialize
     @creation_order = CreationOrder.new(session[:creation_order_params])
     @creation_order.current_step = session[:creation_order_step]
     @creation_order.no_error_found = session[:creation_order_no_error_found]
-    @creation_order.no_error_found = true
   end
 
   def session_merge(params)

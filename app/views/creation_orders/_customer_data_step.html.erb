@@ -1,7 +1,7 @@
 <%= render "stepper" %>
 
 <div class="ls-box">
-  <h3 class="ls-md-margin-bottom">Dados do cliente</h3>
+  <h3 class="ls-title-4 ls-md-margin-bottom">Dados do cliente</h3>
 
   <%= form_with model: @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
     <fieldset>
@@ -90,6 +90,7 @@
     <div class="ls-actions-btn">
       <%= f.submit 'Continuar', class: "ls-btn-primary" %>
       <%= f.submit "Voltar", name: "back_button", class: "ls-btn-primary" unless @creation_order.first_step? %>
+      <%= link_to "Cancelar", root_path, class: "ls-btn-primary ls-float-right" %>
     </div>
   <% end %>
 </div>

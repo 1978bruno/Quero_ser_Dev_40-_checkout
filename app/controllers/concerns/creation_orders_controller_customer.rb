@@ -7,13 +7,13 @@ module CreationOrdersControllerCustomer
     if api_result[:success]
       @customer = api_result[:data]
       @creation_order.customer_exists = true
+      set_customer_data
     else
       @creation_order.customer_exists = false
       flash[:alert] = api_result[:data][:status_message]
     end
 
     set_session_customer_exists
-    set_customer_data
   end
 
   def set_session_customer_exists
@@ -42,6 +42,23 @@ module CreationOrdersControllerCustomer
     @creation_order.customer_phone = @customer[:phone]
     @creation_order.customer_birthdate = @customer[:birthdate]
     @creation_order.customer_corporate_name = @customer[:corporate_name]
+  end
+
+  def clear_creation_order_customer_data
+    @creation_order.customer_name = ''
+    @creation_order.customer_email = ''
+    @creation_order.customer_address = ''
+    @creation_order.customer_city = ''
+
+    clear_creation_order_customer_data2
+  end
+
+  def clear_creation_order_customer_data2
+    @creation_order.customer_state = ''
+    @creation_order.customer_zipcode = ''
+    @creation_order.customer_phone = ''
+    @creation_order.customer_birthdate = ''
+    @creation_order.customer_corporate_name = ''
   end
 
   def set_session_customer_data

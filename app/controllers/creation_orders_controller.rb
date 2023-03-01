@@ -17,7 +17,7 @@ class CreationOrdersController < ApplicationController
 
   def create
     initialize_controller
-    handle_form_current_step
+    handle_form_current_step unless params[:back_button]
     control_flow
     before_actions_next_step
     decides_next_view

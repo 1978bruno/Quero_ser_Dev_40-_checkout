@@ -29,6 +29,7 @@ module CreationOrdersControllerHandleForm
   end
 
   def handle_form_customer
+    clear_creation_order_customer_data
     search_customer
   end
 

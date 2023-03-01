@@ -1,9 +1,11 @@
 .stepper-wrapper {
-  font-family: Arial;
-  margin-top: 50px;
+  font-family: Open Sans, Arial, Helvetica, Sans-serif;
+  font-size: 18px;
+  font-weight: 300;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .stepper-item {
   position: relative;
@@ -11,16 +13,12 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
-
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
 }
 
 .stepper-item::before {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px dashed #ccc;
   width: 100%;
   top: 20px;
   left: -50%;
@@ -30,7 +28,7 @@
 .stepper-item::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px dashed #ccc;
   width: 100%;
   top: 20px;
   left: 50%;
@@ -55,7 +53,7 @@
 }
 
 .stepper-item.active .step-name {
-  text-decoration: underline;
+  color: #108e67;
 }
 
 .stepper-item.active .step-counter {
@@ -64,14 +62,21 @@
 }
 
 .stepper-item.completed .step-counter {
-  background-color: #6c6c6c;
-  color: #fff;
+  border-color: #108e67;
+  background-color: #fff;
+  border: 2px solid #108e67;
+  color: #108e67;
+}
+
+.stepper-item.completed .step-name {
+  color: #108e67;
 }
 
 .stepper-item.completed::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #878787;
+  border-bottom: 2px solid #108e67;
+  border-color: #108e67;
   width: 100%;
   top: 20px;
   left: 50%;

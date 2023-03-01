@@ -130,12 +130,12 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       BlacklistedCustomer.create!(doc_ident: '88212849000170', blacklisted_reason: 'Motivo do bloqueio')
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-  
+
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '88212849000170'
       click_on 'Pesquisar Cliente'
-  
+
       expect(page).not_to have_content 'Dados do cliente'
       expect(page).to have_content 'Este cliente está bloqueado para solicitar novos pedidos'
     end

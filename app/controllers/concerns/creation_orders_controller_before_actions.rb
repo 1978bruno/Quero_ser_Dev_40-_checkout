@@ -2,6 +2,8 @@ module CreationOrdersControllerBeforeActions
   extend ActiveSupport::Concern
 
   def before_actions_next_step
+    @creation_order.no_error_found = true
+
     case @creation_order.current_step
     when 'products'
       before_products

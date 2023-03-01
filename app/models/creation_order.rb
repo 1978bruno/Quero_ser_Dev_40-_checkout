@@ -105,4 +105,15 @@ class CreationOrder
 
     errors.add(:base, I18n.t('creation_order.msg_customer_blacklisted'))
   end
+
+  def customer_identification_formatted
+    case customer_identification.size
+    when 11
+      cpf = CPF.new(customer_identification)
+      cpf.formatted
+    when 14
+      cnpj = CNPJ.new(customer_identification)
+      cnpj.formatted
+    end
+  end
 end
