@@ -23,7 +23,7 @@
             <%= label_tag :customer_name,'Nome:' , {class: 'ls-label ls-text-sm ls-md-margin-top ls-sm-margin-bottom'} %>
             <%= text_field_tag :customer_name, @customer[:name], disabled:true %>
                       
-          <% unless @already_blacklisted %>  
+          <% unless @is_blacklisted %>  
             <%= label_tag :blacklisted_reason, 'Razão para bloqueio:', {class: 'ls-label ls-text-sm ls-md-margin-top ls-sm-margin-bottom'} %>
             <%= text_area_tag :blacklisted_reason, '', required: true %>          
             <%= submit_tag('Bloquear cliente', {class: "ls-btn"}) %>
