@@ -30,20 +30,14 @@
 <br>
 
 ### **Lista de pedidos pendentes**
-#### `POST` http://localhost:3000/api/v1/orders/list_by_doc
+#### `GET` http://localhost:3000/api/v1/customers/{doc_cliente}/orders
 
 
 #### **Parâmetros**
 
 - Content-Type: `application/json`
+- Passar o documento do cliente como parâmetro na URL
 
-- Body (obrigatório)
-
-```sh
-{
-  "doc_ident": "22200022201"
-}
-```
 #### **Respostas**
 
 *Sucesso:*
@@ -51,19 +45,40 @@
 - Código `200`
 ``` sh
 [
-  {
-	"id": 7,
-	"customer_id": 1,
-	"price": "30.0",
-	"discount": null,
-	"payment_mode": null,
-	"status": "pending",
-	"cancel_reason": null,
-	"salesman_id": 1,
-	"order_code": "order_C8lg2dJv60",
-	"product_plan_name": "Plano Bronze",
-	"product_plan_periodicity": "Mensal"
-  }
+	{
+		"id": 1,
+		"price": "30.0",
+		"discount": null,
+		"payment_mode": null,
+		"status": "pending",
+		"cancel_reason": null,
+		"order_code": "9qeZ77Gih8",
+		"product_plan_name": "Plano Bronze",
+		"product_plan_periodicity": "Mensal",
+		"customer_doc_ident": "22200022201",
+		"salesman": {
+			"id": 3,
+			"email": "vendedor@locaweb.com.br",
+			"name": "vendedor"
+		}
+	},
+	{
+		"id": 5,
+		"price": "50.0",
+		"discount": null,
+		"payment_mode": null,
+		"status": "pending",
+		"cancel_reason": null,
+		"order_code": "4a2TyFq505",
+		"product_plan_name": "Plano Prata",
+		"product_plan_periodicity": "Mensal",
+		"customer_doc_ident": "22200022201",
+		"salesman": {
+			"id": 4,
+			"email": "vendedor2@locaweb.com.br",
+			"name": "vendedor2"
+		}
+	}
 ]
 ```
 
@@ -76,12 +91,12 @@
   "response": "Nenhum registro encontrado"
 }
 ```
-*Caso não seja enviado um documento no corpo da requisição*
+*Caso exista um erro interno da api*
 
-- Código: `404`
+- Código: `500`
 
 ```sh
 {
-  "error": "Documento do cliente não informado"
+  "error": "Ocorreu um erro interno"
 }
 ```

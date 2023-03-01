@@ -10,7 +10,7 @@ describe 'Order API' do
       create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
                      product_plan_name: 'Hospedagem Premmium', product_plan_periodicity: 'Anual')
 
-      post '/api/v1/orders/list_by_doc', params: { doc_ident: order.customer_doc_ident }
+      get "/api/v1/customers/#{order.customer_doc_ident}/orders"
 
       expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
@@ -25,25 +25,17 @@ describe 'Order API' do
     end
 
     it 'falha se não houver pedidos' do
-      post '/api/v1/orders/list_by_doc', params: { doc_ident: '999999999' }
+      get '/api/v1/customers/999999999/orders'
 
       expect(response.status).to eq 404
       expect(response.content_type).to include 'application/json'
       expect(response.body).to include 'Nenhum registro encontrado'
     end
 
-    it 'falha se não for informado o documento' do
-      post '/api/v1/orders/list_by_doc', params: { doc_ident: '' }
-
-      expect(response.status).to eq 404
-      expect(response.content_type).to include 'application/json'
-      expect(response.body).to include 'Documento do cliente não informado'
-    end
-
     it 'e existe um erro interno' do
       allow(Order).to receive(:all).and_raise(ActiveRecord::QueryCanceled)
 
-      post '/api/v1/orders/list_by_doc', params: { doc_ident: '22200022201' }
+      get '/api/v1/customers/22200022201/orders'
 
       expect(response).to have_http_status(500)
     end
