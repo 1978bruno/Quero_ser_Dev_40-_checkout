@@ -61,4 +61,26 @@ RSpec.describe CustomerService do
       expect(api_customer).to eq({ status: 'ERROR_API', data: {}, status_message: 'timeout' })
     end
   end
+
+  context('Posts customer to external API') do
+    it('with success') do
+      response_json = { id: '1232231', doc_ident: '11122233345', name: 'Alberto Santos',
+                        email: 'asantos@email.com.br', address: 'Av Central, 2000 apto 201',
+                        city: 'Rio de Janeiro', state: 'RJ',
+                        zipcode: '20200-021', phone: '21 99999-8888',
+                        birthdate: '01/01/2000', corporate_name: '' }
+      allow(Faraday).to receive(:post).and_return(double({ status: 201, body: JSON.generate(response_json) }))
+
+      customer_data = { doc_ident: '11122233345', name: 'Alberto Santos',
+                        email: 'asantos@email.com.br', address: 'Av Central, 2000 apto 201',
+                        city: 'Rio de Janeiro', state: 'RJ',
+                        zipcode: '20200-021', phone: '21 99999-8888',
+                        birthdate: '01/01/2000', corporate_name: '' }
+      api_customer = CustomerService.save_customer(customer_data)
+
+      expect(api_customer).to eq({ status: 'SUCCESS',
+                                   data: response_json,
+                                   status_message: 'OK' })
+    end
+  end
 end

@@ -17,8 +17,15 @@ class CustomerService
       Response.error(e.message)
     end
 
-    def save_customer(_customer_data)
-      { success: true, data: {} }
+    def save_customer(customer_data)
+      response = Faraday.post(Rails.configuration.external_apis['customer_api_url'],
+                              customer_data.to_json, { 'Content-Type' => 'application/json' })
+
+      return Response.error('Não foi possível cadastrar o cliente') if response.status != 201
+
+      Response.success(JSON.parse(response.body, symbolize_names: true))
+    rescue StandardError => e
+      Response.error(e.message)
     end
 
     private
