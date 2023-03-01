@@ -18,4 +18,12 @@ Rails.application.routes.draw do
       get :order_cancel_reason
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :customers, only: [:show] do
+        resources :orders, only: [:index]
+      end
+    end
+  end
 end

@@ -64,6 +64,6 @@ describe 'usuário troca sua senha' do
 
     # Assert
     expect(page).to have_content 'Senha alterada com sucesso'
-    expect(current_path).to eq root_path
+    expect(current_path).to eq new_user_session_path
   end
 end
