@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_01_215332) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
     t.string "blacklisted_reason", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["doc_ident"], name: "index_blacklisted_customers_on_doc_ident", unique: true
   end
 
   create_table "bonus_commissions", force: :cascade do |t|

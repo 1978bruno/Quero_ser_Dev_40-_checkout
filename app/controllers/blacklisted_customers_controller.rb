@@ -5,20 +5,15 @@ class BlacklistedCustomersController < ApplicationController
     query_doc_ident = params[:customer_doc_ident]
     @blacklisted_customers = BlacklistedCustomer.all
 
-    if query_doc_ident.present?
-        customer_blacklisted = customer_check_blacklist(query_doc_ident)
-        customer_data_from_api = CustomerService.get_customer(query_doc_ident)
-        if customer_blacklisted.present?
-          @blacklisted_customers = [customer_blacklisted] 
-          @already_blacklisted = true
-        end
-        if customer_data_from_api[:status] != 'SUCCESS' && customer_blacklisted.blank?
-          flash.now[:alert] =  customer_data_from_api[:status_message]          
-        else
-          @customer = customer_data_from_api[:data]          
-        end
-    end  
-end
+    return if query_doc_ident.blank?
+
+    customer_blacklisted = customer_check_blacklist(query_doc_ident)
+    if customer_blacklisted.present?
+      @blacklisted_customers = [customer_blacklisted]
+      @already_blacklisted = true
+    end
+    @customer = process_customer_from_api(query_doc_ident, @already_blacklisted)
+  end
 
   def save
     BlacklistedCustomer.create!({ doc_ident: params[:id], blacklisted_reason: params[:blacklisted_reason] })
@@ -46,5 +41,15 @@ end
 
   def customer_check_blacklist(doc_ident)
     BlacklistedCustomer.find_by(doc_ident:)
+  end
+
+  def process_customer_from_api(query_doc_ident, is_blacklisted)
+    customer_data_from_api = CustomerService.get_customer(query_doc_ident)
+
+    if customer_data_from_api[:status] != 'SUCCESS' && !is_blacklisted
+      flash.now[:alert] = customer_data_from_api[:status_message] and return
+    end
+
+    customer_data_from_api[:data]
   end
 end
