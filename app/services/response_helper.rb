@@ -1,4 +1,4 @@
-class Response
+class ResponseHelper
   class << self
     def error(msg)
       { status: 'ERROR_API', status_message: msg, data: {} }
