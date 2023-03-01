@@ -26,47 +26,77 @@
 
 <br>
 
-## API - Endpoints
-### `POST` http://localhost:3000/api/v1/orders/list_by_doc
+## API - Endpoints:
+<br>
 
-#### Parâmetros
-##### Content-Type
+### **Lista de pedidos pendentes**
+#### `GET` http://localhost:3000/api/v1/customers/{doc_cliente}/orders
 
+
+#### **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o documento do cliente como parâmetro na URL
+
+#### **Respostas**
+
+*Sucesso:*
+
+- Código `200`
 ``` sh
-application/json
+[
+	{
+		"id": 1,
+		"price": "30.0",
+		"discount": null,
+		"payment_mode": null,
+		"status": "pending",
+		"cancel_reason": null,
+		"order_code": "9qeZ77Gih8",
+		"product_plan_name": "Plano Bronze",
+		"product_plan_periodicity": "Mensal",
+		"customer_doc_ident": "22200022201",
+		"salesman": {
+			"id": 3,
+			"email": "vendedor@locaweb.com.br",
+			"name": "vendedor"
+		}
+	},
+	{
+		"id": 5,
+		"price": "50.0",
+		"discount": null,
+		"payment_mode": null,
+		"status": "pending",
+		"cancel_reason": null,
+		"order_code": "4a2TyFq505",
+		"product_plan_name": "Plano Prata",
+		"product_plan_periodicity": "Mensal",
+		"customer_doc_ident": "22200022201",
+		"salesman": {
+			"id": 4,
+			"email": "vendedor2@locaweb.com.br",
+			"name": "vendedor2"
+		}
+	}
+]
 ```
-##### Body (obrigatório)
+
+*Caso não sejam encontrados pedidos*
+
+- Código: `404`
 
 ```sh
 {
-  "doc_ident": "22200022201"
+  "response": "Nenhum registro encontrado"
 }
 ```
-#### Respostas
-##### Sucesso
-##### Code
-``` sh
-200
-```
+*Caso exista um erro interno da api*
 
-##### Caso não sejam encontrados pedidos
-##### Code
-``` sh
-200
-```
+- Código: `500`
 
 ```sh
 {
-	"response": "Nenhum registro encontrado"
-}
-```
-##### Caso não seja enviado um documento no corpo da requisição
-##### Code
-``` sh
-404
-```
-```sh
-{
-	"error": "Documento do cliente não informado"
+  "error": "Ocorreu um erro interno"
 }
 ```

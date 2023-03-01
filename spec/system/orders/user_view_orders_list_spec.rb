@@ -14,10 +14,9 @@ describe 'Orders List View' do
     it 'Seller user view only orders created by him' do
       salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
       other_user = create(:user, email: 'second-user@locaweb.com.br', password: '12345600', admin: false)
-      customer = create(:customer, doc_ident: '22200022201')
-      create_list(:order, 10, customer_id: customer.id,
+      create_list(:order, 10, customer_doc_ident: '22200022201',
                               salesman_id: salesman.id)
-      create_list(:order, 10, customer_id: customer.id,
+      create_list(:order, 10, customer_doc_ident: '22200022201',
                               salesman_id: other_user.id)
 
       login_as(salesman)
@@ -32,10 +31,9 @@ describe 'Orders List View' do
       admin = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: true)
       salesman_one = create(:user, email: 'first-user@locaweb.com.br', password: '12345600', admin: false)
       salesman_two = create(:user, email: 'second-user@locaweb.com.br', password: '12345600', admin: false)
-      customer = create(:customer, doc_ident: '22200022201')
-      create_list(:order, 10, customer_id: customer.id,
+      create_list(:order, 10, customer_doc_ident: '22200022201',
                               salesman_id: salesman_one.id)
-      create_list(:order, 10, customer_id: customer.id,
+      create_list(:order, 10, customer_doc_ident: '22200022201',
                               salesman_id: salesman_two.id)
 
       login_as(admin)
