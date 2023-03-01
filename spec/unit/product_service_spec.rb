@@ -12,10 +12,11 @@ RSpec.describe ProductService do
         allow(Faraday).to receive(:get).and_return(mocked_answer)
 
         produtos_listados = ProductService.list_product_group
-        expect(produtos_listados).to eq({ success: true,
+        expect(produtos_listados).to eq({ status: 'SUCCESS',
                                           data: [{ id: 123,
                                                    name: 'Hospedagem GO',
-                                                   description: '1 Site' }] })
+                                                   description: '1 Site' }],
+                                          status_message: 'OK' })
       end
 
       it 'empty product group list' do
@@ -23,7 +24,7 @@ RSpec.describe ProductService do
 
         produtos_listados = ProductService.list_product_group
 
-        expect(produtos_listados).to eq({ success: true, data: [] })
+        expect(produtos_listados).to eq({ status: 'SUCCESS', status_message: 'OK', data: [] })
       end
 
       it 'fail to access API' do
@@ -31,9 +32,9 @@ RSpec.describe ProductService do
 
         produtos_listados = ProductService.list_product_group
 
-        expect(produtos_listados).to eq({ success: false,
-                                          data: { status_message:
-                                                  'Não foi possível acessar a API de grupos de produto' } })
+        expect(produtos_listados).to eq({ status: 'ERROR_API',
+                                          data: {},
+                                          status_message: 'Não foi possível acessar a API de grupos de produto' })
       end
 
       it 'return error from raised exceptions' do
@@ -41,7 +42,7 @@ RSpec.describe ProductService do
 
         produtos_listados = ProductService.list_product_group
 
-        expect(produtos_listados).to eq({ success: false, data: { status_message: 'timeout' } })
+        expect(produtos_listados).to eq({ status: 'ERROR_API', data: {}, status_message: 'timeout' })
       end
     end
     context 'Plan List' do
@@ -55,11 +56,12 @@ RSpec.describe ProductService do
         allow(Faraday).to receive(:get).and_return(mocked_answer)
 
         planos_listados = ProductService.list_plans(2)
-        expect(planos_listados).to eq({ success: true,
+        expect(planos_listados).to eq({ status: 'SUCCESS',
                                         data: [{ id: 123,
                                                  name: 'Email Locaweb Básico',
                                                  description: '2 caixas de email',
-                                                 details: '2 caixas de email ilimitadas' }] })
+                                                 details: '2 caixas de email ilimitadas' }],
+                                        status_message: 'OK' })
       end
 
       it 'list with prices' do
@@ -93,10 +95,11 @@ RSpec.describe ProductService do
         allow(Faraday).to receive(:get).and_return(mocked_answer)
 
         planos_listados = ProductService.list_prices(2)
-        expect(planos_listados).to eq({ success: true,
+        expect(planos_listados).to eq({ status: 'SUCCESS',
                                         data: [{ price: 80.97,
                                                  plan: 'Hospedagem II',
-                                                 periodicity: 'Trimestral' }] })
+                                                 periodicity: 'Trimestral' }],
+                                        status_message: 'OK' })
       end
     end
   end

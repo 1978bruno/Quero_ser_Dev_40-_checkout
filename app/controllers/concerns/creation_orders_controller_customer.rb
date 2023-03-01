@@ -2,18 +2,24 @@ module CreationOrdersControllerCustomer
   extend ActiveSupport::Concern
 
   def search_customer
-    api_result = CustomerService.get_customer(@creation_order.customer_identification)
+    @api_result = CustomerService.get_customer(@creation_order.customer_identification)
 
-    if api_result[:success]
-      @customer = api_result[:data]
+    if @api_result[:status] == 'SUCCESS'
+      @customer = @api_result[:data]
       @creation_order.customer_exists = true
       set_customer_data
     else
-      @creation_order.customer_exists = false
-      flash[:alert] = api_result[:data][:status_message]
+      check_api_other_results
     end
 
     set_session_customer_exists
+  end
+
+  def check_api_other_results
+    flash[:alert] = @api_result[:status_message] if @api_result[:status] == 'ERROR_API'
+    flash[:notice] = @api_result[:status_message] if @api_result[:status] == 'NOT_FOUND'
+
+    @creation_order.customer_exists = false
   end
 
   def set_session_customer_exists

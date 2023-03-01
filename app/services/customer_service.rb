@@ -2,19 +2,28 @@ class CustomerService
   class << self
     def get_customer(customer_doc_ident)
       response = Faraday.get("#{Rails.configuration.external_apis['customer_api_url']}/#{customer_doc_ident}")
-      return { success: false, data: {} } if response.status == 404
+
+      return ResponseHelper.not_found('Cliente não encontrado') if response.status == 404
+
       if response.status != 200 || !check_response(response)
-        return { success: false, data: { status_message: 'Não foi possível acessar a API de clientes' } }
+        return ResponseHelper.error('Não foi possível acessar a API de clientes')
       end
 
-      customer = JSON.parse(response.body)
-      convert_customer(customer)
+      customer = JSON.parse(response.body, symbolize_names: true)
+      ResponseHelper.success(customer)
     rescue StandardError => e
-      { success: false, data: { status_message: e.message } }
+      ResponseHelper.error(e.message)
     end
 
-    def save_customer(_customer_data)
-      { success: true, data: {} }
+    def save_customer(customer_data)
+      response = Faraday.post(Rails.configuration.external_apis['customer_api_url'],
+                              customer_data.to_json, { 'Content-Type' => 'application/json' })
+
+      return ResponseHelper.error('Não foi possível cadastrar o cliente') if response.status != 201
+
+      ResponseHelper.success(JSON.parse(response.body, symbolize_names: true))
+    rescue StandardError => e
+      ResponseHelper.error(e.message)
     end
 
     private
@@ -24,11 +33,11 @@ class CustomerService
     end
 
     def convert_customer(customer)
-      { success: true, data: { doc_ident: customer['doc_ident'], name: customer['name'],
-                               email: customer['email'], address: customer['address'],
-                               city: customer['city'], state: customer['state'],
-                               zipcode: customer['zipcode'], phone: customer['phone'],
-                               birthdate: customer['birthdate'], corporate_name: customer['corporate_name'] } }
+      { doc_ident: customer['doc_ident'], name: customer[:name],
+        email: customer['email'], address: customer[:address],
+        city: customer['city'], state: customer[:state],
+        zipcode: customer['zipcode'], phone: customer[:phone],
+        birthdate: customer['birthdate'], corporate_name: customer[:corporate_name] }
     end
   end
 end
