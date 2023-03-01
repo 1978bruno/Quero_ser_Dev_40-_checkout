@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Order API' do
   context 'GET /api/v1/orders' do
     it 'successo' do
-      salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
+      salesman = create(:user, email: 'user@locaweb.com.br', name: 'Pedro Santos', password: '12345678', admin: false)
       order = create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
                              product_plan_name: 'Hospedagem GO', product_plan_periodicity: 'Mensal',
                              price: 30.00)
@@ -17,6 +17,9 @@ describe 'Order API' do
       json_response = JSON.parse(response.body)
       expect(json_response.length).to eq 2
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
+      expect(json_response[0]['salesman']['id']).to eq salesman.id
+      expect(json_response[0]['salesman']['name']).to eq 'Pedro Santos'
+      expect(json_response[0]['salesman']['email']).to eq salesman.email
       expect(json_response[0].keys).not_to include('created_at')
       expect(json_response[0].keys).not_to include('updated_at')
     end
