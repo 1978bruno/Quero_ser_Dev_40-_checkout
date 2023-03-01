@@ -1,0 +1,27 @@
+<h1 class="ls-title-intro ls-md-margin-bottom">Lista de Clientes Bloqueados</h1>
+<% if @blacklisted_customers.any? %>
+  <table class="ls-table ls-table-striped">
+    <thead>
+      <tr>
+        <th><%= User.human_attribute_name(:doc_ident)%></th>
+        <th><%= User.human_attribute_name(:blacklisted_reason)%></th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @blacklisted_customers.each do |customer| %>
+        <tr id="<%= dom_id(customer) %>">
+          <td><%= customer.doc_ident %></td>
+          <td><%= customer.blacklisted_reason %></td>
+          <td>
+            <div class="ls-display-inline-block">
+                <%= button_to 'Desbloquear', blacklisted_customer_path(customer), method: :delete, class: 'ls-btn-primary-sm' %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Não existem clientes bloqueados.</p>
+<% end %>

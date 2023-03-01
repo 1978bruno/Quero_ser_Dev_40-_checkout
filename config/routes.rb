@@ -18,4 +18,8 @@ Rails.application.routes.draw do
       get :order_cancel_reason
     end
   end
+
+  resources :blacklisted_customers, only: [:index, :destroy] do
+    post 'save', on: :member
+  end
 end
