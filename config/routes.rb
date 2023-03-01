@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-  resources :users_admin, :controller => 'users' do
+  resources :users_admin, controller: 'users' do
     patch 'lock_unlock', on: :member
     get 'edit_password', on: :member
     post 'update_password', on: :member
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :blacklisted_customers, only: [:index, :destroy] do
+  resources :blacklisted_customers, only: %i[index destroy] do
     post 'save', on: :member
   end
 end
