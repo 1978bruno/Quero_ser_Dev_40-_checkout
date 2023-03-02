@@ -4,15 +4,15 @@
       <h4>Pesquisar cliente para bloqueio/desbloqueio</h4>
     </div>
     <%= form_with url: blacklisted_customers_path, method: :get, :class => 'ls-form ls-form-inline ls-float-left'  do %>
-      <%= label_tag :customer_doc_ident, 'Busca', {for: 'name', class: 'ls-label-text ls-hidden-accessible'} %>
-        <%= text_field_tag :customer_doc_ident, params[:customer_doc_ident] || '' %>
+        <%= label_tag :search_doc_ident,'Número do documento:' , {class: 'ls-display-block ls-label ls-text-sm ls-md-margin-top ls-sm-margin-bottom'} %>
+        <%= text_field_tag :search_doc_ident, params[:search_doc_ident] || '' %>
       <%= submit_tag 'Buscar', {class: "ls-btn"} %>
       <%= link_to 'Limpar pesquisa', blacklisted_customers_path,  class: "ls-btn" %>
     <% end %>
 </div>
 
 <% if @customer.present? %>
-  <div class="ls-box-filter">
+  <div id="customer_details" class="ls-box-filter">
       <div class="ls-display-block ls-sm-margin-bottom">
         <h3>Detalhes do cliente</h3>
          <%= form_with url: save_blacklisted_customer_path(@customer[:doc_ident]), method: :post, class: 'ls-form'  do %>
@@ -46,7 +46,7 @@
     <tbody>
       <% @blacklisted_customers.each do |customer| %>
         <tr id="<%= dom_id(customer) %>">
-          <td><%= customer.doc_ident %><%= link_to " (ver detalhes)","#{blacklisted_customers_path}/?customer_doc_ident=#{customer.doc_ident}" %></td>
+          <td><%= customer.doc_ident %><%= link_to " (ver detalhes)","#{blacklisted_customers_path}/?search_doc_ident=#{customer.doc_ident}" %></td>
           <td><%= customer.blacklisted_reason %></td>
           <td>
             <div class="ls-display-inline-block">

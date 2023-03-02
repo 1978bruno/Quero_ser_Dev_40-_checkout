@@ -2,7 +2,7 @@ class BlacklistedCustomersController < ApplicationController
   before_action :authenticate_user!, :redirect_unless_admin, only: %i[index save destroy]
 
   def index
-    query_doc_ident = params[:customer_doc_ident]
+    query_doc_ident = params[:search_doc_ident]
     @blacklisted_customers = BlacklistedCustomer.all
 
     return if query_doc_ident.blank?
