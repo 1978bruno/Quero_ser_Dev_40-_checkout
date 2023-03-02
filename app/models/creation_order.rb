@@ -15,7 +15,7 @@ class CreationOrder
   validates :customer_identification, presence:
             { if: ->(o) { o.current_step == 'customer' } }
   validate  :validate_customer_identification
-  validate  :customer_blacklisted?
+  validate  :customer_blocklisted?
 
   validates :customer_identification, presence:
             { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }

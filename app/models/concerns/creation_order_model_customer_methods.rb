@@ -38,14 +38,14 @@ module CreationOrderModelCustomerMethods
     errors.add(:customer_phone, I18n.t('creation_order.msg_phone_wrong_format'))
   end
 
-  def customer_blacklisted?
+  def customer_blocklisted?
     return unless current_step == 'customer'
 
-    blacklisted_customer = BlacklistedCustomer.find_by(doc_ident: customer_identification)
+    blocklisted_customer = BlocklistedCustomer.find_by(doc_ident: customer_identification)
 
-    return unless blacklisted_customer
+    return unless blocklisted_customer
 
-    errors.add(:base, I18n.t('creation_order.msg_customer_blacklisted'))
+    errors.add(:base, I18n.t('creation_order.msg_customer_blocklisted'))
   end
 
   def customer_identification_formatted

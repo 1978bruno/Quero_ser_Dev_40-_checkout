@@ -48,7 +48,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
     end
 
     it 'sem sucesso quando o CPF estiver bloqueado' do
-      BlacklistedCustomer.create!(doc_ident: '87591438786', blacklisted_reason: 'Motivo do bloqueio')
+      BlocklistedCustomer.create!(doc_ident: '87591438786', blocklisted_reason: 'Motivo do bloqueio')
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
 
@@ -109,7 +109,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
     end
 
     it 'sem sucesso quando o CNPJ estiver bloqueado' do
-      BlacklistedCustomer.create!(doc_ident: '88212849000170', blacklisted_reason: 'Motivo do bloqueio')
+      BlocklistedCustomer.create!(doc_ident: '88212849000170', blocklisted_reason: 'Motivo do bloqueio')
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
 
