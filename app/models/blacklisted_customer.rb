@@ -1,2 +1,0 @@
-class BlacklistedCustomer < ApplicationRecord
-end
