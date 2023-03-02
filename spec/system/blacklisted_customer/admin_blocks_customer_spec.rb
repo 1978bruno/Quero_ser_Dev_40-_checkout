@@ -178,4 +178,30 @@ describe 'Admin blocks/unblocks customer' do
     expect(page).not_to have_css('div#customer_details')
     expect(page).to have_content('Cliente não encontrado')
   end
+
+  it 'and there is no blocked customer' do
+    admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+
+    login_as(admin)
+
+    visit(blacklisted_customers_path)
+
+    expect(page).to have_content('Não existem clientes bloqueados.')
+    expect(page).not_to have_css('Documento de identidade')
+    expect(page).not_to have_css('Razão do bloqueio')
+  end
+
+  it 'and receives an error message when the external API fails' do
+    admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+    url = "#{Rails.configuration.external_apis['customer_api_url']}/12312312312"
+    allow(Faraday).to receive(:get).with(url).and_raise(Faraday::TimeoutError)
+
+    login_as(admin)
+
+    visit(blacklisted_customers_path)
+    fill_in 'search_doc_ident', with: '12312312312'
+    click_on 'Buscar'
+
+    expect(page).to have_content('Problema ao acessar API de clientes')
+  end
 end
