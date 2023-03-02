@@ -26,4 +26,4 @@ Order.create!(salesman_id: selesman_two.id, customer_doc_ident: '22200022201', p
 Order.create!(salesman_id: selesman_two.id, customer_doc_ident: '32100022201', product_plan_name: 'Plano Ouro',
               product_plan_periodicity: 'Anual', price: 70.00)
 
-BlacklistedCustomer.create!(doc_ident: '18422142414', blacklisted_reason: 'Processo judicial em andamento.')
+BlocklistedCustomer.create!(doc_ident: '18422142414', blocklisted_reason: 'Processo judicial em andamento.')

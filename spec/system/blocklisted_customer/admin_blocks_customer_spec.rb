@@ -8,7 +8,7 @@ describe 'Admin blocks/unblocks customer' do
     visit(root_path)
     click_on('Bloqueio de Clientes')
 
-    expect(current_path).to eq(blacklisted_customers_path)
+    expect(current_path).to eq(blocklisted_customers_path)
   end
 
   it 'User without admin priviledges cant see block users option on the menu' do
@@ -24,11 +24,11 @@ describe 'Admin blocks/unblocks customer' do
 
   it 'lists blocked customers as admin user' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
-    BlacklistedCustomer.create!(doc_ident: '18422142414', blacklisted_reason: 'Processo judicial em andamento.')
-    BlacklistedCustomer.create!(doc_ident: '12341234123', blacklisted_reason: 'Divida')
+    BlocklistedCustomer.create!(doc_ident: '18422142414', blocklisted_reason: 'Processo judicial em andamento.')
+    BlocklistedCustomer.create!(doc_ident: '12341234123', blocklisted_reason: 'Divida')
 
     login_as(admin)
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
 
     expect(page).to have_content('18422142414')
     expect(page).to have_content('Processo judicial em andamento.')
@@ -41,12 +41,12 @@ describe 'Admin blocks/unblocks customer' do
 
   it 'unblocks a customer from the blocked list' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
-    BlacklistedCustomer.create!(doc_ident: '18422142414', blacklisted_reason: 'Processo judicial em andamento.')
-    customer_to_block = BlacklistedCustomer.create!(doc_ident: '12341234123', blacklisted_reason: 'Divida')
+    BlocklistedCustomer.create!(doc_ident: '18422142414', blocklisted_reason: 'Processo judicial em andamento.')
+    customer_to_block = BlocklistedCustomer.create!(doc_ident: '12341234123', blocklisted_reason: 'Divida')
 
     login_as(admin)
-    visit(blacklisted_customers_path)
-    within("#blacklisted_customer_#{customer_to_block.id}") do
+    visit(blocklisted_customers_path)
+    within("#blocklisted_customer_#{customer_to_block.id}") do
       click_on 'Desbloquear'
     end
 
@@ -78,7 +78,7 @@ describe 'Admin blocks/unblocks customer' do
     allow(Faraday).to receive(:get).with(url).and_return(mocked_api_response)
 
     login_as(admin)
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
     fill_in 'search_doc_ident', with: '12312312312'
     click_on 'Buscar'
 
@@ -108,7 +108,7 @@ describe 'Admin blocks/unblocks customer' do
     allow(Faraday).to receive(:get).with(url).and_return(mocked_api_response)
 
     login_as(admin)
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
     fill_in 'search_doc_ident', with: '12312312312'
     click_on 'Buscar'
     fill_in 'Razão para bloqueio:', with: 'Razão detalhada do bloqueio'
@@ -125,9 +125,9 @@ describe 'Admin blocks/unblocks customer' do
   it 'checks details of a customer already on the blocked list
       after clicking "ver detalhes" the list should only show the selected customer' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
-    blocked_customer = BlacklistedCustomer.create!(doc_ident: '12312312312',
-                                                   blacklisted_reason: 'Processo judicial em andamento.')
-    BlacklistedCustomer.create!(doc_ident: '12312312322', blacklisted_reason: 'Cliente 2 bloqueado.')
+    blocked_customer = BlocklistedCustomer.create!(doc_ident: '12312312312',
+                                                   blocklisted_reason: 'Processo judicial em andamento.')
+    BlocklistedCustomer.create!(doc_ident: '12312312322', blocklisted_reason: 'Cliente 2 bloqueado.')
     mocked_api_response = double({ status: 200,
                                    body: JSON.generate({
                                                          doc_ident: '12312312312',
@@ -145,8 +145,8 @@ describe 'Admin blocks/unblocks customer' do
     allow(Faraday).to receive(:get).with(url).and_return(mocked_api_response)
 
     login_as(admin)
-    visit(blacklisted_customers_path)
-    within("#blacklisted_customer_#{blocked_customer.id}") do
+    visit(blocklisted_customers_path)
+    within("#blocklisted_customer_#{blocked_customer.id}") do
       click_on 'ver detalhes'
     end
 
@@ -171,7 +171,7 @@ describe 'Admin blocks/unblocks customer' do
 
     login_as(admin)
 
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
     fill_in 'search_doc_ident', with: '12312312312'
     click_on 'Buscar'
 
@@ -184,7 +184,7 @@ describe 'Admin blocks/unblocks customer' do
 
     login_as(admin)
 
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
 
     expect(page).to have_content('Não existem clientes bloqueados.')
     expect(page).not_to have_css('Documento de identidade')
@@ -198,7 +198,7 @@ describe 'Admin blocks/unblocks customer' do
 
     login_as(admin)
 
-    visit(blacklisted_customers_path)
+    visit(blocklisted_customers_path)
     fill_in 'search_doc_ident', with: '12312312312'
     click_on 'Buscar'
 

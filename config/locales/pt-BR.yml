@@ -1,5 +1,5 @@
 pt-BR:
-  blacklisted_customer:
+  blocklisted_customer:
     msg_customer_unblocked: 'Cliente desbloqueado'
     msg_customer_unblock_fail: 'Não foi possível desbloquear o cliente'
     msg_customer_blocked:  'Cliente bloqueado com sucesso'
@@ -10,4 +10,4 @@ pt-BR:
     msg_user_changed: 'Alterado com sucesso'
     msg_password_changed: 'Senha alterada com sucesso'
     msg_user_locked: 'Usuário bloqueado com sucesso'
-    msg_user_unlocked: 'Usuário desbloqueado com sucesso'    
+    msg_user_unlocked: 'Usuário desbloqueado com sucesso'

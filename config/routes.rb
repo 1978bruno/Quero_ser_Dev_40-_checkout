@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :blacklisted_customers, only: %i[index destroy] do
+  resources :blocklisted_customers, only: %i[index destroy] do
     post 'save', on: :member
   end
 
