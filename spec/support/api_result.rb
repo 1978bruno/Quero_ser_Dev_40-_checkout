@@ -6,6 +6,14 @@ def api_result_customer
                           birthdate: '1980-01-01', corporate_name: '' }) }
 end
 
+def api_result_customer_cnpj
+  { status: 200,
+    body: JSON.generate({ doc_ident: '36358603000107', name: 'Acme Ltda',
+                          email: 'contato@acme.com.br', address: 'Rua Principal, 100',
+                          city: 'São Paulo', state: 'SP', zipcode: '11111-111', phone: '11-99999-8888',
+                          birthdate: '', corporate_name: 'Acme Ltda' }) }
+end
+
 def api_result_products
   { status: 200,
     body: JSON.generate(
@@ -32,8 +40,10 @@ end
 
 def api_result_prices
   { status: 200,
-    body: '[{"price":"80.97","plan":{"name":"Hospedagem II"},"periodicity":{"name":"Trimestral"},
-      {"price":"60.97","plan":{"name":"Hospedagem II"},"periodicity":{"name":"Semestral"}}]' }
+    body: JSON.generate(
+      [{ price: '80.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Trimestral' } },
+       { price: '60.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Semestral' } }]
+    ) }
 end
 
 def api_result_failed

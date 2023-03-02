@@ -2,6 +2,7 @@ require 'cpf_cnpj'
 
 class CreationOrder
   include ActiveModel::Model
+  include CreationOrderModelCustomerMethods
 
   attr_accessor :customer_exists, :customer_identification, :customer_name, :customer_address, :customer_city,
                 :customer_state, :customer_zipcode, :customer_email, :customer_phone, :customer_birthdate,
@@ -28,15 +29,24 @@ class CreationOrder
             { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }
   validates :customer_zipcode, presence:
             { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }
+  validate  :validate_customer_zipcode
   validates :customer_email, presence:
             { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }
   validates :customer_phone, presence:
             { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }
+  validate  :validate_customer_phone
   validates :customer_birthdate, presence:
-            { if: ->(o) { o.current_step == 'customer_data' && o.customer_exists == false } }
-
-  #  validates :customer_corporate_name, presence: { if: ->(o) { o.current_step == 'customer_data' } }
-
+            { if: lambda { |o|
+                    o.current_step == 'customer_data' &&
+                      o.customer_exists == false &&
+                      o.customer_cpf?
+                  } }
+  validates :customer_corporate_name, presence:
+            { if: lambda { |o|
+                    o.current_step == 'customer_data' &&
+                      o.customer_exists == false &&
+                      o.customer_cnpj?
+                  } }
   validates :product_group_form, presence:
             { if: ->(o) { o.current_step == 'products' && o.no_error_found } }
   validates :product_plan_form, presence:
@@ -66,54 +76,5 @@ class CreationOrder
 
   def last_step?
     current_step == steps.last
-  end
-
-  def all_valid?
-    steps.all? do |step|
-      self.current_step = step
-      valid?
-    end
-  end
-
-  def validate_customer_identification
-    return unless current_step == 'customer' || current_step == 'customer_data'
-
-    case customer_identification.size
-    when 11
-      validate_customer_cpf
-    when 14
-      validate_customer_cnpj
-    else
-      errors.add(:base, I18n.t('creation_order.msg_invalid_value'))
-    end
-  end
-
-  def validate_customer_cpf
-    errors.add(:base, I18n.t('creation_order.msg_invalid_cpf')) unless CPF.valid?(customer_identification)
-  end
-
-  def validate_customer_cnpj
-    errors.add(:base, I18n.t('creation_order.msg_invalid_cnpj')) unless CNPJ.valid?(customer_identification)
-  end
-
-  def customer_blacklisted?
-    return unless current_step == 'customer'
-
-    blacklisted_customer = BlacklistedCustomer.find_by(doc_ident: customer_identification)
-
-    return unless blacklisted_customer
-
-    errors.add(:base, I18n.t('creation_order.msg_customer_blacklisted'))
-  end
-
-  def customer_identification_formatted
-    case customer_identification.size
-    when 11
-      cpf = CPF.new(customer_identification)
-      cpf.formatted
-    when 14
-      cnpj = CNPJ.new(customer_identification)
-      cnpj.formatted
-    end
   end
 end

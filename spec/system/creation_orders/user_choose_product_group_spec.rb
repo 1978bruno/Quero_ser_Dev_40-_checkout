@@ -74,6 +74,27 @@ describe 'Vendedor navega até a escolha de um produto' do
     expect(page).to have_field 'creation_order[customer_name]', disabled: true, with: 'José da Silva'
   end
 
+  it 'e tenta continuar sem selecionar um produto' do
+    salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
+    login_as(salesman)
+    mocked_answer = double(api_result_customer)
+    allow(Faraday).to receive(:get).and_return(mocked_answer)
+
+    visit root_path
+    click_on 'Criar Pedido'
+    fill_in 'CPF (ou CNPJ)', with: '87591438786'
+    click_on 'Pesquisar Cliente'
+    mocked_answer = double(api_result_products)
+    allow(Faraday).to receive(:get).and_return(mocked_answer)
+    click_on 'Continuar'
+    click_on 'Continuar'
+
+    within('div#step_active') do
+      expect(page).to have_content 'Produtos'
+    end
+    expect(page).to have_content 'Deve ser selecionada uma das opções'
+  end
+
   it 'e ocorre um erro na API' do
     salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
     login_as(salesman)

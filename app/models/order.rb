@@ -7,7 +7,8 @@ class Order < ApplicationRecord
 
   before_validation :gen_order_code, on: :create
 
-  validates :price,
+  validates :order_code,
+            :price,
             :product_plan_name,
             :product_plan_periodicity,
             :status,

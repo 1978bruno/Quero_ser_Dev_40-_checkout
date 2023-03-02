@@ -13,12 +13,11 @@ describe 'Vendedor informa os dados de um novo cliente' do
       fill_in 'Nome', with: 'José da Silva'
       fill_in 'Endereço', with: 'Av. Principal, 100'
       fill_in 'Cidade', with: 'São Paulo'
-      fill_in 'Estado', with: 'SP'
+      select 'São Paulo', from: 'creation_order_customer_state'
       fill_in 'CEP', with: '11111-111'
       fill_in 'E-mail', with: 'jose.silva@email.com.br'
       fill_in 'Data Nascimento', with: '01/01/1980'
-      fill_in 'Telefone', with: '11-99999-8888'
-      fill_in 'Nome Corporativo', with: ''
+      fill_in 'Telefone', with: '(11) 99999-8888'
       click_on 'Continuar'
 
       expect(page).not_to have_content 'Dados do cliente'
@@ -61,11 +60,10 @@ describe 'Vendedor informa os dados de um novo cliente' do
       fill_in 'Nome', with: 'Acme Ltda'
       fill_in 'Endereço', with: 'Av. Principal, 100'
       fill_in 'Cidade', with: 'São Paulo'
-      fill_in 'Estado', with: 'SP'
+      select 'São Paulo', from: 'creation_order_customer_state'
       fill_in 'CEP', with: '11111-111'
       fill_in 'E-mail', with: 'contato@email.com.br'
-      fill_in 'Data Nascimento', with: '01/01/1980'
-      fill_in 'Telefone', with: '11-99999-8888'
+      fill_in 'Telefone', with: '(11) 99999-8888'
       fill_in 'Nome Corporativo', with: 'Acme Ltda'
       click_on 'Continuar'
 
@@ -90,7 +88,7 @@ describe 'Vendedor informa os dados de um novo cliente' do
       expect(page).to have_content 'CEP não pode ficar em branco'
       expect(page).to have_content 'E-mail não pode ficar em branco'
       expect(page).to have_content 'Telefone não pode ficar em branco'
-      expect(page).to have_content 'Data Nascimento não pode ficar em branco'
+      expect(page).to have_content 'Nome Corporativo não pode ficar em branco'
     end
   end
 end
