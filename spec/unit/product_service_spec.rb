@@ -8,8 +8,8 @@ RSpec.describe ProductService do
                            description: '1 Site' }]
         mocked_answer = double({ status: 200,
                                  body: JSON.generate(json_response) })
-
-        allow(Faraday).to receive(:get).and_return(mocked_answer)
+        url = "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
+        allow(Faraday).to receive(:get).with(url).and_return(mocked_answer)
 
         produtos_listados = ProductService.list_product_group
         expect(produtos_listados).to eq({ status: 'SUCCESS',
@@ -20,7 +20,8 @@ RSpec.describe ProductService do
       end
 
       it 'empty product group list' do
-        allow(Faraday).to receive(:get).and_return(double({ status: 200, body: '[]' }))
+        url = "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
+        allow(Faraday).to receive(:get).with(url).and_return(double({ status: 200, body: '[]' }))
 
         produtos_listados = ProductService.list_product_group
 
@@ -28,7 +29,8 @@ RSpec.describe ProductService do
       end
 
       it 'fail to access API' do
-        allow(Faraday).to receive(:get).and_return(double({ status: 500 }))
+        url = "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
+        allow(Faraday).to receive(:get).with(url).and_return(double({ status: 500 }))
 
         produtos_listados = ProductService.list_product_group
 
@@ -38,7 +40,8 @@ RSpec.describe ProductService do
       end
 
       it 'return error from raised exceptions' do
-        allow(Faraday).to receive(:get).and_raise(Faraday::TimeoutError)
+        url = "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
+        allow(Faraday).to receive(:get).with(url).and_raise(Faraday::TimeoutError)
 
         produtos_listados = ProductService.list_product_group
 
@@ -53,7 +56,8 @@ RSpec.describe ProductService do
         mocked_answer = double({ status: 200,
                                  body: JSON.generate(json_response) })
 
-        allow(Faraday).to receive(:get).and_return(mocked_answer)
+        url = "#{Rails.configuration.external_apis['products_api_url']}/product_groups/2/plans"
+        allow(Faraday).to receive(:get).with(url).and_return(mocked_answer)
 
         planos_listados = ProductService.list_plans(2)
         expect(planos_listados).to eq({ status: 'SUCCESS',
@@ -91,8 +95,8 @@ RSpec.describe ProductService do
         }]
         mocked_answer = double({ status: 200,
                                  body: JSON.generate(json_response) })
-
-        allow(Faraday).to receive(:get).and_return(mocked_answer)
+        url = "#{Rails.configuration.external_apis['products_api_url']}/plans/2/prices"
+        allow(Faraday).to receive(:get).with(url).and_return(mocked_answer)
 
         planos_listados = ProductService.list_prices(2)
         expect(planos_listados).to eq({ status: 'SUCCESS',

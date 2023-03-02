@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post 'update_password', on: :member
     get 'index_admin', on: :collection
   end
+  
   resources :users, only: [:index]
   resources :orders, only: %i[index new show] do
     collection do
@@ -21,5 +22,13 @@ Rails.application.routes.draw do
 
   resources :blacklisted_customers, only: %i[index destroy] do
     post 'save', on: :member
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :customers, only: [:show] do
+        resources :orders, only: [:index]
+      end
+    end
   end
 end

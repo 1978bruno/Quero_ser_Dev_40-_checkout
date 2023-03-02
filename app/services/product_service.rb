@@ -15,7 +15,7 @@ class ProductService
 
     def list_plans(group_id)
       response = Faraday.get "#{BASE_URL}/product_groups/#{group_id}/plans"
-      ResponseHelper.error('Não foi possível acessar a API de planos') if response.status != 200
+      return ResponseHelper.error('Não foi possível acessar a API de planos') if response.status != 200
 
       plans = JSON.parse(response.body).map do |prod|
         { id: prod['id'], name: prod['name'], description: prod['description'], details: prod['details'] }
@@ -27,7 +27,7 @@ class ProductService
 
     def list_prices(plan_id)
       response = Faraday.get "#{BASE_URL}/plans/#{plan_id}/prices"
-      ResponseHelper.error('Não foi possível acessar a API de preços') if response.status != 200
+      return ResponseHelper.error('Não foi possível acessar a API de preços') if response.status != 200
 
       prices = JSON.parse(response.body).map do |prod|
         { price: prod['price'], plan: prod['plan']['name'],
