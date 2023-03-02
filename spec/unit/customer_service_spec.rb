@@ -16,7 +16,9 @@ RSpec.describe CustomerService do
                                                      birthdate: '1980-01-01',
                                                      corporate_name: ''
                                                    }) })
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+
+      url = "#{Rails.configuration.external_apis['customer_api_url']}/87591438786"
+      allow(Faraday).to receive(:get).with(url).and_return(mocked_answer)
 
       api_customer = CustomerService.get_customer('87591438786')
 
@@ -37,7 +39,8 @@ RSpec.describe CustomerService do
     end
 
     it 'not found' do
-      allow(Faraday).to receive(:get).and_return(double({ status: 404, body: '' }))
+      url = "#{Rails.configuration.external_apis['customer_api_url']}/11122233345"
+      allow(Faraday).to receive(:get).with(url).and_return(double({ status: 404, body: '' }))
 
       api_customer = CustomerService.get_customer('11122233345')
 
@@ -45,7 +48,8 @@ RSpec.describe CustomerService do
     end
 
     it 'fail to access API' do
-      allow(Faraday).to receive(:get).and_return(double({ status: 500 }))
+      url = "#{Rails.configuration.external_apis['customer_api_url']}/11122233345"
+      allow(Faraday).to receive(:get).with(url).and_return(double({ status: 500 }))
 
       api_customer = CustomerService.get_customer('11122233345')
       expect(api_customer).to eq({ status: 'ERROR_API',
@@ -54,7 +58,8 @@ RSpec.describe CustomerService do
     end
 
     it 'return error from raised exceptions' do
-      allow(Faraday).to receive(:get).and_raise(Faraday::TimeoutError)
+      url = "#{Rails.configuration.external_apis['customer_api_url']}/11122233345"
+      allow(Faraday).to receive(:get).with(url).and_raise(Faraday::TimeoutError)
 
       api_customer = CustomerService.get_customer('11122233345')
 
@@ -69,13 +74,18 @@ RSpec.describe CustomerService do
                         city: 'Rio de Janeiro', state: 'RJ',
                         zipcode: '20200-021', phone: '21 99999-8888',
                         birthdate: '01/01/2000', corporate_name: '' }
-      allow(Faraday).to receive(:post).and_return(double({ status: 201, body: JSON.generate(response_json) }))
 
       customer_data = { doc_ident: '11122233345', name: 'Alberto Santos',
                         email: 'asantos@email.com.br', address: 'Av Central, 2000 apto 201',
                         city: 'Rio de Janeiro', state: 'RJ',
                         zipcode: '20200-021', phone: '21 99999-8888',
                         birthdate: '01/01/2000', corporate_name: '' }
+
+      url = Rails.configuration.external_apis['customer_api_url']
+      allow(Faraday).to receive(:post).with(url, customer_data.to_json,
+                                            { 'Content-Type' => 'application/json' })
+                                      .and_return(double({ status: 201, body: JSON.generate(response_json) }))
+
       api_customer = CustomerService.save_customer(customer_data)
 
       expect(api_customer).to eq({ status: 'SUCCESS',
