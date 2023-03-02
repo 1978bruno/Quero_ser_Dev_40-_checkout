@@ -22,6 +22,9 @@ describe 'Vendedor informa os dados de um novo cliente' do
       click_on 'Continuar'
 
       expect(page).not_to have_content 'Dados do cliente'
+      within('div#step_active') do
+        expect(page).to have_content 'Produtos'
+      end
     end
 
     it 'sem sucesso' do

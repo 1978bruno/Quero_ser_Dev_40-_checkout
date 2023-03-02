@@ -25,6 +25,9 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
 
+      within('div#step_active') do
+        expect(page).to have_content 'Dados do Cliente'
+      end
       expect(page).to have_content 'Dados do cliente'
       expect(page).to have_field 'creation_order[customer_identification]', disabled: true, with: '87591438786'
       expect(page).to have_field 'creation_order[customer_name]', disabled: true, with: 'José da Silva'
@@ -95,6 +98,9 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       fill_in 'CPF (ou CNPJ)', with: '88212849000170'
       click_on 'Pesquisar Cliente'
 
+      within('div#step_active') do
+        expect(page).to have_content 'Dados do Cliente'
+      end
       expect(page).to have_content 'Dados do cliente'
       expect(page).to have_field 'creation_order[customer_identification]', disabled: true, with: '88212849000170'
       expect(page).to have_field 'creation_order[customer_name]', disabled: true, with: 'Acme Ltda'
