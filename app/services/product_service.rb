@@ -3,51 +3,39 @@ class ProductService
   class << self
     def list_product_group
       response = Faraday.get "#{BASE_URL}/product_groups"
-      if response.status != 200
-        return { success: false, data: { status_message: 'Não foi possível acessar a API de grupos de produto' } }
-      end
+      return ResponseHelper.error('Não foi possível acessar a API de grupos de produto') if response.status != 200
 
-      products = JSON.parse(response.body).map do |prod|
-        { id: prod['id'], name: prod['name'], description: prod['description'] }
+      products = JSON.parse(response.body, symbolize_names: true).map do |prod|
+        { id: prod[:id], name: prod[:name], description: prod[:description] }
       end
-      { success: true, data: products }
+      ResponseHelper.success(products)
     rescue StandardError => e
-      { success: false, data: { status_message: e.message } }
+      ResponseHelper.error(e.message)
     end
 
     def list_plans(group_id)
       response = Faraday.get "#{BASE_URL}/product_groups/#{group_id}/plans"
-      if response.status != 200
-        return { success: false, data: { status_message: 'Não foi possível acessar a API de planos' } }
-      end
+      return ResponseHelper.error('Não foi possível acessar a API de planos') if response.status != 200
 
       plans = JSON.parse(response.body).map do |prod|
         { id: prod['id'], name: prod['name'], description: prod['description'], details: prod['details'] }
       end
-      { success: true, data: plans }
+      ResponseHelper.success(plans)
     rescue StandardError => e
-      { success: false, data: { status_message: e.message } }
+      ResponseHelper.error(e.message)
     end
 
     def list_prices(plan_id)
       response = Faraday.get "#{BASE_URL}/plans/#{plan_id}/prices"
-      if response.status != 200
-        return { success: false, data: { status_message: 'Não foi possível acessar a API de preços' } }
-      end
+      return ResponseHelper.error('Não foi possível acessar a API de preços') if response.status != 200
 
-      prices = parse_prices(response.body)
-      { success: true, data: prices }
-    rescue StandardError => e
-      { success: false, data: { status_message: e.message } }
-    end
-
-    private
-
-    def parse_prices(json_response)
-      JSON.parse(json_response).map do |prod|
+      prices = JSON.parse(response.body).map do |prod|
         { price: prod['price'], plan: prod['plan']['name'],
           periodicity: prod['periodicity']['name'] }
       end
+      ResponseHelper.success(prices)
+    rescue StandardError => e
+      ResponseHelper.error(e.message)
     end
   end
 end
