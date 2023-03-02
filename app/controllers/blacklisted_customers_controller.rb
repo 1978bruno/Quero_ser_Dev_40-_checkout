@@ -46,7 +46,7 @@ class BlacklistedCustomersController < ApplicationController
   def process_customer_from_api(query_doc_ident)
     customer_data_from_api = CustomerService.get_customer(query_doc_ident)
 
-    if customer_data_from_api[:status] != 'SUCCESS' && @is_blacklisted
+    if customer_data_from_api[:status] != 'SUCCESS'
       flash.now[:alert] = customer_data_from_api[:status_message] and return
     end
 
