@@ -23,8 +23,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers, only: [:show] do
         resources :orders, only: [:index]
-        member do
-          patch  :set_paid
+      end
+      resource :customers, only: [:index] do
+        resources :orders, only: [:show] do
+          post :paid, on: :member
+          post :cancelled, on: :member
         end
       end
     end
