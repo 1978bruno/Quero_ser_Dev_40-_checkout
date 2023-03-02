@@ -1,4 +1,10 @@
 pt-BR:
+  blocklisted_customer:
+    msg_customer_unblocked: 'Cliente desbloqueado'
+    msg_customer_unblock_fail: 'Não foi possível desbloquear o cliente'
+    msg_customer_blocked:  'Cliente bloqueado com sucesso'
+    msg_customer_block_fail: 'Não foi possivel bloquear o cliente'
+    msg_customer_api_error: 'Problema ao acessar API de clientes'
   user:
     msg_record_created: Usuário cadastrado com sucesso
     msg_user_changed: Alterado com sucesso

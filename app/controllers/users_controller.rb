@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :redirect_unless_admin, only: %i[new create edit update]
+  before_action :authenticate_user!, :redirect_unless_admin, only: %i[new create edit update lock_unlock]
   before_action :authenticate_user!, only: %i[index edit_password update_password]
   before_action :set_user, only: %i[edit update edit_password update_password lock_unlock]
 
