@@ -5,20 +5,8 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
     it 'com sucesso' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double({ status: 200,
-                               body: JSON.generate({
-                                                     doc_ident: '87591438786',
-                                                     name: 'José da Silva',
-                                                     email: 'jose.silva@email.com.br',
-                                                     address: 'Rua Principal, 100',
-                                                     city: 'São Paulo',
-                                                     state: 'SP',
-                                                     zipcode: '11111-111',
-                                                     phone: '11-99999-8888',
-                                                     birthdate: '1980-01-01',
-                                                     corporate_name: ''
-                                                   }) })
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer)
+      allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
 
       visit root_path
       click_on 'Criar Pedido'
@@ -78,20 +66,8 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
     it 'com sucesso' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double({ status: 200,
-                               body: JSON.generate({
-                                                     doc_ident: '88212849000170',
-                                                     name: 'Acme Ltda',
-                                                     email: 'contato@acme.com.br',
-                                                     address: 'Rua Principal, 100',
-                                                     city: 'São Paulo',
-                                                     state: 'SP',
-                                                     zipcode: '11111-111',
-                                                     phone: '11-99999-8888',
-                                                     birthdate: '1980-01-01',
-                                                     corporate_name: 'Acme Ltda'
-                                                   }) })
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer_cnpj)
+      allow(Faraday).to receive(:get).with(url_api_customer('88212849000170')).and_return(fake_response_customer)
 
       visit root_path
       click_on 'Criar Pedido'

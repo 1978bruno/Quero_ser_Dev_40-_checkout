@@ -5,22 +5,22 @@ describe 'Vendedor navega até a confirmação do pedido' do
     it 'com sucesso' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double(api_result_customer)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer)
+      allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
+      fake_response_products = double(api_result_products)
+      allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
+      fake_response_plans = double(api_result_plans)
+      allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
+      fake_response_prices = double(api_result_prices)
+      allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
-      mocked_answer = double(api_result_products)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
-      mocked_answer = double(api_result_plans)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       choose 'Hospedagem de Sites'
       click_on 'Continuar'
-      mocked_answer = double(api_result_prices)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       choose 'Hospedagem II'
       click_on 'Continuar'
       choose 'Trimestral'
@@ -38,27 +38,27 @@ describe 'Vendedor navega até a confirmação do pedido' do
     it 'e confirma com sucesso' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double(api_result_customer)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer)
+      allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
+      fake_response_products = double(api_result_products)
+      allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
+      fake_response_plans = double(api_result_plans)
+      allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
+      fake_response_prices = double(api_result_prices)
+      allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
+      allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('ABCDE12345')
 
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
-      mocked_answer = double(api_result_products)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem de Sites'
-      mocked_answer = double(api_result_plans)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem II'
-      mocked_answer = double(api_result_prices)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Trimestral'
       click_on 'Continuar'
-      allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('ABCDE12345')
       click_on 'Confirmar Pedido'
 
       expect(page).to have_content 'Pedido criado com sucesso'
@@ -68,23 +68,23 @@ describe 'Vendedor navega até a confirmação do pedido' do
     it 'e retorna à página anterior sem perdas de informação' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double(api_result_customer)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer)
+      allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
+      fake_response_products = double(api_result_products)
+      allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
+      fake_response_plans = double(api_result_plans)
+      allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
+      fake_response_prices = double(api_result_prices)
+      allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
-      mocked_answer = double(api_result_products)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem de Sites'
-      mocked_answer = double(api_result_plans)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem II'
-      mocked_answer = double(api_result_prices)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Trimestral'
       click_on 'Continuar'
@@ -97,27 +97,27 @@ describe 'Vendedor navega até a confirmação do pedido' do
     it 'e ocorre um erro durante a confirmação' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double(api_result_customer)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer)
+      allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
+      fake_response_products = double(api_result_products)
+      allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
+      fake_response_plans = double(api_result_plans)
+      allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
+      fake_response_prices = double(api_result_prices)
+      allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
+      allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('')
 
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
-      mocked_answer = double(api_result_products)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem de Sites'
-      mocked_answer = double(api_result_plans)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Hospedagem II'
-      mocked_answer = double(api_result_prices)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
       choose 'Trimestral'
       click_on 'Continuar'
-      allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('')
       click_on 'Confirmar Pedido'
 
       expect(page).to have_content 'Ocorreu um problema na criação do pedido'
@@ -129,22 +129,22 @@ describe 'Vendedor navega até a confirmação do pedido' do
     it 'se aparece formatado na tela de confirmação' do
       salesman = create(:user, name: 'Vendedor', email: 'vendedor1@locaweb.com.br', password: '12345678')
       login_as(salesman)
-      mocked_answer = double(api_result_customer_cnpj)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
+      fake_response_customer = double(api_result_customer_cnpj)
+      allow(Faraday).to receive(:get).with(url_api_customer('36358603000107')).and_return(fake_response_customer)
+      fake_response_products = double(api_result_products)
+      allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
+      fake_response_plans = double(api_result_plans)
+      allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
+      fake_response_prices = double(api_result_prices)
+      allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '36358603000107'
       click_on 'Pesquisar Cliente'
-      mocked_answer = double(api_result_products)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       click_on 'Continuar'
-      mocked_answer = double(api_result_plans)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       choose 'Hospedagem de Sites'
       click_on 'Continuar'
-      mocked_answer = double(api_result_prices)
-      allow(Faraday).to receive(:get).and_return(mocked_answer)
       choose 'Hospedagem II'
       click_on 'Continuar'
       choose 'Trimestral'

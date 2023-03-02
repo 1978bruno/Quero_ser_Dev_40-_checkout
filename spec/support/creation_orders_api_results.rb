@@ -1,3 +1,19 @@
+def url_api_customer(customer_identification)
+  "#{Rails.configuration.external_apis['customer_api_url']}/#{customer_identification}"
+end
+
+def url_api_products
+  "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
+end
+
+def url_api_product_plans(product_group_id)
+  "#{Rails.configuration.external_apis['products_api_url']}/product_groups/#{product_group_id}/plans"
+end
+
+def url_api_product_prices(product_plan_id)
+  "#{Rails.configuration.external_apis['products_api_url']}/plans/#{product_plan_id}/prices"
+end
+
 def api_result_customer
   { status: 200,
     body: JSON.generate({ doc_ident: '87591438786', name: 'José da Silva',
