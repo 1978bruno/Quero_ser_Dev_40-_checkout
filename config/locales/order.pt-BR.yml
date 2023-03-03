@@ -22,3 +22,7 @@ pt-BR:
         salesman: Vendedor
         customer_doc_ident: Cliente
         order_code: Código do Pedido
+        price_with_discount: Preço com desconto
+        created_at: Criado em
+        updated_at: Modificado em
+        

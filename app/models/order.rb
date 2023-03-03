@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'cpf_cnpj'
 
 class Order < ApplicationRecord
   belongs_to :salesman, class_name: 'User'
@@ -16,6 +17,21 @@ class Order < ApplicationRecord
             presence: true
 
   validates :cancel_reason, if: :cancelled?, presence: true
+
+  def customer_doc_ident_formatted
+    case customer_doc_ident.size
+    when 11
+      cpf = CPF.new(customer_doc_ident)
+      cpf.formatted
+    when 14
+      cnpj = CNPJ.new(customer_doc_ident)
+      cnpj.formatted
+    end
+  end
+
+  def price_with_discount
+    price - (price * (discount / 100.0))
+  end
 
   private
 
