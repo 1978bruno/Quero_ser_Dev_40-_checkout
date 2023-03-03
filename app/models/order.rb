@@ -3,6 +3,7 @@ require 'cpf_cnpj'
 
 class Order < ApplicationRecord
   belongs_to :salesman, class_name: 'User'
+  has_one :paid_commission, dependent: :destroy
 
   enum status: { pending: 0, paid: 3, cancelled: 5 }
 
