@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class=" ls-html-nobg">
+<html class="ls-theme-dark-green ls-html-nobg">
   <head>
     <title>Checkout</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -16,18 +16,26 @@
     <%= render "layouts/shared/sidebar" %>
 
     <main class="ls-main">
-      <div class="container-fluid" style="padding:30px">
+      <div class="container-fluid">
         <% if notice %>
-          <div class="notice ls-alert-success ls-dismissable">
+          <div class="notice ls-md-margin-top ls-alert-success ls-dismissable">
             <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
             <p><%= notice %></p>
           </div>
         <% end %>
 
         <% if alert %>
-          <div class="alert ls-alert-danger ls-dismissable">
+          <div class="alert ls-md-margin-top ls-alert-danger ls-dismissable">
             <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
-            <p><%= alert %></p>
+            <p>
+              <% if alert.class == String %>
+                <%= alert %>
+              <% else %>
+                <% flash[:alert].each do |msg| %>
+                  <%= msg %><br>
+                <% end %>
+              <% end %>
+            </p>
           </div>
         <% end %>
 

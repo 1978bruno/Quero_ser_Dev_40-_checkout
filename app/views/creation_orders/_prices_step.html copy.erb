@@ -1,0 +1,35 @@
+<%= render "stepper" %>
+
+<h1>Prices Step</h1>
+
+<div class="ls-box">
+  <%= form_for @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
+    <% if @product_plan_prices.any? %>
+      <table class="ls-table ls-table-striped">
+        <thead>
+          <tr>
+            <th>Periodicidade</th>
+            <th>Preço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @product_plan_prices.each do |price| %>
+            <tr>
+              <td><%= price[:periodicity] %></td>
+              <td><%= number_to_currency(price[:price]) %></td>
+              <td><%= f.radio_button :product_price_component, "#{price[:periodicity]} #{price[:price]}", class: "ls-label-text" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>Não existem preços disponíveis para o plano selecionado</p>
+    <% end %>
+
+    <div class="ls-actions-btn">
+      <%= f.submit 'Continuar', class: "ls-btn-primary" %>
+      <%= f.submit "Voltar", name: "back_button", class: "ls-btn-primary" unless @creation_order.first_step? %>
+    </div>
+  <% end %>
+</div>

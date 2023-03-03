@@ -6,8 +6,19 @@ pt-BR:
     msg_customer_block_fail: 'Não foi possivel bloquear o cliente'
     msg_customer_api_error: 'Problema ao acessar API de clientes'
   user:
-    msg_record_created: 'Usuário cadastrado com sucesso'
-    msg_user_changed: 'Alterado com sucesso'
-    msg_password_changed: 'Senha alterada com sucesso'
-    msg_user_locked: 'Usuário bloqueado com sucesso'
-    msg_user_unlocked: 'Usuário desbloqueado com sucesso'
+    msg_record_created: Usuário cadastrado com sucesso
+    msg_user_changed: Alterado com sucesso
+    msg_password_changed: Senha alterada com sucesso
+    msg_user_locked: Usuário bloqueado com sucesso
+    msg_user_unlocked: Usuário desbloqueado com sucesso
+  creation_order:
+    msg_invalid_cpf: CPF inválido
+    msg_invalid_cnpj: CNPJ inválido
+    msg_invalid_value: Deve ser informado um CPF ou CNPJ válido
+    msg_order_created: Pedido criado com sucesso
+    msg_order_created_select_one_option: Deve ser selecionada uma das opções
+    msg_customer_blocklisted: Este cliente está bloqueado para solicitar novos pedidos
+    msg_order_not_created: Ocorreu um problema na criação do pedido
+    msg_zipcode_wrong_format: deve estar no formato "99999-999"
+    msg_phone_wrong_format: deve estar no formato "(99) 99999-9999" ou "(99) 9999-9999"
+

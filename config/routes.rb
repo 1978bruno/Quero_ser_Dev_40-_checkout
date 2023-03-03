@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :creation_orders, only: %i[new create]
   resources :blocklisted_customers, only: %i[index destroy] do
     post 'save', on: :member
   end
