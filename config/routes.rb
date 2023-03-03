@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     post 'save', on: :member
   end
 
+  resources :paid_commissions, only: [:index]
+
   namespace :api do
     namespace :v1 do
       resources :customers, only: [:show] do
