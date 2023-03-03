@@ -20,6 +20,7 @@ describe 'Order API' do
       expect(json_response['order_code']).to eq(order.order_code)
       expect(json_response['payment_mode']).to eq('credit_card')
       expect(json_response['discount']).to eq('10.99')
+      expect(json_response['paid_at']).not_to eq(nil)
       expect(json_response.keys).not_to include('created_at')
       expect(json_response.keys).not_to include('updated_at')
     end

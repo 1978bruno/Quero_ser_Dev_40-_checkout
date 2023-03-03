@@ -33,7 +33,7 @@ describe 'Order API' do
 
       expect(response.status).to eq 404
       expect(response.content_type).to include 'application/json'
-      expect(response.body).to include 'Modo de pagamento não informado'
+      expect(response.body).to include 'Motivo do cancelamento não informado'
     end
 
     it 'e existe um erro interno' do
