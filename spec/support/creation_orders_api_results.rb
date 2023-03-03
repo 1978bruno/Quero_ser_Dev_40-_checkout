@@ -22,6 +22,10 @@ def api_result_customer
                           birthdate: '1980-01-01', corporate_name: '' }) }
 end
 
+def api_result_customer_not_found
+  { status: 404, body: {} }
+end
+
 def api_result_customer_cnpj
   { status: 200,
     body: JSON.generate({ doc_ident: '36358603000107', name: 'Acme Ltda',
