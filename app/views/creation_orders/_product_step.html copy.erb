@@ -1,0 +1,45 @@
+<%= render "stepper" %>
+
+<h1>Product Step</h1>
+
+<div class="ls-box">
+  <%= form_for @creation_order, class: "ls-form ls-form-horizontal row" do | f | %>
+    <fieldset>
+      <label class="ls-label col-md-2 <%= (@creation_order.errors[:product_group].empty?)? '':'ls-error' %>">
+        <%= f.label :product_group, class: "ls-label-text" %>
+        <%= f.text_field :product_group %>
+        <% if ! @creation_order.errors[:product_group].empty? %>
+          <small class="ls-help-message"><%= @creation_order.errors.where(:product_group).first.full_message %></small>
+        <% end %>
+      </label>
+    </fieldset>
+
+    <% if @products.any? %>
+      <table class="ls-table ls-table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td><%= product[:name] %></td>
+              <td><%= product[:description] %></td>
+              <td><%= f.radio_button :product_group, product[:name], class: "ls-label-text" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>Não existem produtos disponíveis</p>
+    <% end %>
+
+    <div class="ls-actions-btn">
+      <%= f.submit 'Continuar', class: "ls-btn-primary" %>
+      <%= f.submit "Voltar", name: "back_button", class: "ls-btn-primary" unless @creation_order.first_step? %>
+    </div>
+  <% end %>
+</div>

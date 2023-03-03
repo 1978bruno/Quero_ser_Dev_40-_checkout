@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_03_132353) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,11 +39,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "blacklisted_customers", force: :cascade do |t|
+  create_table "blocklisted_customers", force: :cascade do |t|
     t.string "doc_ident", null: false
-    t.string "blacklisted_reason", null: false
+    t.string "blocklisted_reason", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["doc_ident"], name: "index_blocklisted_customers_on_doc_ident", unique: true
   end
 
   create_table "bonus_commissions", force: :cascade do |t|
@@ -59,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
 
   create_table "orders", force: :cascade do |t|
     t.decimal "price", precision: 8, scale: 2, null: false
-    t.decimal "discount", precision: 8, scale: 2
+    t.decimal "discount", precision: 8, scale: 2, default: "0.0"
     t.string "payment_mode"
     t.integer "status", default: 0
     t.string "cancel_reason"
@@ -70,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
     t.string "product_plan_name", null: false
     t.string "product_plan_periodicity", null: false
     t.string "customer_doc_ident", null: false
+    t.datetime "paid_at"
     t.index ["salesman_id"], name: "index_orders_on_salesman_id"
   end
 
@@ -80,7 +82,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "salesman_id"
+    t.integer "order_id", null: false
     t.index ["bonus_commission_id"], name: "index_paid_commissions_on_bonus_commission_id"
+    t.index ["order_id"], name: "index_paid_commissions_on_order_id"
     t.index ["salesman_id"], name: "index_paid_commissions_on_salesman_id"
   end
 
@@ -103,5 +107,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_24_185240) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "orders", "users", column: "salesman_id"
   add_foreign_key "paid_commissions", "bonus_commissions"
+  add_foreign_key "paid_commissions", "orders"
   add_foreign_key "paid_commissions", "users", column: "salesman_id"
 end

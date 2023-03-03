@@ -2,12 +2,14 @@ require 'securerandom'
 
 class Order < ApplicationRecord
   belongs_to :salesman, class_name: 'User'
+  has_one :paid_commission, dependent: :destroy
 
   enum status: { pending: 0, paid: 3, cancelled: 5 }
 
   before_validation :gen_order_code, on: :create
 
-  validates :price,
+  validates :order_code,
+            :price,
             :product_plan_name,
             :product_plan_periodicity,
             :status,
@@ -19,6 +21,6 @@ class Order < ApplicationRecord
   private
 
   def gen_order_code
-    self.order_code = SecureRandom.alphanumeric(10)
+    self.order_code = SecureRandom.alphanumeric(10).upcase
   end
 end
