@@ -10,8 +10,8 @@ class PaidCommissionsController < ApplicationController
 
     salesman_commissions = salesman_paid_commissions(salesmen)
 
-    if salesman_commisions.blank?
-      flash.now[:notice] = 'Não foram encontradas comissões pagas para esse critério'
+    if salesman_commissions.blank?
+      flash.now[:alert] = 'Não foram encontradas comissões pagas para esse critério'
       render :index
     end
     @paid_commissions = [salesman_commissions]
@@ -24,6 +24,6 @@ class PaidCommissionsController < ApplicationController
   end
 
   def salesman_paid_commissions(salesmen)
-    PaidCommission.where('salesman IN ?', salesmen)
+    # PaidCommission.where('salesman IN ?', salesmen)
   end
 end
