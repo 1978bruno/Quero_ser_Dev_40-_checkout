@@ -1,12 +1,22 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :retrieve_id, only: %i[order_cancel_reason order_cancel_post]
+  before_action :retrieve_id, only: %i[show order_cancel_reason order_cancel_post]
 
   def index
     @orders = current_user.admin? ? Order.all : current_user.orders
   end
 
-  def show; end
+  def show
+    @api_result = CustomerService.get_customer(@order.customer_doc_ident)
+
+    if @api_result[:status] == 'SUCCESS'
+      @customer = @api_result[:data]
+    else
+      @customer = {}
+      flash[:alert] = @api_result[:status_message] if @api_result[:status] == 'ERROR_API'
+      flash[:notice] = @api_result[:status_message] if @api_result[:status] == 'NOT_FOUND'
+    end
+  end
 
   def new; end
 

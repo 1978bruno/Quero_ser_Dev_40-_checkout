@@ -28,6 +28,7 @@ product_plan_name                   string [note: 'fk API']
   price                             decimal [not null]
   discount                          decimal [default: null]
   payment_mode                      string  [default: null]
+  paid_at                           datetime
   status                            integer [default: 0, note: '0=pending, 1=cancelled, 2=processed']
   cancel_reason                     string  [default: null]
   created_at                        timestamp
@@ -54,7 +55,7 @@ Table bonus_comissions {
   description         string
   start_date          datetime
   end_date            datetime
-  comission_perc      decimal [note:'Percent of total sale']
+  commission_perc      decimal [note:'Percent of total sale']
   amount_limit        decimal [note: 'Total amount per salesman']
   active              boolean
   created_at          timestamp
