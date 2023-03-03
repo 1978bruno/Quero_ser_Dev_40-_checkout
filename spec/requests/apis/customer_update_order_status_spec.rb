@@ -10,8 +10,8 @@ describe 'Order API' do
       create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
                      product_plan_name: 'Hospedagem Premmium', product_plan_periodicity: 'Anual')
 
-      post "/api/v1/customers/orders/#{order.id}/paid", params: { payment_mode: 'credit_card',
-                                                                  discount: 10.99 }
+      post "/api/v1/customers/orders/#{order.order_code}/paid", params: { payment_mode: 'credit_card',
+                                                                          discount: 10.99 }
 
       expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
@@ -30,12 +30,21 @@ describe 'Order API' do
       expect(response.status).to eq 404
     end
 
-    it 'falha se não forem informados o modo de pagamento e o desconto' do
-      post '/api/v1/customers/orders/1/paid', params: { payment_mode: '' }
+    it 'falha se não for informado o modo de pagamento' do
+      post '/api/v1/customers/orders/9qeZ77Gih8/paid', params: { payment_mode: '' }
 
       expect(response.status).to eq 404
       expect(response.content_type).to include 'application/json'
-      expect(response.body).to include 'Dados de modo de pagamento e/ou desconto não informados'
+      expect(response.body).to include 'Modo de pagamento não informado'
+    end
+
+    it 'e existe um erro interno' do
+      allow(Order).to receive(:find_by).and_raise(ActiveRecord::QueryCanceled)
+
+      post '/api/v1/customers/orders/9qeZ77Gih8/paid', params: { payment_mode: 'credit_card',
+                                                                 discount: 10.99 }
+
+      expect(response).to have_http_status(500)
     end
   end
 end

@@ -14,7 +14,7 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def paid
-    @order = Order.find_by(id: params[:id])
+    @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
     @order.update(payment_mode: params[:payment_mode], discount: params[:discount])
@@ -24,7 +24,7 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def cancelled
-    @order = Order.find_by(id: params[:id])
+    @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
     @order.update(status: :cancelled, cancel_reason: params[:cancel_reason])
@@ -38,7 +38,7 @@ class Api::V1::OrdersController < ActionController::API
   def if_payment_params_is_empty
     return if params[:payment_mode].present?
 
-    render json: { error: 'Dados de modo de pagamento e/ou desconto não informados' }.to_json,
+    render json: { error: 'Modo de pagamento não informado' }.to_json,
            status: :not_found
   end
 

@@ -27,22 +27,27 @@
 <br>
 
 ## API - Endpoints:
-<br>
 
-### **Lista de pedidos pendentes**
-#### `GET` http://localhost:3000/api/v1/customers/{doc_client}/orders
+<details>
+  <summary>
+    <b>Lista de pedidos pendentes</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
 
+  `GET` http://localhost:3000/api/v1/customers/{doc_client}/orders
 
-#### **Parâmetros**
+  **Parâmetros**
 
 - Content-Type: `application/json`
 - Passar o documento do cliente como parâmetro na URL
 
 #### **Respostas**
 
-*Sucesso:*
+*- Sucesso:*
 
 - Código `200`
+
 ``` sh
 [
 	{
@@ -76,7 +81,7 @@
 ]
 ```
 
-*Caso não sejam encontrados pedidos*
+*- Caso não sejam encontrados pedidos*
 
 - Código: `404`
 
@@ -85,7 +90,7 @@
   "response": "Nenhum registro encontrado"
 }
 ```
-*Caso exista um erro interno da api*
+*- Caso exista um erro interno da api*
 
 - Código: `500`
 
@@ -95,15 +100,22 @@
 }
 ```
 
-### **Altera o status do pedido para pago**
-#### `POST` http://localhost:3000/api/v1/customers/orders/{doc_client}/paid
+</details>
 
+<details>
+  <summary>
+    <b>Altera o status do pedido para pago</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
 
-#### **Parâmetros**
+  `POST` http://localhost:3000/api/v1/customers/orders/{order_code}/paid
+
+  **Parâmetros**
 
 - Content-Type: `application/json`
-- Passar o id do pedido como parâmetro na URL
-- Passar o modo de pagamento e o desconto (se houver) como parâmetro no BODY da requisição
+- Passar o código do pedido como parâmetro na URL
+- Passar o modo de pagamento e o desconto (se houver) como parâmetro no `BODY` da requisição
 
 ``` sh
 {
@@ -112,7 +124,9 @@
 }
 ```
 
-*Sucesso:*
+#### **Respostas**
+
+*- Sucesso:*
 
 - Código `200`
 
@@ -127,47 +141,68 @@
 	"product_plan_periodicity": "Mensal",
 	"customer_doc_ident": "22200022201",
 	"salesman": {
-		"id": 3,
 		"email": "vendedor@locaweb.com.br",
 		"name": "vendedor"
 	}
 }
 ```
-*Caso não seja encontrado pedido*
+
+*- Caso não sejam encontrados pedidos*
+
+- Código: `404`
+
+```sh
+{
+  "response": "Nenhum registro encontrado"
+}
+```
+
+*- Caso não seja enviado o modo de pagamento*
 
 - Código: `404`
 
 ``` sh
 {
-	"response": "Nenhum registro encontrado"
+  "error": "Modo de pagamento não informado"
 }
 ```
-*Caso não seja enviado o modo de pagamento*
 
-- Código: `404`
+*- Caso exista um erro interno da api*
 
-``` sh
+- Código: `500`
+
+```sh
 {
-	"error": "Modo de pagamento não informado"
+  "error": "Ocorreu um erro interno"
 }
 ```
-
-### **Altera o status do pedido para cancelado**
-#### `POST` http://localhost:3000/api/v1/customers/orders/{doc_client}/cancelled
+</details>
 
 
-#### **Parâmetros**
+<details>
+  <summary>
+    <b>Altera o status do pedido para cancelado</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
+
+  `POST` http://localhost:3000/api/v1/customers/orders/{order_code}/cancelled
+
+  **Parâmetros**
 
 - Content-Type: `application/json`
-- Passar o id do pedido como parâmetro na URL
-- Passar o motivo do cancelamento como parâmetro no BODY da requisição
+- Passar o código do pedido como parâmetro na URL
+- Passar o motivo do cancelamento como parâmetro no `BODY` da requisição
+
 ``` sh
 {
 	"cancel_reason": "O cliente desistiu"
 }
 ```
 
-*Sucesso:*
+#### **Respostas**
+
+*- Sucesso:*
 
 - Código `200`
 
@@ -188,16 +223,18 @@
 	}
 }
 ```
-*Caso não seja encontrado pedido*
+
+*- Caso não sejam encontrados pedidos*
 
 - Código: `404`
 
-``` sh
+```sh
 {
-	"response": "Nenhum registro encontrado"
+  "response": "Nenhum registro encontrado"
 }
 ```
-*Caso não seja enviado o motivo de cancelamento*
+
+*- Caso não seja enviado o motivo de cancelamento*
 
 - Código: `404`
 
@@ -206,3 +243,14 @@
 	"error": "Motivo do cancelamento não informado"
 }
 ```
+
+*- Caso exista um erro interno da api*
+
+- Código: `500`
+
+```sh
+{
+  "error": "Ocorreu um erro interno"
+}
+```
+</details>
