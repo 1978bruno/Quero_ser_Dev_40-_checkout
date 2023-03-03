@@ -10,10 +10,10 @@ Table Users {
   
 }
 
-Table customers_blacklisted{
+Table blocklisted_customers{
   id                      int [pk, increment] // auto-increment
   doc_ident               string    [not null, unique]      
-  blacklisted_reason      string    [default: null]
+  blocklisted_reason      string    [default: null]
   created_at              timestamp
   updated_at              timestamp
 }
