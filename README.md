@@ -30,7 +30,7 @@
 <br>
 
 ### **Lista de pedidos pendentes**
-#### `GET` http://localhost:3000/api/v1/customers/{doc_cliente}/orders
+#### `GET` http://localhost:3000/api/v1/customers/{doc_client}/orders
 
 
 #### **Parâmetros**
@@ -46,35 +46,29 @@
 ``` sh
 [
 	{
-		"id": 1,
 		"price": "30.0",
 		"discount": null,
 		"payment_mode": null,
 		"status": "pending",
-		"cancel_reason": null,
 		"order_code": "9qeZ77Gih8",
 		"product_plan_name": "Plano Bronze",
 		"product_plan_periodicity": "Mensal",
 		"customer_doc_ident": "22200022201",
 		"salesman": {
-			"id": 3,
 			"email": "vendedor@locaweb.com.br",
 			"name": "vendedor"
 		}
 	},
 	{
-		"id": 5,
 		"price": "50.0",
 		"discount": null,
 		"payment_mode": null,
 		"status": "pending",
-		"cancel_reason": null,
 		"order_code": "4a2TyFq505",
 		"product_plan_name": "Plano Prata",
 		"product_plan_periodicity": "Mensal",
 		"customer_doc_ident": "22200022201",
 		"salesman": {
-			"id": 4,
 			"email": "vendedor2@locaweb.com.br",
 			"name": "vendedor2"
 		}
@@ -98,5 +92,117 @@
 ```sh
 {
   "error": "Ocorreu um erro interno"
+}
+```
+
+### **Altera o status do pedido para pago**
+#### `POST` http://localhost:3000/api/v1/customers/orders/{doc_client}/paid
+
+
+#### **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o id do pedido como parâmetro na URL
+- Passar o modo de pagamento e o desconto (se houver) como parâmetro no BODY da requisição
+
+``` sh
+{
+	"payment_mode": "credit_card",
+	"discount": "10.99" 
+}
+```
+
+*Sucesso:*
+
+- Código `200`
+
+``` sh
+{
+	"payment_mode": "credit_card",
+	"discount": "10.99",
+	"status": "paid",
+	"price": "30.0",
+	"order_code": "9qeZ77Gih8",
+	"product_plan_name": "Plano Bronze",
+	"product_plan_periodicity": "Mensal",
+	"customer_doc_ident": "22200022201",
+	"salesman": {
+		"id": 3,
+		"email": "vendedor@locaweb.com.br",
+		"name": "vendedor"
+	}
+}
+```
+*Caso não seja encontrado pedido*
+
+- Código: `404`
+
+``` sh
+{
+	"response": "Nenhum registro encontrado"
+}
+```
+*Caso não seja enviado o modo de pagamento*
+
+- Código: `404`
+
+``` sh
+{
+	"error": "Modo de pagamento não informado"
+}
+```
+
+### **Altera o status do pedido para cancelado**
+#### `POST` http://localhost:3000/api/v1/customers/orders/{doc_client}/cancelled
+
+
+#### **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o id do pedido como parâmetro na URL
+- Passar o motivo do cancelamento como parâmetro no BODY da requisição
+``` sh
+{
+	"cancel_reason": "O cliente desistiu"
+}
+```
+
+*Sucesso:*
+
+- Código `200`
+
+``` sh
+{
+	"status": "cancelled",
+	"cancel_reason": "O cliente desistiu",
+	"price": "30.0",
+	"discount": "10.99",
+	"payment_mode": "credit_card",
+	"order_code": "9qeZ77Gih8",
+	"product_plan_name": "Plano Bronze",
+	"product_plan_periodicity": "Mensal",
+	"customer_doc_ident": "22200022201",
+	"salesman": {
+		"email": "vendedor@locaweb.com.br",
+		"name": "vendedor"
+	}
+}
+```
+*Caso não seja encontrado pedido*
+
+- Código: `404`
+
+``` sh
+{
+	"response": "Nenhum registro encontrado"
+}
+```
+*Caso não seja enviado o motivo de cancelamento*
+
+- Código: `404`
+
+``` sh
+{
+	"error": "Motivo do cancelamento não informado"
 }
 ```
