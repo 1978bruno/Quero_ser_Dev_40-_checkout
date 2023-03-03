@@ -1,6 +1,6 @@
-<div class="ls-box">
-  <h3 class="ls-title-4 ls-md-margin-bottom">Detalhes do Pedido - <%= @order.order_code %></h3>
+<h1 class="ls-title-intro ls-md-margin-bottom">Detalhes do Pedido - <%= @order.order_code %></h1>
 
+<div class="ls-box">
   <div class="ls-box-filter">
     <h5 class="ls-title-6">Dados Internos</h3>
   </div>
@@ -12,16 +12,23 @@
         <input id="salesman" type="text" value="<%= @order.salesman.name %> (<%= @order.salesman.email %>)" disabled="disabled">
       </label>
       <label class="ls-label col-md-2">
-        <b class="ls-label-text"><%= Order.human_attribute_name('status') %></b>
-        <input id="status" type="text" value="<%= I18n.t(@order.status) %>" disabled="disabled">
+        <b class="ls-label-text"><%= Order.human_attribute_name('status') %></b><br>
+        <% status_tag = {pending:'ls-tag-warning', cancelled:'ls-tag-danger' , paid:'ls-tag-success' }%>
+        <span id="status" class="<%=status_tag[@order.status.to_sym]%> ls-xs-margin-top"><%= I18n.t(@order.status) %></span>            
       </label>
+      <% if @order.paid? %>
+        <label class="ls-label col-md-2">
+          <b class="ls-label-text"><%= Order.human_attribute_name('paid_at') %></b>
+          <input id="paid_at" type="text" value="<%= I18n.l(@order.paid_at, format: :date_time) %>" disabled="disabled">
+        </label>
+      <% end %>
       <label class="ls-label col-md-2">
         <b class="ls-label-text"><%= Order.human_attribute_name('created_at') %></b>
-        <input id="status" type="text" value="<%= @order.created_at.strftime("%d/%m/%Y") %>" disabled="disabled">
+        <input id="created_at" type="text" value="<%= I18n.l(@order.created_at, format: :date_time) %>" disabled="disabled">
       </label>
       <label class="ls-label col-md-2">
         <b class="ls-label-text"><%= Order.human_attribute_name('updated_at') %></b>
-        <input id="status" type="text" value="<%= @order.updated_at.strftime("%d/%m/%Y") %>" disabled="disabled">
+        <input id="updated_at" type="text" value="<%= I18n.l(@order.updated_at, format: :date_time) %>" disabled="disabled">
       </label>
     </fieldset>
     <fieldset class="ls-form-disable ls-form-text">

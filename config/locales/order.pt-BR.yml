@@ -25,4 +25,5 @@ pt-BR:
         price_with_discount: Preço com desconto
         created_at: Criado em
         updated_at: Modificado em
+        paid_at: Pago em
         
