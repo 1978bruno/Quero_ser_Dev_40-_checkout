@@ -27,5 +27,13 @@ describe 'Order API' do
 
       expect(response.status).to eq 404
     end
+
+    it 'falha se o motivo do cancelamento não for informado' do
+      post '/api/v1/customers/orders/1/cancelled', params: { cancel_reason: '' }
+
+      expect(response.status).to eq 404
+      expect(response.content_type).to include 'application/json'
+      expect(response.body).to include 'Modo de pagamento não informado'
+    end
   end
 end
