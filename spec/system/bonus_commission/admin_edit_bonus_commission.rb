@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 describe 'Administrador edita uma campanha de bonus' do
   it 'sem sucesso' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
@@ -36,6 +35,7 @@ describe 'Administrador edita uma campanha de bonus' do
     fill_in 'limite de comissão', with: 100
     click_on 'Salvar'
 
-    expect(page).to have_content "Hospedagem GO #{I18n.localize(Date.current.to_date)} #{I18n.localize(10.days.from_now.to_date)} 10,000% R$ 100,00"
+    expect(page).to have_content "Hospedagem GO #{I18n.l(Date.current.to_date)}
+                                                         #{I18n.l(10.days.from_now.to_date)} 10,000% R$ 100,00"
   end
 end

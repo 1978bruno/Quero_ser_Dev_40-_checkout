@@ -23,7 +23,7 @@ describe 'Administrador inicia a criação de uma campanha de bonus,' do
       fill_in 'Data de início', with: ''
       fill_in 'Data fim', with: ''
       fill_in 'Percentual de comissão', with: ''
-      fill_in 'limite de comissão', with: ''
+      fill_in 'Limite de comissão', with: ''
       click_on 'Salvar'
 
       expect(page).to have_content 'Campanha não cadastrada.'
@@ -44,10 +44,11 @@ describe 'Administrador inicia a criação de uma campanha de bonus,' do
       fill_in 'Data de início', with: Date.current
       fill_in 'Data fim', with: 10.days.from_now
       fill_in 'Percentual de comissão', with: 10
-      fill_in 'limite de comissão', with: 100
+      fill_in 'Limite de comissão', with: 100
       click_on 'Salvar'
 
-      expect(page).to have_content "Hospedagem GO #{I18n.localize(Date.current.to_date)} #{I18n.localize(10.days.from_now.to_date)} 10,000% R$ 100,00"
+      expect(page).to have_content "Hospedagem GO #{I18n.l(Date.current.to_date)}
+                                    #{I18n.l(10.days.from_now.to_date)} 10,000% R$ 100,00"
     end
   end
   context 'digitando uma' do
@@ -58,7 +59,6 @@ describe 'Administrador inicia a criação de uma campanha de bonus,' do
       login_as(admin)
       click_on 'Campanha de bonificação'
       click_on 'Criar nova campanha'
-
     end
     it 'data de início anterior à atual, tendo erro' do
       admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
