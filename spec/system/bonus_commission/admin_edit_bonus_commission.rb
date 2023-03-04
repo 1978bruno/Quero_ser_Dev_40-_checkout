@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 describe 'Administrador edita uma campanha de bonus' do
   it 'sem sucesso' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)

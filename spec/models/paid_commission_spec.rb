@@ -37,7 +37,7 @@ RSpec.describe PaidCommission, type: :model do
         order = create(:order, price: 15_000.00, paid_at: '2023-03-04', salesman:)
 
         bonus_especial = BonusCommission.create({ description: 'Bonus Especial', start_date: '2023-03-01',
-                                                  end_date: '2023-03-05', commission_perc: '5', amount_limit: 100 })
+                                                  end_date: '2023-03-05', commission_perc: 5, amount_limit: 100 })
 
         PaidCommission.pay_commission_from_order_code('ABCDEF1020')
 
