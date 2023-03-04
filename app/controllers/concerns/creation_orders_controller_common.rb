@@ -20,7 +20,7 @@ module CreationOrdersControllerCommon
   def decides_next_view
     if @end_process && @creation_order.no_error_found
       session[:creation_order_step] = session[:creation_order_params] = nil
-      redirect_to orders_path
+      redirect_to order_path(@order)
     else
       render :new
     end

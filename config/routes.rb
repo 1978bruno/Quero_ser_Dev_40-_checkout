@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     post 'update_password', on: :member
     get 'index_admin', on: :collection
   end
-  
+
   resources :users, only: [:index]
   resources :orders, only: %i[index new show] do
     collection do
@@ -33,6 +33,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers, only: [:show] do
         resources :orders, only: [:index]
+      end
+      resource :customers, only: [:index] do
+        resources :orders, only: [:show] do
+          post :paid, on: :member
+          post :cancelled, on: :member
+        end
       end
     end
   end

@@ -8,5 +8,6 @@ FactoryBot.define do
     cancel_reason { nil }
     product_plan_name { 'Hospedagem Go' }
     product_plan_periodicity { 'Mensal' }
+    paid_at { nil }
   end
 end

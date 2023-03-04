@@ -2,7 +2,7 @@ module CreationOrdersControllerBeforeActions
   extend ActiveSupport::Concern
 
   def before_actions_next_step
-    @creation_order.no_error_found = true
+    @creation_order.no_error_found = true unless @creation_order.current_step == 'confirmation'
 
     case @creation_order.current_step
     when 'products'
