@@ -1,0 +1,39 @@
+<h1 class="ls-title-intro ls-md-margin-bottom">Campanhas ativas</h1>
+<%= link_to 'Criar nova campanha', new_bonus_commission_path, class: 'ls-btn-primary ls-md-margin-bottom' %>
+<% if @bonus_commissions.any? %>
+  <table class="ls-table ls-table-striped">
+    <thead>
+      <tr>
+        <th><%= BonusCommission.human_attribute_name(:description)%></th>
+        <th><%= BonusCommission.human_attribute_name(:start_date)%></th>
+        <th><%= BonusCommission.human_attribute_name(:end_date)%></th>
+        <th><%= BonusCommission.human_attribute_name(:commission_perc)%></th>
+        <th><%= BonusCommission.human_attribute_name(:amount_limit)%></th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bonus_commissions.each do |bc| %>
+        <tr>
+          <td><%= bc.description %></td>
+          <td><%= I18n.t(bc.start_date) %></td>
+          <td><%= I18n.t(bc.end_date) %></td>
+          <td><%= I18n.t(bc.commission_perc) %></td>
+          <td><%= number_to_currency(bc.amount_limit) %></td>
+          <td id="user_admin">
+              <span class="ls-ico-checkmark"></span>
+          </td>
+          <td>
+            <div class="ls-display-inline-block ls-md-margin-right">
+              <%= link_to 'Editar', edit_bonus_commission_path(bc.id), class: 'ls-btn-primary-sm' %>
+            </div>
+            <div class="ls-display-inline-block">
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Não existem campanhas de bonificação cadastradas ou ativas.</p>
+<% end %>
