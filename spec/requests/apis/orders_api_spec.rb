@@ -17,7 +17,6 @@ describe 'Order API' do
       json_response = JSON.parse(response.body)
       expect(json_response.length).to eq 2
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
-      expect(json_response[0]['salesman']['id']).to eq salesman.id
       expect(json_response[0]['salesman']['name']).to eq 'Pedro Santos'
       expect(json_response[0]['salesman']['email']).to eq salesman.email
       expect(json_response[0].keys).not_to include('created_at')

@@ -30,6 +30,12 @@ Rails.application.routes.draw do
       resources :customers, only: [:show] do
         resources :orders, only: [:index]
       end
+      resource :customers, only: [:index] do
+        resources :orders, only: [:show] do
+          post :paid, on: :member
+          post :cancelled, on: :member
+        end
+      end
     end
   end
 end
