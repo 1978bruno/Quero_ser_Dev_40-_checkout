@@ -10,9 +10,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
     login_as(salesman)
     visit(orders_path)
-    within('tr#order_id_2') do
-      click_on order.order_code
-    end
+    click_on order.order_code
 
     expect(page).to have_content "Detalhes do Pedido - #{order.order_code}"
     expect(page).to have_field 'salesman', disabled: true, with: "#{salesman.name} (#{salesman.email})"
@@ -34,9 +32,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
     login_as(salesman)
     visit(orders_path)
-    within('tr#order_id_2') do
-      click_on order.order_code
-    end
+    click_on order.order_code
 
     expect(page).to have_content "Detalhes do Pedido - #{order.order_code}"
     expect(page).to have_field 'salesman', disabled: true, with: "#{salesman.name} (#{salesman.email})"
@@ -61,9 +57,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
     login_as(salesman)
     visit(orders_path)
-    within('tr#order_id_2') do
-      click_on order.order_code
-    end
+    click_on order.order_code
 
     expect(page).to have_content "Detalhes do Pedido - #{order.order_code}"
     expect(page).to have_field 'salesman', disabled: true, with: "#{salesman.name} (#{salesman.email})"
@@ -85,9 +79,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
     login_as(salesman)
     visit(orders_path)
-    within('tr#order_id_2') do
-      click_on order.order_code
-    end
+    click_on order.order_code
 
     within('div#notice') do
       expect(page).to have_content 'Cliente não encontrado'
@@ -109,9 +101,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
     login_as(salesman)
     visit(orders_path)
-    within('tr#order_id_2') do
-      click_on order.order_code
-    end
+    click_on order.order_code
 
     within('div#alert') do
       expect(page).to have_content 'Não foi possível acessar a API de clientes'

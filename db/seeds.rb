@@ -43,6 +43,3 @@ PaidCommission.create!(salesman: salesman_three, paid_at: '2022-06-06', amount: 
 
 BonusCommission.create({ description: 'Bonus Especial', start_date: '2023-03-01',
                          end_date: '2023-03-05', commission_perc: '5', amount_limit: 100 })
-
-BonusCommission.create({ description: 'Bonus Base', start_date: '2023-01-01',
-                         end_date: '2023-12-31', commission_perc: '1', amount_limit: 0 })

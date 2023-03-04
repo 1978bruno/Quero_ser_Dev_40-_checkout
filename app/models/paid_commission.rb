@@ -1,5 +1,7 @@
 class PaidCommission < ApplicationRecord
-  belongs_to :bonus_commission
+  BASE_COMISSION_PERCENTAGE = Rails.configuration.commissions[:base_percentage]
+
+  belongs_to :bonus_commission, optional: true
   belongs_to :salesman, class_name: 'User'
   belongs_to :order
 
@@ -24,9 +26,10 @@ class PaidCommission < ApplicationRecord
 
     private
 
-    def calculate_commission(bonus, order_total)
-      comission = ((bonus.commission_perc / 100.0) * order_total).round(2)
-      bonus.cap_limit? ? [bonus.amount_limit, comission].min : comission
+    def calculate_commission(bonus, total_order)
+      commission_perc = bonus.present? ? bonus.commission_perc : BASE_COMISSION_PERCENTAGE
+      comission = ((commission_perc / 100.0) * total_order).round(2)
+      bonus ? [bonus.amount_limit, comission].min : comission
     end
 
     def current_bonus(order_date)
@@ -35,9 +38,8 @@ class PaidCommission < ApplicationRecord
                                .where('end_date >= ?', order_date)
                                .order(commission_perc: :desc)
                                .take(1)
-      raise StandardError, 'O sistema precisa de ter pelo menos o bonus padrão de 1% cadastrado' if bonuses.count.zero?
 
-      bonuses[0]
+      bonuses.count.zero? ? nil : bonuses[0]
     end
   end
 end
