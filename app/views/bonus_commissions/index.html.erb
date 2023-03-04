@@ -18,7 +18,7 @@
           <td><%= bc.description %></td>
           <td><%= I18n.localize(bc.start_date.to_date) %></td>
           <td><%= I18n.localize(bc.end_date.to_date) %></td>
-          <td><%= number_to_percentage(bc.commission_perc) %></td>
+          <td><%= number_to_percentage(bc.commission_perc, precision: 2) %></td>
           <td><%= number_to_currency(bc.amount_limit) %></td>
           <td id="user_admin">
               <span class="ls-ico-checkmark"></span>
