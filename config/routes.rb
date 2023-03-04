@@ -25,8 +25,8 @@ Rails.application.routes.draw do
     post 'save', on: :member
   end
 
-  resources :bonus_commissions, only: %i[index new edit create] do
-    patch 'deactive', on: :member
+  resources :bonus_commissions, only: %i[index new edit create update] do
+    post 'deactive', on: :member
   end
 
   namespace :api do

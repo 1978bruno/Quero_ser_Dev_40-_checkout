@@ -21,4 +21,7 @@ pt-BR:
     msg_order_not_created: Ocorreu um problema na criação do pedido
     msg_zipcode_wrong_format: deve estar no formato "99999-999"
     msg_phone_wrong_format: deve estar no formato "(99) 99999-9999" ou "(99) 9999-9999"
+  bonus_commission:
+    msg_create_success: Campanha de bonificação cadastrada com sucesso
+    msg_create_unsuccess: Campanha não cadastrada
 
