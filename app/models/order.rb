@@ -11,7 +11,11 @@ class Order < ApplicationRecord
 
   validates :order_code,
             :price,
+            :product_group_id,
+            :product_group_name,
+            :product_plan_id,
             :product_plan_name,
+            :product_plan_periodicity_id,
             :product_plan_periodicity,
             :status,
             :customer_doc_ident,

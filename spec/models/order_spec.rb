@@ -7,7 +7,11 @@ RSpec.describe Order, type: :model do
       allow(SecureRandom).to receive(:alphanumeric).and_return('ABCDEF1020')
       salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
       order = Order.new({
+                          product_group_id: 1,
+                          product_group_name: 'Hospedagem de Sites',
+                          product_plan_id: 1,
                           product_plan_name: 'Hospedagem GO',
+                          product_plan_periodicity_id: 1,
                           product_plan_periodicity: 'Mensal',
                           price: 99.00,
                           customer_doc_ident: '22200022201',

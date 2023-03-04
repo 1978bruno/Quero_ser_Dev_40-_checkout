@@ -100,7 +100,8 @@ RSpec.describe ProductService do
 
         planos_listados = ProductService.list_prices(2)
         expect(planos_listados).to eq({ status: 'SUCCESS',
-                                        data: [{ price: 80.97,
+                                        data: [{ id: 25,
+                                                 price: 80.97,
                                                  plan: 'Hospedagem II',
                                                  periodicity: 'Trimestral' }],
                                         status_message: 'OK' })
