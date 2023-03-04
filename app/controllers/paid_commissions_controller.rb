@@ -6,7 +6,9 @@ class PaidCommissionsController < ApplicationController
 
     return if query_salesman.blank?
 
-    salesmen = User.where('name like ?', "%#{query_salesman}%")
+    salesmen = User.where('name like ?', "%#{query_salesman}%").map(&:id)
+    puts salesmen
+    puts '================='
 
     salesman_commissions = salesman_paid_commissions(salesmen)
 
@@ -24,6 +26,6 @@ class PaidCommissionsController < ApplicationController
   end
 
   def salesman_paid_commissions(salesmen)
-    # PaidCommission.where('salesman IN ?', salesmen)
+    # PaidCommission.where(salesman_id: salesmen)
   end
 end
