@@ -35,10 +35,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @paid_commissions.each do |commission| %>
-    <tr id="<%= dom_id(commission) %>">
-      <td><%= commission.salesman.name %></td>
-      <td><%= commission.amount %></td>
+    <% @paid_commissions.sort_by{|user, value| user.name}.each do |user, sum_amount| %>
+    <tr id="<%= dom_id(user) %>" >
+      <td><%= user.name  %></td>
+      <td><%= sum_amount %></td>
       <td>
         <div class="ls-display-inline-block">
           <%= link_to 'Detalhes', paid_commissions_path, class: 'ls-btn-primary-sm' %>

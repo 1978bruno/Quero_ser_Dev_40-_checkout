@@ -21,8 +21,8 @@ order2 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '321000
                        product_plan_name: 'Plano Prata', product_plan_periodicity: 'Mensal', price: 50.00)
 order3 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '42600022201',
                        product_plan_name: 'Plano Ouro', product_plan_periodicity: 'Anual', price: 70.00)
-Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '92220022201', product_plan_name: 'Plano Platinum',
-              product_plan_periodicity: 'Anual', price: 90.00)
+order4 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '92220022201',
+                       product_plan_name: 'Plano Platinum', product_plan_periodicity: 'Anual', price: 90.00)
 Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '22200022201', product_plan_name: 'Plano Prata',
               product_plan_periodicity: 'Mensal', price: 50.00)
 Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '32100022201', product_plan_name: 'Plano Ouro',
@@ -37,6 +37,8 @@ BlocklistedCustomer.create!(doc_ident: '18422142414', blocklisted_reason: 'Proce
 PaidCommission.create!(salesman: salesman_one, paid_at: '2022-01-01', amount: 100.00, order: order1,
                        bonus_commission: bonus_commission1)
 PaidCommission.create!(salesman: salesman_two, paid_at: '2022-03-03', amount: 200.00, order: order2,
+                       bonus_commission: bonus_commission1)
+PaidCommission.create!(salesman: salesman_two, paid_at: '2022-04-03', amount: 50.00, order: order4,
                        bonus_commission: bonus_commission1)
 PaidCommission.create!(salesman: salesman_three, paid_at: '2022-06-06', amount: 300.00, order: order3,
                        bonus_commission: bonus_commission1)
