@@ -18,8 +18,6 @@ describe 'Order API' do
       expect(json_response['payment_mode']).to eq('credit_card')
       expect(json_response['discount']).to eq('10.99')
       expect(json_response['paid_at']).not_to eq(nil)
-      expect(json_response.keys).not_to include('created_at')
-      expect(json_response.keys).not_to include('updated_at')
     end
 
     it 'falha se o pedido não for encontrado' do

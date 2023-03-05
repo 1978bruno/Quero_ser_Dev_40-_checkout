@@ -15,8 +15,6 @@ describe 'Order API' do
       expect(json_response['status']).to eq('cancelled')
       expect(json_response['order_code']).to eq(order.order_code)
       expect(json_response['cancel_reason']).to eq('O cliente desistiu')
-      expect(json_response.keys).not_to include('created_at')
-      expect(json_response.keys).not_to include('updated_at')
     end
 
     it 'falha se o pedido não for encontrado' do

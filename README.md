@@ -55,6 +55,8 @@
         "discount": "0.0",
         "payment_mode": null,
         "status": "pending",
+        "created_at": "2023-03-05T15:58:10.312-03:00",
+        "updated_at": "2023-03-05T15:58:10.312-03:00",
         "order_code": "GPQJU3FPN5",
         "product_plan_name": "Plano Prata",
         "product_plan_periodicity": "Mensal",
@@ -67,25 +69,6 @@
         "salesman": {
             "email": "vendedor@locaweb.com.br",
             "name": "vendedor"
-        }
-    },
-    {
-        "price": "70.0",
-        "discount": "0.0",
-        "payment_mode": null,
-        "status": "pending",
-        "order_code": "3UHEOUEGN1",
-        "product_plan_name": "Plano Ouro",
-        "product_plan_periodicity": "Anual",
-        "customer_doc_ident": "32100022201",
-        "paid_at": null,
-        "product_group_id": 1,
-        "product_group_name": "Hospedagem de Sites",
-        "product_plan_id": 3,
-        "product_plan_periodicity_id": 3,
-        "salesman": {
-            "email": "vendedor2@locaweb.com.br",
-            "name": "vendedor2"
         }
     }
 ]
@@ -144,9 +127,11 @@
 {
     "payment_mode": "credit_card",
     "discount": "0.0",
-    "paid_at": "2023-03-05T17:08:54.415-03:00",
+    "paid_at": "2023-03-05T17:17:29.840-03:00",
     "status": "paid",
     "price": "70.0",
+    "created_at": "2023-03-05T15:58:10.347-03:00",
+    "updated_at": "2023-03-05T17:17:29.873-03:00",
     "order_code": "3UHEOUEGN1",
     "product_plan_name": "Plano Ouro",
     "product_plan_periodicity": "Anual",
@@ -224,15 +209,17 @@
 ``` sh
 {
     "status": "cancelled",
-    "cancel_reason": "test",
+    "cancel_reason": "Cliente desistiu",
     "price": "70.0",
     "discount": "0.0",
-    "payment_mode": null,
+    "payment_mode": "credit_card",
+    "created_at": "2023-03-05T15:58:10.347-03:00",
+    "updated_at": "2023-03-05T17:19:36.533-03:00",
     "order_code": "3UHEOUEGN1",
     "product_plan_name": "Plano Ouro",
     "product_plan_periodicity": "Anual",
     "customer_doc_ident": "32100022201",
-    "paid_at": null,
+    "paid_at": "2023-03-05T17:17:29.840-03:00",
     "product_group_id": 1,
     "product_group_name": "Hospedagem de Sites",
     "product_plan_id": 3,

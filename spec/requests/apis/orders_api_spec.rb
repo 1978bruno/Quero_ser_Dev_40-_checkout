@@ -22,8 +22,6 @@ describe 'Order API' do
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
       expect(json_response[0]['salesman']['name']).to eq 'Pedro Santos'
       expect(json_response[0]['salesman']['email']).to eq salesman.email
-      expect(json_response[0].keys).not_to include('created_at')
-      expect(json_response[0].keys).not_to include('updated_at')
     end
 
     it 'falha se não houver pedidos' do
