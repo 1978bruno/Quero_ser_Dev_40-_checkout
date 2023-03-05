@@ -50,36 +50,44 @@
 
 ``` sh
 [
-	{
-		"price": "30.0",
-		"discount": "0.0",
-		"payment_mode": null,
-		"status": "pending",
-		"order_code": "KRR4JOLSRG",
-		"product_plan_name": "Plano Bronze",
-		"product_plan_periodicity": "Mensal",
-		"customer_doc_ident": "22200022201",
-		"paid_at": null,
-		"salesman": {
-			"email": "vendedor@locaweb.com.br",
-			"name": "vendedor"
-		}
-	},
-	{
-		"price": "50.0",
-		"discount": "0.0",
-		"payment_mode": null,
-		"status": "pending",
-		"order_code": "N5KDI4HLYH",
-		"product_plan_name": "Plano Prata",
-		"product_plan_periodicity": "Mensal",
-		"customer_doc_ident": "22200022201",
-		"paid_at": null,
-		"salesman": {
-			"email": "vendedor2@locaweb.com.br",
-			"name": "vendedor2"
-		}
-	}
+    {
+        "price": "50.0",
+        "discount": "0.0",
+        "payment_mode": null,
+        "status": "pending",
+        "order_code": "GPQJU3FPN5",
+        "product_plan_name": "Plano Prata",
+        "product_plan_periodicity": "Mensal",
+        "customer_doc_ident": "32100022201",
+        "paid_at": null,
+        "product_group_id": 1,
+        "product_group_name": "Hospedagem de Sites",
+        "product_plan_id": 2,
+        "product_plan_periodicity_id": 2,
+        "salesman": {
+            "email": "vendedor@locaweb.com.br",
+            "name": "vendedor"
+        }
+    },
+    {
+        "price": "70.0",
+        "discount": "0.0",
+        "payment_mode": null,
+        "status": "pending",
+        "order_code": "3UHEOUEGN1",
+        "product_plan_name": "Plano Ouro",
+        "product_plan_periodicity": "Anual",
+        "customer_doc_ident": "32100022201",
+        "paid_at": null,
+        "product_group_id": 1,
+        "product_group_name": "Hospedagem de Sites",
+        "product_plan_id": 3,
+        "product_plan_periodicity_id": 3,
+        "salesman": {
+            "email": "vendedor2@locaweb.com.br",
+            "name": "vendedor2"
+        }
+    }
 ]
 ```
 
@@ -111,7 +119,7 @@
   <br>
   <b>Método HTTP / URL</b>
 
-  `POST` http://localhost:3000/api/v1/customers/orders/{order_code}/paid
+  `POST` http://localhost:3000/api/v1/orders/{order_code}/pay
 
   **Parâmetros**
 
@@ -134,19 +142,23 @@
 
 ``` sh
 {
-	"payment_mode": "credit_card",
-	"discount": "10.99",
-	"paid_at": "2023-03-03T18:18:51.727Z",
-	"status": "paid",
-	"price": "30.0",
-	"order_code": "KRR4JOLSRG",
-	"product_plan_name": "Plano Bronze",
-	"product_plan_periodicity": "Mensal",
-	"customer_doc_ident": "22200022201",
-	"salesman": {
-		"email": "vendedor@locaweb.com.br",
-		"name": "vendedor"
-	}
+    "payment_mode": "credit_card",
+    "discount": "0.0",
+    "paid_at": "2023-03-05T17:08:54.415-03:00",
+    "status": "paid",
+    "price": "70.0",
+    "order_code": "3UHEOUEGN1",
+    "product_plan_name": "Plano Ouro",
+    "product_plan_periodicity": "Anual",
+    "customer_doc_ident": "32100022201",
+    "product_group_id": 1,
+    "product_group_name": "Hospedagem de Sites",
+    "product_plan_id": 3,
+    "product_plan_periodicity_id": 3,
+    "salesman": {
+        "email": "vendedor2@locaweb.com.br",
+        "name": "vendedor2"
+    }
 }
 ```
 
@@ -162,7 +174,7 @@
 
 *- Caso não seja enviado o modo de pagamento*
 
-- Código: `404`
+- Código: `400`
 
 ``` sh
 {
@@ -189,7 +201,7 @@
   <br>
   <b>Método HTTP / URL</b>
 
-  `POST` http://localhost:3000/api/v1/customers/orders/{order_code}/cancelled
+  `POST` http://localhost:3000/api/v1/orders/{order_code}/cancel
 
   **Parâmetros**
 
@@ -211,20 +223,24 @@
 
 ``` sh
 {
-	"status": "cancelled",
-	"cancel_reason": "O cliente desistiu",
-	"price": "30.0",
-	"discount": "10.99",
-	"payment_mode": "credit_card",
-	"order_code": "KRR4JOLSRG",
-	"product_plan_name": "Plano Bronze",
-	"product_plan_periodicity": "Mensal",
-	"customer_doc_ident": "22200022201",
-	"paid_at": "2023-03-03T18:14:06.074Z",
-	"salesman": {
-		"email": "vendedor@locaweb.com.br",
-		"name": "vendedor"
-	}
+    "status": "cancelled",
+    "cancel_reason": "test",
+    "price": "70.0",
+    "discount": "0.0",
+    "payment_mode": null,
+    "order_code": "3UHEOUEGN1",
+    "product_plan_name": "Plano Ouro",
+    "product_plan_periodicity": "Anual",
+    "customer_doc_ident": "32100022201",
+    "paid_at": null,
+    "product_group_id": 1,
+    "product_group_name": "Hospedagem de Sites",
+    "product_plan_id": 3,
+    "product_plan_periodicity_id": 3,
+    "salesman": {
+        "email": "vendedor2@locaweb.com.br",
+        "name": "vendedor2"
+    }
 }
 ```
 

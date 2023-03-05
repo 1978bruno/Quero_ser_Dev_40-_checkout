@@ -1,10 +1,10 @@
 class Api::V1::OrdersController < ActionController::API
   rescue_from ActiveRecord::ActiveRecordError, with: :return_internal_error
   rescue_from ActiveRecord::RecordNotFound, with: :return_not_found
-  before_action :if_payment_params_is_empty, only: [:paid]
-  before_action :if_cancel_reason_param_is_empty, only: [:cancelled]
+  before_action :if_payment_params_is_empty, only: [:pay]
+  before_action :if_cancel_reason_param_is_empty, only: [:cancel]
 
-  def index
+  def list_by_customer
     orders = Order.where(customer_doc_ident: params[:customer_id], status: :pending)
 
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if orders.empty?
@@ -13,7 +13,7 @@ class Api::V1::OrdersController < ActionController::API
                                              include: { salesman: { only: %i[name email] } })
   end
 
-  def paid
+  def pay
     @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
@@ -23,7 +23,7 @@ class Api::V1::OrdersController < ActionController::API
                                              include: { salesman: { only: %i[name email] } })
   end
 
-  def cancelled
+  def cancel
     @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
@@ -39,14 +39,14 @@ class Api::V1::OrdersController < ActionController::API
     return if params[:payment_mode].present?
 
     render json: { error: 'Modo de pagamento não informado' }.to_json,
-           status: :not_found
+           status: :bad_request
   end
 
   def if_cancel_reason_param_is_empty
     return if params[:cancel_reason].present?
 
     render json: { error: 'Motivo do cancelamento não informado' }.to_json,
-           status: :not_found
+           status: :bad_request
   end
 
   def return_internal_error
