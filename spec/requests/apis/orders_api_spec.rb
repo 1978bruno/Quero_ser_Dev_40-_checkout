@@ -5,10 +5,13 @@ describe 'Order API' do
     it 'successo' do
       salesman = create(:user, email: 'user@locaweb.com.br', name: 'Pedro Santos', password: '12345678', admin: false)
       order = create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
-                             product_plan_name: 'Hospedagem GO', product_plan_periodicity: 'Mensal',
+                             product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                             product_plan_id: 1, product_plan_name: 'Hospedagem GO',
                              price: 30.00)
       create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
-                     product_plan_name: 'Hospedagem Premmium', product_plan_periodicity: 'Anual')
+                     product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                     product_plan_id: 1, product_plan_name: 'Hospedagem Premium',
+                     price: 25.00)
 
       get "/api/v1/customers/#{order.customer_doc_ident}/orders"
 

@@ -12,6 +12,7 @@ pt-BR:
     attributes:
       order:
         price: Preço
+        product_group_name: Grupo de produtos
         product_plan_name: Nome do produto
         product_plan_periodicity: Periodicidade do produto
         status: Status

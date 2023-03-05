@@ -8,7 +8,8 @@ class CreationOrder
                 :customer_state, :customer_zipcode, :customer_email, :customer_phone, :customer_birthdate,
                 :customer_corporate_name, :product_group_form, :product_group_id, :product_group_name,
                 :product_plan_form, :product_plan_id, :product_plan_name, :product_price_form,
-                :product_plan_periodicity, :product_plan_price, :no_error_found
+                :product_plan_periodicity_id, :product_plan_periodicity, :product_plan_price,
+                :no_error_found
 
   attr_writer :current_step
 

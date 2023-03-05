@@ -59,10 +59,12 @@ module CreationOrdersControllerHandleForm
 
   def handle_form_prices
     price_form = @creation_order.product_price_form.split('#')
-    @creation_order.product_plan_periodicity = price_form[0]
-    @creation_order.product_plan_price = price_form[1]
+    @creation_order.product_plan_periodicity_id = price_form[0]
+    @creation_order.product_plan_periodicity = price_form[1]
+    @creation_order.product_plan_price = price_form[2]
 
-    product_price_params = { product_plan_periodicity: @creation_order.product_plan_periodicity,
+    product_price_params = { product_plan_periodicity_id: @creation_order.product_plan_periodicity_id,
+                             product_plan_periodicity: @creation_order.product_plan_periodicity,
                              product_plan_price: @creation_order.product_plan_price }
 
     session_merge(product_price_params)
@@ -81,7 +83,11 @@ module CreationOrdersControllerHandleForm
 
   def new_order_object
     Order.new(customer_doc_ident: @creation_order.customer_identification,
+              product_group_id: @creation_order.product_group_id,
+              product_group_name: @creation_order.product_group_name,
+              product_plan_id: @creation_order.product_plan_id,
               product_plan_name: @creation_order.product_plan_name,
+              product_plan_periodicity_id: @creation_order.product_plan_periodicity_id,
               product_plan_periodicity: @creation_order.product_plan_periodicity,
               price: @creation_order.product_plan_price,
               salesman_id: current_user.id)

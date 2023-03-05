@@ -61,8 +61,8 @@ end
 def api_result_prices
   { status: 200,
     body: JSON.generate(
-      [{ price: '80.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Trimestral' } },
-       { price: '60.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Semestral' } }]
+      [{ id: 25, price: '80.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Trimestral' } },
+       { id: 15, price: '60.97', plan: { name: 'Hospedagem II' }, periodicity: { name: 'Semestral' } }]
     ) }
 end
 
