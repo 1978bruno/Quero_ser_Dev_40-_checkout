@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   belongs_to :salesman, class_name: 'User'
   has_one :paid_commission, dependent: :destroy
 
+  scope :pending_or_awaiting, -> { where(status: :pending).or(where(status: :awaiting_payment)) }
+
   enum status: { pending: 0, awaiting_payment: 2, paid: 3, cancelled: 5 }
 
   before_validation :gen_order_code, on: :create

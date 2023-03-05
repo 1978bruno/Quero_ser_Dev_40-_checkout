@@ -5,7 +5,7 @@ class Api::V1::OrdersController < ActionController::API
   before_action :if_cancel_reason_param_is_empty, only: [:cancel]
 
   def list_by_customer
-    orders = Order.where(customer_doc_ident: params[:customer_id], status: :pending)
+    orders = Order.pending_or_awaiting.where(customer_doc_ident: params[:customer_id])
 
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if orders.empty?
 
