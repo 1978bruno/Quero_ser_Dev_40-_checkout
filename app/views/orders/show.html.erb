@@ -127,7 +127,7 @@
         <b class="ls-label-text">
           <%= Order.human_attribute_name(:payment_mode) %>
         </b>
-        <input id="payment_mode" type="text" value="<%= @order.payment_mode %>" disabled="disabled">
+        <input id="payment_mode" type="text" value="<%= I18n.t(@order.payment_mode) %>" disabled="disabled">
       </label>
     </fieldset>
     <fieldset class="ls-form-disable ls-form-text">

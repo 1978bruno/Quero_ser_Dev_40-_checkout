@@ -33,6 +33,7 @@ Rails.application.routes.draw do
         post :pay, on: :member
         post :cancel, on: :member
         post :renew, on: :member
+        post :awaiting_payment, on: :member
       end
     end
   end

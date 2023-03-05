@@ -17,7 +17,7 @@ class Api::V1::OrdersController < ActionController::API
     @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
-    @order.update(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
+    @order.update!(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
     @order.paid!
     render status: :ok, json: @order.as_json(except: %i[id cancel_reason salesman_id],
                                              include: { salesman: { only: %i[name email] } })
@@ -27,10 +27,30 @@ class Api::V1::OrdersController < ActionController::API
     @order = Order.find_by(order_code: params[:id])
     return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
 
-    @order.update(status: :cancelled, cancel_reason: params[:cancel_reason])
+    @order.update!(status: :cancelled, cancel_reason: params[:cancel_reason])
 
     render status: :ok, json: @order.as_json(except: %i[id salesman_id],
                                              include: { salesman: { only: %i[name email] } })
+  end
+
+  def awaiting_payment
+    @order = Order.find_by(order_code: params[:id])
+    return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
+
+    @order.update!(status: :awaiting_payment)
+
+    render status: :ok, json: @order.as_json(except: %i[id salesman_id],
+                                             include: { salesman: { only: %i[name email] } })
+  end
+
+  def renew
+    @order = Order.find_by(order_code: params[:id])
+    return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
+
+    # @order.update(status: :cancelled, cancel_reason: params[:cancel_reason])
+
+    # render status: :ok, json: @order.as_json(except: %i[id salesman_id],
+    #                                          include: { salesman: { only: %i[name email] } })
   end
 
   private
