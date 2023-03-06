@@ -2,14 +2,6 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-  # resources :users_admin, only: %i[index], controller: 'users' do
-  #   member do
-  #     patch :lock_unlock
-  #     get :edit_password
-  #     post :update_password
-  #   end
-  # end
-
   resources :users, only: %i[index new create edit update] do
     member do
       patch :lock_unlock
@@ -35,14 +27,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :customers, only: [:show] do
-        resources :orders, only: [:index]
-      end
-      resource :customers, only: [:index] do
-        resources :orders, only: [:show] do
-          post :paid, on: :member
-          post :cancelled, on: :member
-        end
+      get '/customers/:customer_id/orders', to: 'orders#list_by_customer', as: 'list_by_customer'
+
+      resources :orders, only: [] do
+        post :pay, on: :member
+        post :cancel, on: :member
+        post :renew, on: :member
+        post :awaiting_payment, on: :member
       end
     end
   end

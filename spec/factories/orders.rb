@@ -13,5 +13,13 @@ FactoryBot.define do
     product_plan_periodicity_id { 1 }
     product_plan_periodicity { 'Mensal' }
     paid_at { nil }
+    after :build do |p, options|
+      p.product_group_id = options.product_group_id
+      p.product_group_name = options.product_group_name
+      p.product_plan_id = options.product_plan_id
+      p.product_plan_name = options.product_plan_name
+      p.product_plan_periodicity_id = options.product_plan_periodicity_id
+      p.product_plan_periodicity = options.product_plan_periodicity
+    end
   end
 end
