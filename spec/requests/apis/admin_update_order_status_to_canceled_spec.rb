@@ -24,7 +24,9 @@ describe 'Order API' do
     end
 
     it 'falha se o motivo do cancelamento não for informado' do
-      post '/api/v1/orders/9qeZ77Gih8/cancel', params: { cancel_reason: '' }
+      salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
+      order = create(:order, salesman:)
+      post "/api/v1/orders/#{order.order_code}/cancel", params: { cancel_reason: '' }
 
       expect(response.status).to eq 400
       expect(response.content_type).to include 'application/json'

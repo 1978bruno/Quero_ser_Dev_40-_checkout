@@ -1,6 +1,7 @@
 class Api::V1::OrdersController < ActionController::API
   rescue_from ActiveRecord::ActiveRecordError, with: :return_internal_error
   rescue_from ActiveRecord::RecordNotFound, with: :return_not_found
+  before_action :find_pending_order, only: %i[cancel awaiting_payment]
   before_action :if_payment_params_is_empty, only: [:pay]
   before_action :if_cancel_reason_param_is_empty, only: [:cancel]
 
@@ -14,19 +15,16 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def pay
-    @order = Order.find_by(order_code: params[:id])
-    return render status: :not_found, json: { response: 'Nenhum registro encontrado' }.to_json if @order.nil?
+    @order = Order.find_by!(order_code: params[:id], status: :awaiting_payment)
 
     @order.update!(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
     @order.paid!
+    PaidCommission.pay_commission_from_order_code(@order.order_code)
     render status: :ok, json: @order.as_json(except: %i[id cancel_reason salesman_id],
                                              include: { salesman: { only: %i[name email] } })
   end
 
   def cancel
-    @order = Order.find_by(order_code: params[:id])
-    return render status: :not_found, json: { response: 'Nenhum registro encontrado' }.to_json if @order.nil?
-
     @order.update!(status: :cancelled, cancel_reason: params[:cancel_reason])
 
     render status: :ok, json: @order.as_json(except: %i[id salesman_id],
@@ -34,9 +32,6 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def awaiting_payment
-    @order = Order.find_by(order_code: params[:id])
-    return render status: :not_found, json: { response: 'Nenhum registro encontrado' }.to_json if @order.nil?
-
     @order.update!(status: :awaiting_payment)
 
     render status: :ok, json: @order.as_json(except: %i[id salesman_id],
@@ -69,6 +64,10 @@ class Api::V1::OrdersController < ActionController::API
     return if params[:cancel_reason].present?
 
     render status: :bad_request, json: { error: 'Motivo do cancelamento não informado' }.to_json
+  end
+
+  def find_pending_order
+    @order = Order.find_by!(order_code: params[:id], status: :pending)
   end
 
   def return_internal_error

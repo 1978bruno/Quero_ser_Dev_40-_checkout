@@ -4,7 +4,7 @@ describe 'Order API' do
   context 'GET /api/v1/orders' do
     it 'atualiza status do pedido para pago' do
       salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
-      order = create(:order, salesman:)
+      order = create(:order, salesman:, status: :awaiting_payment)
       create(:order, salesman:)
 
       post "/api/v1/orders/#{order.order_code}/pay", params: { payment_mode: 'credit_card',
@@ -27,7 +27,9 @@ describe 'Order API' do
     end
 
     it 'falha se não for informado o modo de pagamento' do
-      post '/api/v1/orders/9qeZ77Gih8/pay', params: { payment_mode: '' }
+      salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
+      order = create(:order, salesman:, status: :paid)
+      post "/api/v1/orders/#{order.order_code}/pay", params: { payment_mode: '' }
 
       expect(response.status).to eq 400
       expect(response.content_type).to include 'application/json'
