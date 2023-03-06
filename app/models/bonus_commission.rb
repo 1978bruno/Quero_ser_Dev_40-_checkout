@@ -3,8 +3,16 @@ class BonusCommission < ApplicationRecord
 
   validates :description, :commission_perc, :amount_limit, presence: true
 
-  # Não validaria isso. Acho que a pessoa pode cadastrar retroativo sem afetar o sistema.
-  # Nem sempre dá p/ cadastrar no dia.
-  # validates :start_date, comparison: { greater_than_or_equal_to: Time.current }
-  validates :end_date, comparison: { greater_than: :start_date }
+  validates :start_date, on: %i[create update], comparison: { greater_than_or_equal_to: :actual_date_treatment }
+  validates :end_date, comparison: { greater_than: :start_date_treatment }
+
+  private
+
+  def start_date_treatment
+    I18n.l(start_date.to_date) unless start_date.nil?
+  end
+
+  def actual_date_treatment
+    I18n.l(Time.current.to_date)
+  end
 end

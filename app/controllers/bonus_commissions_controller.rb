@@ -32,11 +32,10 @@ class BonusCommissionsController < ApplicationController
                                                                                                      :end_date,
                                                                                                      :commission_perc,
                                                                                                      :amount_limit))
-    if @bonus_commission.valid?
-      redirect_to bonus_commissions_path
-    else
-      render :edit
-    end
+    redirect_to bonus_commissions_path and return if @bonus_commission.valid?
+
+    flash.now[:alert] = I18n.t('bonus_commission.msg_create_unsuccess')
+    render :edit
   end
 
   def deactive

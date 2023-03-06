@@ -10,10 +10,10 @@ RSpec.describe PaidCommission, type: :model do
 
         salesman = create(:user)
 
-        order = create(:order, price: 150.00, paid_at: '2023-03-04', discount: 50.00, salesman:)
+        order = create(:order, price: 150.00, paid_at: 1.day.from_now, discount: 50.00, salesman:)
 
-        bonus_especial = BonusCommission.create({ description: 'Bonus Especial', start_date: '2023-03-01',
-                                                  end_date: '2023-03-05', commission_perc: '5', amount_limit: 100 })
+        bonus_especial = BonusCommission.create({ description: 'Bonus Especial', start_date: Date.current,
+                                                  end_date: 2.days.from_now, commission_perc: '5', amount_limit: 100 })
 
         PaidCommission.pay_commission_from_order_code('ABCDEF1020')
 
@@ -34,10 +34,10 @@ RSpec.describe PaidCommission, type: :model do
 
         salesman = create(:user)
 
-        order = create(:order, price: 15_000.00, paid_at: '2023-03-04', salesman:)
+        order = create(:order, price: 15_000.00, paid_at: 1.day.from_now, salesman:)
 
-        bonus_especial = BonusCommission.create({ description: 'Bonus Especial', start_date: '2023-03-01',
-                                                  end_date: '2023-03-05', commission_perc: 5, amount_limit: 100 })
+        bonus_especial = BonusCommission.create({ description: 'Bonus Especial', start_date: Date.current,
+                                                  end_date: 2.days.from_now, commission_perc: 5, amount_limit: 100 })
 
         PaidCommission.pay_commission_from_order_code('ABCDEF1020')
 
