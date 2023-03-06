@@ -12,21 +12,31 @@ salesman_one = User.create!(name: 'vendedor', email: 'vendedor@locaweb.com.br', 
                             admin: false, active: true)
 salesman_two = User.create!(name: 'vendedor2', email: 'vendedor2@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
-salesman_three = User.create!(name: 'André Mota', email: 'joaom@locaweb.com.br', password: '12345678',
-                              admin: false, active: true)
 
 order1 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '22200022201',
-                       product_plan_name: 'Plano Bronze', product_plan_periodicity: 'Mensal', price: 30.00)
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 1, product_plan_name: 'Plano Bronze',
+                       product_plan_periodicity_id: 1, product_plan_periodicity: 'Mensal', price: 30.00)
 order2 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '32100022201',
-                       product_plan_name: 'Plano Prata', product_plan_periodicity: 'Mensal', price: 50.00)
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 2, product_plan_name: 'Plano Prata',
+                       product_plan_periodicity_id: 2, product_plan_periodicity: 'Mensal', price: 50.00)
 order3 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '42600022201',
-                       product_plan_name: 'Plano Ouro', product_plan_periodicity: 'Anual', price: 70.00)
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 3, product_plan_name: 'Plano Ouro',
+                       product_plan_periodicity_id: 3, product_plan_periodicity: 'Anual', price: 70.00)
 order4 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '92220022201',
-                       product_plan_name: 'Plano Platinum', product_plan_periodicity: 'Anual', price: 90.00)
-Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '22200022201', product_plan_name: 'Plano Prata',
-              product_plan_periodicity: 'Mensal', price: 50.00)
-Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '32100022201', product_plan_name: 'Plano Ouro',
-              product_plan_periodicity: 'Anual', price: 70.00)
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 4, product_plan_name: 'Plano Platinum',
+                       product_plan_periodicity_id: 4, product_plan_periodicity: 'Anual', price: 90.00)
+Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '22200022201',
+              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+              product_plan_id: 2, product_plan_name: 'Plano Prata',
+              product_plan_periodicity_id: 2, product_plan_periodicity: 'Mensal', price: 50.00)
+Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '32100022201',
+              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+              product_plan_id: 3, product_plan_name: 'Plano Ouro',
+              product_plan_periodicity_id: 3, product_plan_periodicity: 'Anual', price: 70.00)
 
 bonus_commission1 = BonusCommission.create!(description: 'programa de incentivos 1', start_date: '2022-01-01',
                                             end_date: '2022-12-31', commission_perc: 3.5, amount_limit: 1000,
