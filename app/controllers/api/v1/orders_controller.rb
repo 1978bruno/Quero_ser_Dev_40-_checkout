@@ -3,6 +3,7 @@ class Api::V1::OrdersController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :return_not_found
   before_action :if_payment_params_is_empty, only: [:paid]
   before_action :if_cancel_reason_param_is_empty, only: [:cancelled]
+  before_action :find_order, only: %i[paid cancelled]
 
   def index
     orders = Order.where(customer_doc_ident: params[:customer_id], status: :pending)
@@ -14,9 +15,6 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def paid
-    @order = Order.find_by(order_code: params[:id])
-    return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
-
     @order.update(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
     @order.paid!
     PaidCommission.pay_commission_from_order_code(@order.order_code)
@@ -25,11 +23,7 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def cancelled
-    @order = Order.find_by(order_code: params[:id])
-    return render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found if @order.nil?
-
     @order.update(status: :cancelled, cancel_reason: params[:cancel_reason])
-
     render status: :ok, json: @order.as_json(except: %i[id created_at updated_at salesman_id],
                                              include: { salesman: { only: %i[name email] } })
   end
@@ -55,6 +49,12 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def return_not_found
+    render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found
+  end
+
+  def find_order
+    return @order = Order.find_by(order_code: params[:id]) if @order.nil?
+
     render json: { response: 'Nenhum registro encontrado' }.to_json, status: :not_found
   end
 end
