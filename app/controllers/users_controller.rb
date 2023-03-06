@@ -1,18 +1,14 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :redirect_unless_admin, only: %i[new create edit update lock_unlock]
-  before_action :authenticate_user!, only: %i[index edit_password update_password]
+  before_action :authenticate_user!, :redirect_unless_admin, only: %i[index new create edit update lock_unlock]
+  before_action :authenticate_user!, only: %i[edit_password update_password]
   before_action :set_user, only: %i[edit update edit_password update_password lock_unlock]
 
   def index
-    if current_user.admin == false
-      @users = []
-      @users << current_user
-      flash.now[:notice] = 'Não tem acesso. Precisa estar logado como Admin.'
-    elsif params['query'].nil?
-      @users = User.where('active = true and admin = false')
-    else
-      @users = User.where('name like ? and active = true and admin = false', "%#{params['query']}%")
-    end
+    @users = if params['query'].nil?
+               User.all
+             else
+               User.where('name like ?', "%#{params['query']}%")
+             end
   end
 
   def new
@@ -24,7 +20,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to index_admin_users_admin_index_path, notice: I18n.t('user.msg_record_created')
+      redirect_to users_path, notice: I18n.t('user.msg_record_created')
     else
       render :new
     end
@@ -38,14 +34,10 @@ class UsersController < ApplicationController
                        end
 
     if @user.update(user_params_edit)
-      redirect_to index_admin_users_admin_index_path, notice: I18n.t('user.msg_user_changed')
+      redirect_to users_path, notice: I18n.t('user.msg_user_changed')
     else
       render :edit
     end
-  end
-
-  def index_admin
-    @users = User.all
   end
 
   def edit_password
@@ -68,7 +60,7 @@ class UsersController < ApplicationController
     @user.save
     flash[:notice] = I18n.t('user.msg_user_locked') unless @user.active
     flash[:notice] = I18n.t('user.msg_user_unlocked') if @user.active
-    redirect_to index_admin_users_admin_index_path
+    redirect_to users_path
   end
 
   private

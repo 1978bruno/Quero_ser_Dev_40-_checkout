@@ -1,5 +1,5 @@
 <div class="ls-box">
-  <%= form_with model: @user, url: url, class: "ls-form ls-form-horizontal row" do | f | %>
+  <%= form_with model: @user, url: url, method: method, class: "ls-form ls-form-horizontal row" do | f | %>
     <fieldset>
       <label class="ls-label col-md-5 <%= (@user.errors[:name].empty?)? '':'ls-error' %>">
         <%= f.label :name, class: "ls-label-text" %>
@@ -59,7 +59,7 @@
       <% if (@user == current_user) && (! current_user.try(:admin?)) %>
         <%= link_to 'Cancelar', root_path, class: "ls-btn-primary" %>
       <% else %>
-        <%= link_to 'Cancelar', index_admin_users_admin_index_path, class: "ls-btn-primary" %>
+        <%= link_to 'Cancelar', users_path, class: "ls-btn-primary" %>
       <% end %>
     </div>
   <% end %>
