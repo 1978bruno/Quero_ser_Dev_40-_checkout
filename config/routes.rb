@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   resources :paid_commissions, only: [:index] do
-    get :salesman, on: :collection
+    get :salesman_detail, on: :collection
   end
 
   namespace :api do

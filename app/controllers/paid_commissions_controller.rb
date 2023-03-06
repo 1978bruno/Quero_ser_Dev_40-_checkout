@@ -6,14 +6,14 @@ class PaidCommissionsController < ApplicationController
     @start_date = date_or_empty(params[:start_date])
     @end_date = date_or_empty(params[:end_date])
     @paid_commissions = load_all_commissions
-    return if query_salesman.blank?
+    return if query_salesman.blank? && @start_date.blank? && @end_date.blank?
 
     salesmen_commissions = salesmen_paid_commissions(query_salesman)
     no_results_found(salesmen_commissions)
     @paid_commissions = salesmen_commissions
   end
 
-  def salesman
+  def salesman_detail
     @user = User.find(params[:user_id])
     @start_date = date_or_empty(params[:start_date])
     @end_date = date_or_empty(params[:end_date])
@@ -55,7 +55,7 @@ class PaidCommissionsController < ApplicationController
   end
 
   def no_results_found(salesman_commissions)
-    return if salesman_commissions.present?
+    return unless salesman_commissions.empty?
 
     flash.now[:alert] = 'Não foram encontradas comissões pagas para esse critério'
     @paid_commissions = nil
