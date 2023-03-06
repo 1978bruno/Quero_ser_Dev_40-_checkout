@@ -31,14 +31,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :customers, only: [:show] do
-        resources :orders, only: [:index]
-      end
-      resource :customers, only: [:index] do
-        resources :orders, only: [:show] do
-          post :paid, on: :member
-          post :cancelled, on: :member
-        end
+      get '/customers/:customer_id/orders', to: 'orders#list_by_customer', as: 'list_by_customer'
+
+      resources :orders, only: [] do
+        post :pay, on: :member
+        post :cancel, on: :member
+        post :renew, on: :member
+        post :awaiting_payment, on: :member
       end
     end
   end

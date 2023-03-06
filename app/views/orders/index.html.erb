@@ -25,9 +25,9 @@
           <td class="hidden-xs"><%= order.product_plan_periodicity %></td>
           <td><%= number_to_currency(order.price) %></td>
           <td class="hidden-xs"><%= order.discount %></td>
-          <td><%= order.payment_mode %></td>
+          <td><%= I18n.t(order.payment_mode) %></td>
           <td class="hidden-xs">
-          <% status_tag = {pending:'ls-tag-warning', cancelled:'ls-tag-danger' , paid:'ls-tag-success' }%>
+          <% status_tag = {pending:'ls-tag-warning', cancelled:'ls-tag-danger' , paid:'ls-tag-success', awaiting_payment: 'ls-tag-info' }%>
             <span class="<%=status_tag[order.status.to_sym]%>"><%= I18n.t(order.status) %></span>            
           </td>
           <td>

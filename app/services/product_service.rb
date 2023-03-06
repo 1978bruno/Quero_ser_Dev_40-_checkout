@@ -30,7 +30,7 @@ class ProductService
       return ResponseHelper.error('Não foi possível acessar a API de preços') if response.status != 200
 
       prices = JSON.parse(response.body).map do |prod|
-        { price: prod['price'], plan: prod['plan']['name'],
+        { id: prod['id'], price: prod['price'], plan: prod['plan']['name'],
           periodicity: prod['periodicity']['name'] }
       end
       ResponseHelper.success(prices)
