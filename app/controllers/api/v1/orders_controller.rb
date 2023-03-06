@@ -19,6 +19,7 @@ class Api::V1::OrdersController < ActionController::API
 
     @order.update(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
     @order.paid!
+    PaidCommission.pay_commission_from_order_code(@order.order_code)
     render status: :ok, json: @order.as_json(except: %i[id cancel_reason created_at updated_at salesman_id],
                                              include: { salesman: { only: %i[name email] } })
   end
