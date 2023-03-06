@@ -35,7 +35,7 @@
   <br>
   <b>Método HTTP / URL</b>
 
-  `GET` http://localhost:3000/api/v1/customers/{doc_client}/orders
+  `GET` /api/v1/customers/{doc_client}/orders
 
   **Parâmetros**
 
@@ -102,7 +102,7 @@
   <br>
   <b>Método HTTP / URL</b>
 
-  `POST` http://localhost:3000/api/v1/orders/{order_code}/pay
+  `POST` /api/v1/orders/{order_code}/pay
 
   **Parâmetros**
 
@@ -186,7 +186,7 @@
   <br>
   <b>Método HTTP / URL</b>
 
-  `POST` http://localhost:3000/api/v1/orders/{order_code}/cancel
+  `POST` /api/v1/orders/{order_code}/cancel
 
   **Parâmetros**
 
@@ -260,4 +260,147 @@
   "error": "Ocorreu um erro interno"
 }
 ```
+</details>
+
+<details>
+  <summary>
+    <b>Altera status do pedido para aguardando confirmação pagamento</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
+
+  `POST` /api/v1/orders/{order_code}/awaiting_payment
+
+  **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o documento do cliente como parâmetro na URL
+
+#### **Respostas**
+
+*- Sucesso:*
+
+- Código `200`
+
+``` sh
+[
+    {
+        "price": "50.0",
+        "discount": "0.0",
+        "payment_mode": null,
+        "status": "awaiting_payment",
+        "created_at": "2023-03-05T15:58:10.312-03:00",
+        "updated_at": "2023-03-05T15:58:10.312-03:00",
+        "order_code": "GPQJU3FPN5",
+        "product_plan_name": "Plano Prata",
+        "product_plan_periodicity": "Mensal",
+        "customer_doc_ident": "32100022201",
+        "paid_at": null,
+        "product_group_id": 1,
+        "product_group_name": "Hospedagem de Sites",
+        "product_plan_id": 2,
+        "product_plan_periodicity_id": 2,
+        "salesman": {
+            "email": "vendedor@locaweb.com.br",
+            "name": "vendedor"
+        }
+    }
+]
+```
+
+*- Caso não sejam encontrados pedidos*
+
+- Código: `404`
+
+```sh
+{
+  "response": "Nenhum registro encontrado"
+}
+```
+*- Caso exista um erro interno da api*
+
+- Código: `500`
+
+```sh
+{
+  "error": "Ocorreu um erro interno"
+}
+```
+
+</details>
+
+<details>
+  <summary>
+    <b>Renovação de Pedido</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
+
+  `POST` /api/v1/orders/{order_code}/renew
+
+  **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o documento do cliente como parâmetro na URL
+
+#### **Respostas**
+
+*- Sucesso:*
+
+- Código `200`
+
+``` sh
+[
+    {
+        "price": "50.0",
+        "discount": "0.0",
+        "payment_mode": null,
+        "status": "pending",
+        "created_at": "2023-03-05T15:58:10.312-03:00",
+        "updated_at": "2023-03-05T15:58:10.312-03:00",
+        "order_code": "GPQJU3FPN5",
+        "product_plan_name": "Plano Prata",
+        "product_plan_periodicity": "Mensal",
+        "customer_doc_ident": "32100022201",
+        "paid_at": null,
+        "product_group_id": 1,
+        "product_group_name": "Hospedagem de Sites",
+        "product_plan_id": 2,
+        "product_plan_periodicity_id": 2,
+        "salesman": {
+            "email": "vendedor@locaweb.com.br",
+            "name": "vendedor"
+        }
+    }
+]
+```
+
+*- Caso não sejam encontrados pedidos*
+
+- Código: `404`
+
+```sh
+{
+  "response": "Nenhum registro encontrado"
+}
+```
+*- Caso plano esteja inativo*
+
+- Código: `400`
+
+```sh
+{
+  "error": "Plano não está mais ativo."
+}
+
+*- Caso exista um erro interno da api*
+
+- Código: `500`
+
+```sh
+{
+  "error": "Ocorreu um erro interno"
+}
+```
+
 </details>
