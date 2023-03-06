@@ -392,6 +392,7 @@
 {
   "error": "Plano não está mais ativo."
 }
+```
 
 *- Caso exista um erro interno da api*
 
