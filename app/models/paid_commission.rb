@@ -8,6 +8,9 @@ class PaidCommission < ApplicationRecord
   validates :paid_at, :amount, presence: true
   validates :amount, numericality: { greater_than: 0 }
 
+  scope :after_start_date, ->(start_date) { where('paid_at >= ?', start_date) if start_date.present? }
+  scope :before_end_date, ->(end_date) { where('paid_at <=?', end_date + 1.day) if end_date.present? }
+
   class << self
     def pay_commission_from_order_code(order_code)
       order = Order.find_by({ order_code: })

@@ -3,9 +3,9 @@
 <div class="ls-box ls-board-box">
   <header class="ls-info-header">
     <h2 class="ls-title-3">Detalhes das comissões no período selecionado para <strong><%= @user.name %></strong></h2>
-    <p class="ls-float-right ls-float-none-xs ls-small-info">
-      <strong><%= @period %></strong>
-    </p>
+     <p class="ls-float-right ls-float-none-xs ls-small-info">
+        <strong><%= "De: #{@start_date == '' ? 'primeiro dado disponível' : @start_date.strftime('%d/%m/%Y')} até: #{@end_date == '' ? 'último dado disponível' : @end_date.strftime('%d/%m/%Y')}" %></strong>
+      </p>
   </header>
   <%= link_to 'Voltar', :back, class: 'ls-btn-primary' %>
   <table class="ls-table ls-table-striped">
