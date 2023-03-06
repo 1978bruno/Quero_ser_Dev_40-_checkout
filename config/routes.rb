@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
+  get 'dashboard', to: 'dashboard#show'
+
   resources :users_admin, controller: 'users' do
     patch 'lock_unlock', on: :member
     get 'edit_password', on: :member
