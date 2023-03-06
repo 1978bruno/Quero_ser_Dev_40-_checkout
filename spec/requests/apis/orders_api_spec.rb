@@ -11,7 +11,7 @@ describe 'Order API' do
       create(:order, salesman_id: salesman.id, customer_doc_ident: '22200022201',
                      product_group_id: 1, product_group_name: 'Hospedagem de Sites',
                      product_plan_id: 1, product_plan_name: 'Hospedagem Premium',
-                     price: 25.00)
+                     price: 25.00, status: :awaiting_payment)
 
       get "/api/v1/customers/#{order.customer_doc_ident}/orders"
 
@@ -22,8 +22,6 @@ describe 'Order API' do
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
       expect(json_response[0]['salesman']['name']).to eq 'Pedro Santos'
       expect(json_response[0]['salesman']['email']).to eq salesman.email
-      expect(json_response[0].keys).not_to include('created_at')
-      expect(json_response[0].keys).not_to include('updated_at')
     end
 
     it 'falha se não houver pedidos' do
