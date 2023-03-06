@@ -12,12 +12,8 @@ class DashboardController < ApplicationController
     orders_day = orders_status_day_data
     @orders_day_by_status = Order.statuses.map { |k, _v| [I18n.t(k), orders_day[k] || 0] }.to_h
 
-    logger.info(@orders_day_by_status)
-
     orders_month = orders_status_month_data
     @orders_month_by_status = Order.statuses.map { |k, _v| [I18n.t(k), orders_month[k] || 0] }.to_h
-
-    logger.info(@orders_month_by_status)
   end
 
   def orders_status_month_data
@@ -41,15 +37,7 @@ class DashboardController < ApplicationController
   end
 
   def orders_products_data
-    # orders_day = orders_day_data
-    # @orders_day_by_status = Order.statuses.map { |k, _v| [I18n.t(k), orders_day[k] || 0] }.to_h
-
-    # logger.info(@orders_day_by_status)
-
     @orders_month_by_product = orders_products_month_data
-    #@orders_month_by_product = Order.statuses.map { |k, _v| [I18n.t(k), orders_month[k] || 0] }.to_h
-
-    logger.info(@orders_month_by_product)
   end
 
   def orders_products_month_data
