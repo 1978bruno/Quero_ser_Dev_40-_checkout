@@ -4,7 +4,7 @@
   <header class="ls-info-header">
     <h2 class="ls-title-3">Detalhes das comissões no período selecionado para <strong><%= @user.name %></strong></h2>
      <p class="ls-float-right ls-float-none-xs ls-small-info">
-        <strong><%= "De: #{@start_date == '' ? 'primeiro dado disponível' : @start_date.strftime('%d/%m/%Y')} até: #{@end_date == '' ? 'último dado disponível' : @end_date.strftime('%d/%m/%Y')}" %></strong>
+        <strong><%= period_desc(@start_date, @end_date) %></strong>
       </p>
   </header>
   <%= link_to 'Voltar', :back, class: 'ls-btn-primary' %>
@@ -20,10 +20,10 @@
     <tbody>
       <% @paid_commissions.order('paid_at desc').each do |commission| %>
       <tr id="<%= dom_id(commission) %>">
-        <td><%= commission.paid_at.strftime('%d/%m/%Y')  %></td>
+        <td><%= I18n.l(commission.paid_at, format: :date) %></td>
         <td><%= commission.bonus_commission.description  %></td>
         <td><%= commission.order.order_code %></td>
-        <td>R$ <%= '%.2f' % commission.amount %></td>
+        <td><%= number_to_currency(commission.amount) %></td>
       </tr>
       <% end %>
     </tbody>

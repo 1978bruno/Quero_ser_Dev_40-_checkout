@@ -2,13 +2,13 @@ class PaidCommissionsController < ApplicationController
   before_action :authenticate_user!, :redirect_unless_admin, only: %i[index salesman]
 
   def index
-    query_salesman = params[:search_salesman]
+    @query_salesman = params[:search_salesman]
     @start_date = date_or_empty(params[:start_date])
     @end_date = date_or_empty(params[:end_date])
-    @paid_commissions = load_all_commissions
-    return if query_salesman.blank? && @start_date.blank? && @end_date.blank?
+    @paid_commissions = PaidCommission.load_all_commissions
+    return flash.now[:notice] = 'Nenhum filtro aplicado' if no_filter_applied
 
-    salesmen_commissions = salesmen_paid_commissions(query_salesman)
+    salesmen_commissions = PaidCommission.filtered_commissions(@query_salesman, @start_date, @end_date)
     no_results_found(salesmen_commissions)
     @paid_commissions = salesmen_commissions
   end
@@ -24,34 +24,16 @@ class PaidCommissionsController < ApplicationController
 
   private
 
+  def no_filter_applied
+    @query_salesman.blank? && @start_date.blank? && @end_date.blank?
+  end
+
   def redirect_unless_admin
     return if current_user.try(:admin?)
   end
 
   def date_or_empty(date)
     date.nil? || date == '' ? '' : date.to_date
-  end
-
-  def load_all_commissions
-    PaidCommission.after_start_date(@start_date)
-                  .before_end_date(@end_date)
-                  .group(:salesman_id)
-                  .sum(:amount)
-                  .transform_keys do |id|
-                    User.find(id)
-                  end
-  end
-
-  def salesmen_paid_commissions(query_salesman)
-    salesmen = User.where('name like ?', "%#{query_salesman}%")
-    PaidCommission.where(salesman: salesmen)
-                  .after_start_date(@start_date)
-                  .before_end_date(@end_date)
-                  .group(:salesman_id)
-                  .sum(:amount)
-                  .transform_keys do |id|
-                    User.find(id)
-                  end
   end
 
   def no_results_found(salesman_commissions)

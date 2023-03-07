@@ -26,7 +26,7 @@ describe 'Admin access paid commissions' do
     expect(page).not_to have_content('Relatório de Comissões')
   end
 
-  it 'and view total paid commissions by salesman ordered by name' do
+  it 'and view total paid commissions by salesman with no filter applied message and ordered by name' do
     admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
     seller1 = create(:user, name: 'Maria Aguiar')
     seller2 = create(:user, name: 'José Silva')
@@ -40,11 +40,12 @@ describe 'Admin access paid commissions' do
     login_as(admin)
     visit(paid_commissions_path)
 
+    expect(page).to have_content('Nenhum filtro aplicado')
     within('tbody') do
       expect(page).to have_css('tr', count: 2)
       tr = find('tr', match: :first)
-      expect(tr).to have_content('José Silva R$ 130.00')
-      expect(page).to have_content('Maria Aguiar R$ 150.00')
+      expect(tr).to have_content('José Silva R$ 130,00')
+      expect(page).to have_content('Maria Aguiar R$ 150,00')
     end
   end
 
@@ -85,8 +86,8 @@ describe 'Admin access paid commissions' do
     within('tbody') do
       expect(page).to have_css('tr', count: 2)
       tr = find('tr', match: :first)
-      expect(tr).to have_content('R$ 50.00')
-      expect(page).to have_content('R$ 100.00')
+      expect(tr).to have_content('R$ 50,00')
+      expect(page).to have_content('R$ 100,00')
     end
   end
 
@@ -115,8 +116,8 @@ describe 'Admin access paid commissions' do
     within('tbody') do
       expect(page).to have_css('tr', count: 1)
       tr = find('tr', match: :first)
-      expect(tr).to have_content('Maria Aguiar R$ 150.00')
-      expect(tr).not_to have_content('José Silva R$ 130.00')
+      expect(tr).to have_content('Maria Aguiar R$ 150,00')
+      expect(tr).not_to have_content('José Silva R$ 130,00')
     end
   end
 
@@ -146,8 +147,8 @@ describe 'Admin access paid commissions' do
     within('tbody') do
       expect(page).to have_css('tr', count: 1)
       tr = find('tr', match: :first)
-      expect(tr).to have_content('José Silva R$ 130.00')
-      expect(tr).not_to have_content('Maria Aguiar R$ 150.00')
+      expect(tr).to have_content('José Silva R$ 130,00')
+      expect(tr).not_to have_content('Maria Aguiar R$ 150,00')
     end
   end
 
@@ -180,8 +181,8 @@ describe 'Admin access paid commissions' do
     within('tbody') do
       expect(page).to have_css('tr', count: 1)
       tr = find('tr', match: :first)
-      expect(tr).to have_content('R$ 50.00')
-      expect(page).not_to have_content('R$ 100.00')
+      expect(tr).to have_content('R$ 50,00')
+      expect(page).not_to have_content('R$ 100,00')
     end
   end
 

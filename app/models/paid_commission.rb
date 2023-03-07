@@ -27,6 +27,27 @@ class PaidCommission < ApplicationRecord
                                bonus_commission: current_bonus, salesman:, order: })
     end
 
+    def load_all_commissions
+      PaidCommission.all
+                    .group(:salesman_id)
+                    .sum(:amount)
+                    .transform_keys do |id|
+                      User.find(id)
+                    end
+    end
+
+    def filtered_commissions(query_salesman, start_date, end_date)
+      salesmen = User.where('name like ?', "%#{query_salesman}%")
+      PaidCommission.where(salesman: salesmen)
+                    .after_start_date(start_date)
+                    .before_end_date(end_date)
+                    .group(:salesman_id)
+                    .sum(:amount)
+                    .transform_keys do |id|
+                      User.find(id)
+                    end
+    end
+
     private
 
     def calculate_commission(bonus, total_order)

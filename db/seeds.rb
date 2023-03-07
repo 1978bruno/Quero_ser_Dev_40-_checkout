@@ -8,11 +8,12 @@
 
 User.create!(name: 'admin', email: 'admin@locaweb.com.br', password: '12345678', admin: true, active: true)
 User.create!(name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '87654321')
-salesman_one = User.create!(name: 'vendedor', email: 'vendedor@locaweb.com.br', password: '12345678',
+salesman_one = User.create!(name: 'André Matos', email: 'andrem@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
-salesman_two = User.create!(name: 'vendedor2', email: 'vendedor2@locaweb.com.br', password: '12345678',
+salesman_two = User.create!(name: 'Beatriz Azevedo', email: 'beatriza@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
-
+salesman_three = User.create!(name: 'Carlos Santos', email: 'amatos@locaweb.com.br', password: '12345678',
+                              admin: false, active: true)
 order1 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '22200022201',
                        product_group_id: 1, product_group_name: 'Hospedagem de Sites',
                        product_plan_id: 1, product_plan_name: 'Plano Bronze',
