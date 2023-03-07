@@ -33,7 +33,12 @@ module CreationOrdersControllerHandleForm
     search_customer
   end
 
-  def handle_form_customer_data; end
+  def handle_form_customer_data
+    return if @creation_order.customer_exists
+    return if @creation_order.customer_data_sent
+
+    send_customer_data_via_api
+  end
 
   def handle_form_products
     product_group_form = @creation_order.product_group_form.split('#')
@@ -76,7 +81,7 @@ module CreationOrdersControllerHandleForm
     if @order.valid? && @order.save
       flash[:notice] = I18n.t('creation_order.msg_order_created')
     else
-      assemble_error_message
+      assemble_order_error_message
       @creation_order.no_error_found = false
     end
   end
@@ -93,10 +98,26 @@ module CreationOrdersControllerHandleForm
               salesman_id: current_user.id)
   end
 
-  def assemble_error_message
+  def send_customer_data_via_api
+    customer_data = create_customer_data_payload
+
+    @api_result = CustomerService.save_customer(customer_data)
+
+    return unless @api_result[:status] == 'SUCCESS'
+
+    assemble_customer_error_message
+    @creation_order.no_error_found = false
+  end
+
+  def assemble_order_error_message
     flash[:alert] = [I18n.t('creation_order.msg_order_not_created')]
     @order.errors.full_messages.each do |msg|
       flash[:alert] << msg
     end
+  end
+
+  def assemble_customer_error_message
+    flash[:alert] = [I18n.t('creation_order.msg_customer_api_error')]
+    flash[:alert] << @api_result[:status_message] if @api_result[:status] == 'ERROR_API'
   end
 end

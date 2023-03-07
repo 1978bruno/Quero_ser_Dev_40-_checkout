@@ -12,7 +12,7 @@ module CreationOrdersControllerCustomer
       check_api_other_results
     end
 
-    set_session_customer_exists
+    set_session_customer_flags
   end
 
   def check_api_other_results
@@ -20,10 +20,12 @@ module CreationOrdersControllerCustomer
     flash[:notice] = @api_result[:status_message] if @api_result[:status] == 'NOT_FOUND'
 
     @creation_order.customer_exists = false
+    @creation_order.customer_data_sent = false
   end
 
-  def set_session_customer_exists
-    session_merge({ customer_exists: @creation_order.customer_exists })
+  def set_session_customer_flags
+    session_merge({ customer_exists: @creation_order.customer_exists,
+                    customer_data_sent: @creation_order.customer_data_sent })
   end
 
   def set_customer_data
@@ -79,5 +81,18 @@ module CreationOrdersControllerCustomer
                         customer_corporate_name: @customer[:corporate_name] }
 
     session_merge(customer_params)
+  end
+
+  def create_customer_data_payload
+    { identification: @creation_order.customer_identification,
+      name: @creation_order.customer_name,
+      address: @creation_order.customer_address,
+      city: @creation_order.customer_city,
+      state: @creation_order.customer_state,
+      zip_code: @creation_order.customer_zipcode,
+      email: @creation_order.customer_email,
+      phone_number: @creation_order.customer_phone,
+      birthdate: @creation_order.customer_birthdate,
+      corporate_name: @creation_order.customer_corporate_name }
   end
 end
