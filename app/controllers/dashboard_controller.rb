@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   def show
     orders_status_data
     orders_products_data
+    orders_sales_data
   end
 
   private
