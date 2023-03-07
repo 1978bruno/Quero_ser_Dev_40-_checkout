@@ -17,7 +17,7 @@ describe 'Order API' do
 
       expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       expect(json_response.length).to eq 2
       expect(json_response[0]['product_plan_name']).to eq 'Hospedagem GO'
       expect(json_response[0]['salesman']['name']).to eq 'Pedro Santos'
