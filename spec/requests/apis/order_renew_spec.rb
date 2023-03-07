@@ -62,7 +62,7 @@ describe 'Renew Order - Order API' do
 
       post "/api/v1/orders/#{order.order_code}/renew"
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
@@ -88,7 +88,7 @@ describe 'Renew Order - Order API' do
 
       post "/api/v1/orders/#{order.order_code}/renew"
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(response.status).to eq 400
       expect(response.content_type).to include 'application/json'
