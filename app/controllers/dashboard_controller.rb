@@ -4,7 +4,8 @@ class DashboardController < ApplicationController
   def show
     orders_status_data
     orders_products_data
-    orders_sales_data
+    orders_periodicity_data
+    #orders_sales_data
   end
 
   private
@@ -48,6 +49,20 @@ class DashboardController < ApplicationController
     else
       current_user.orders.where("strftime('%Y-%m', created_at) = ?", Time.zone.today.strftime('%Y-%m'))
                   .group(:product_group_name).count
+    end
+  end
+
+  def orders_periodicity_data
+    @orders_month_by_periodicity = orders_periodicity_month_data
+  end
+
+  def orders_periodicity_month_data
+    if current_user.admin?
+      Order.where("strftime('%Y-%m', created_at) = ?", Time.zone.today.strftime('%Y-%m'))
+           .group(:product_plan_periodicity).count
+    else
+      current_user.orders.where("strftime('%Y-%m', created_at) = ?", Time.zone.today.strftime('%Y-%m'))
+                  .group(:product_plan_periodicity).count
     end
   end
 end
