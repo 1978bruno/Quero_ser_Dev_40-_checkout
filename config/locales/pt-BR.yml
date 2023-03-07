@@ -24,4 +24,6 @@ pt-BR:
   bonus_commission:
     msg_create_success: Campanha de bonificação cadastrada com sucesso
     msg_create_unsuccess: Campanha não cadastrada
-
+    msg_create_unsuccess_start_date: Campanha não cadastrada. Data de início deve estar fora do intervalo de uma campanha ativa.
+    msg_create_unsuccess_end_date: Campanha não cadastrada. Data fim deve estar fora do intervalo de uma campanha ativa.
+    msg_create_unsuccess_interval: Campanha não cadastrada. Intervalo da campanha em cadastro já tem uma campanha ativa.

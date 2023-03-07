@@ -82,5 +82,65 @@ describe 'Administrador inicia a criação de uma campanha de bonus,' do
       expect(page).to have_content 'Campanha não cadastrada'
       expect(page).to have_content "Data fim deve ser maior que #{I18n.l(10.days.from_now.to_date)}"
     end
+    it 'início dentro de um intervalo de campanha já cadastrado' do
+      admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+      BonusCommission.create({ description: 'Bonus Especial 01', start_date: Date.current,
+                               end_date: 2.days.from_now, commission_perc: '5', amount_limit: 100 })
+      BonusCommission.create({ description: 'Bonus Especial 02', start_date: 3.days.from_now,
+                               end_date: 5.days.from_now, commission_perc: '7', amount_limit: 100 })
+
+      login_as(admin)
+      visit bonus_commissions_path
+      click_on 'Criar nova campanha'
+      fill_in 'Nome da campanha de bonificação', with: 'Bonus Especial 02'
+      fill_in 'Data de início', with: 4.days.from_now
+      fill_in 'Data fim', with: 6.days.from_now
+      fill_in 'Percentual de comissão', with: 10
+      fill_in 'Limite de comissão', with: 100
+      click_on 'Salvar'
+
+      expect(page).to have_content 'Campanha não cadastrada'
+      expect(page).to have_content 'Data de início deve estar fora do intervalo de uma campanha ativa'
+    end
+    it 'fim dentro de um intervalo de campanha já cadastrado' do
+      admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+      BonusCommission.create({ description: 'Bonus Especial 01', start_date: 2.days.from_now,
+                               end_date: 5.days.from_now, commission_perc: '5', amount_limit: 100 })
+      BonusCommission.create({ description: 'Bonus Especial 02', start_date: 6.days.from_now,
+                               end_date: 8.days.from_now, commission_perc: '7', amount_limit: 100 })
+
+      login_as(admin)
+      visit bonus_commissions_path
+      click_on 'Criar nova campanha'
+      fill_in 'Nome da campanha de bonificação', with: 'Bonus Especial 02'
+      fill_in 'Data de início', with: Date.current
+      fill_in 'Data fim', with: 7.days.from_now
+      fill_in 'Percentual de comissão', with: 10
+      fill_in 'Limite de comissão', with: 100
+      click_on 'Salvar'
+
+      expect(page).to have_content 'Campanha não cadastrada'
+      expect(page).to have_content 'Data fim deve estar fora do intervalo de uma campanha ativa'
+    end
+  end
+  context 'digitando o intervalo da campanha' do
+    it 'com uma outra campanha dentro do intercalo' do
+      admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+      BonusCommission.create({ description: 'Bonus Especial 01', start_date: 2.days.from_now,
+                               end_date: 5.days.from_now, commission_perc: '5', amount_limit: 100 })
+
+      login_as(admin)
+      visit bonus_commissions_path
+      click_on 'Criar nova campanha'
+      fill_in 'Nome da campanha de bonificação', with: 'Bonus Especial 02'
+      fill_in 'Data de início', with: Date.current
+      fill_in 'Data fim', with: 7.days.from_now
+      fill_in 'Percentual de comissão', with: 10
+      fill_in 'Limite de comissão', with: 100
+      click_on 'Salvar'
+
+      expect(page).to have_content 'Campanha não cadastrada'
+      expect(page).to have_content 'Intervalo da campanha em cadastro já tem uma campanha ativa'
+    end
   end
 end
