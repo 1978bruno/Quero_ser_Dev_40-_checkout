@@ -2,7 +2,6 @@ class CreationOrdersController < ApplicationController
   include CreationOrdersControllerInitialize
   include CreationOrdersControllerHandleForm
   include CreationOrdersControllerCustomer
-  include CreationOrdersControllerCustomer2
   include CreationOrdersControllerBeforeActions
   include CreationOrdersControllerCommon
 
