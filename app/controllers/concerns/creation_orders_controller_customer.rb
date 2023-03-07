@@ -28,30 +28,6 @@ module CreationOrdersControllerCustomer
                     customer_data_sent: @creation_order.customer_data_sent })
   end
 
-  def set_customer_data
-    return unless @creation_order.customer_exists
-
-    set_creation_order_customer_data
-    set_session_customer_data
-  end
-
-  def set_creation_order_customer_data
-    @creation_order.customer_name = @customer[:name]
-    @creation_order.customer_email = @customer[:email]
-    @creation_order.customer_address = @customer[:address]
-    @creation_order.customer_city = @customer[:city]
-
-    set_creation_order_customer_data2
-  end
-
-  def set_creation_order_customer_data2
-    @creation_order.customer_state = @customer[:state]
-    @creation_order.customer_zipcode = @customer[:zipcode]
-    @creation_order.customer_phone = @customer[:phone]
-    @creation_order.customer_birthdate = @customer[:birthdate]
-    @creation_order.customer_corporate_name = @customer[:corporate_name]
-  end
-
   def clear_creation_order_customer_data
     @creation_order.customer_name = ''
     @creation_order.customer_email = ''
@@ -89,7 +65,8 @@ module CreationOrdersControllerCustomer
     @api_result = CustomerService.save_customer(customer_data)
 
     if @api_result[:status] == 'SUCCESS'
-      @customer_data_sent = true
+      flash[:notice] = I18n.t('creation_order.msg_customer_data_sent_ok')
+      @creation_order.customer_data_sent = @creation_order.customer_exists = true
       set_session_customer_flags
       return
     end
@@ -98,16 +75,25 @@ module CreationOrdersControllerCustomer
   end
 
   def create_customer_data_payload
-    { identification: @creation_order.customer_identification,
-      name: @creation_order.customer_name,
-      address: @creation_order.customer_address,
-      city: @creation_order.customer_city,
-      state: @creation_order.customer_state,
-      zip_code: @creation_order.customer_zipcode,
-      email: @creation_order.customer_email,
-      phone_number: @creation_order.customer_phone.ljust(16),
-      birthdate: @creation_order.customer_birthdate,
-      corporate_name: @creation_order.customer_corporate_name }
+    customer_data_payload = { identification: @creation_order.customer_identification,
+                              name: @creation_order.customer_name,
+                              address: @creation_order.customer_address,
+                              city: @creation_order.customer_city,
+                              state: @creation_order.customer_state,
+                              zip_code: @creation_order.customer_zipcode,
+                              email: @creation_order.customer_email,
+                              phone_number: @creation_order.customer_phone.ljust(16) }
+
+    customer_data_payload.merge!(aditional_customer_data_payload)
+    customer_data_payload
+  end
+
+  def aditional_customer_data_payload
+    if @creation_order.customer_cpf?
+      { birthdate: @creation_order.customer_birthdate }
+    else
+      { corporate_name: @creation_order.customer_corporate_name }
+    end
   end
 
   def assemble_customer_error_message
