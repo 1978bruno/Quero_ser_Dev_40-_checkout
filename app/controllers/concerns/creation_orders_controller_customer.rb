@@ -83,6 +83,20 @@ module CreationOrdersControllerCustomer
     session_merge(customer_params)
   end
 
+  def send_customer_data_via_api
+    customer_data = create_customer_data_payload
+
+    @api_result = CustomerService.save_customer(customer_data)
+
+    if @api_result[:status] == 'SUCCESS'
+      @customer_data_sent = true
+      set_session_customer_flags
+      return
+    end
+
+    assemble_customer_error_message
+  end
+
   def create_customer_data_payload
     { identification: @creation_order.customer_identification,
       name: @creation_order.customer_name,
@@ -91,8 +105,14 @@ module CreationOrdersControllerCustomer
       state: @creation_order.customer_state,
       zip_code: @creation_order.customer_zipcode,
       email: @creation_order.customer_email,
-      phone_number: @creation_order.customer_phone,
+      phone_number: @creation_order.customer_phone.ljust(16),
       birthdate: @creation_order.customer_birthdate,
       corporate_name: @creation_order.customer_corporate_name }
+  end
+
+  def assemble_customer_error_message
+    flash[:alert] = [I18n.t('creation_order.msg_customer_api_error')]
+    flash[:alert] << @api_result[:status_message] if @api_result[:status] == 'ERROR_API'
+    @creation_order.no_error_found = false
   end
 end
