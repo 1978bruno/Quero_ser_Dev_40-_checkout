@@ -2,6 +2,10 @@ def url_api_customer(customer_identification)
   "#{Rails.configuration.external_apis['customer_api_url']}/#{customer_identification}"
 end
 
+def url_api_customer_save
+  Rails.configuration.external_apis['customer_api_url']
+end
+
 def url_api_products
   "#{Rails.configuration.external_apis['products_api_url']}/product_groups"
 end
@@ -24,6 +28,15 @@ end
 
 def api_result_customer_not_found
   { status: 404, body: {} }
+end
+
+def api_result_customer_saved
+  response_json = { id: '1', identification: '69274376146', name: 'José da Silva',
+                    address: 'Av. Principal, 100', city: 'São Paulo', state: 'SP',
+                    zip_code: '11111-111', email: 'jose.silva@email.com.br',
+                    phone_number: '(11) 99999-8888 ', birthdate: '01/01/1980' }
+
+  { status: 201, body: JSON.generate(response_json) }
 end
 
 def api_result_customer_cnpj
