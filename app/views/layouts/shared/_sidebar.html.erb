@@ -5,6 +5,7 @@
         <% if user_signed_in? %>
           <% if current_user.try(:admin?) %>
             <li><%= link_to 'Usuários', index_admin_users_admin_index_path, class: "ls-ico-users", title: 'Usuários' %></li>
+            <li><%= link_to 'Relatório de Comissões', paid_commissions_path, class: "ls-ico-list", title: 'Relatório de Comissões' %></li>
             <li><%= link_to 'Bloqueio de Clientes', blocklisted_customers_path, class: "ls-ico-users", title: 'Bloqueio de Clientes' %></li>
           <% end %>
           <li><%= link_to 'Vendedores', users_path, class: "ls-ico-text", title: 'Vendedores' %></li>
