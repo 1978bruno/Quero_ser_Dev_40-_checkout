@@ -138,7 +138,7 @@ describe 'Administrador edita uma campanha de bonus' do
     end
   end
   context 'digitando o intervalo da campanha' do
-    it 'com uma outra campanha dentro do intercalo' do
+    it 'com uma outra campanha dentro do intervalo' do
       admin = create(:user, email: 'admin@locaweb.com.br', password: '12345678', admin: true)
       BonusCommission.create({ description: 'Bonus Especial 01', start_date: 2.days.from_now,
                                end_date: 5.days.from_now, commission_perc: '5', amount_limit: 100 })
