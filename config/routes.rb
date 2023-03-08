@@ -2,14 +2,14 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
 
-  resources :users_admin, controller: 'users' do
-    patch 'lock_unlock', on: :member
-    get 'edit_password', on: :member
-    post 'update_password', on: :member
-    get 'index_admin', on: :collection
+  resources :users, only: %i[index new create edit update] do
+    member do
+      patch :lock_unlock
+      get :edit_password
+      post :update_password
+    end
   end
 
-  resources :users, only: [:index]
   resources :orders, only: %i[index new show] do
     collection do
       get :prefil_order_form
