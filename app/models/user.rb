@@ -18,6 +18,8 @@ class User < ApplicationRecord
   validates :email, presence: true
   validate  :domain_check
 
+  paginates_per 8
+
   APPROVED_DOMAINS = %w[@locaweb.com.br].freeze
 
   def domain_check

@@ -8,11 +8,15 @@ Rails.application.routes.draw do
       get :edit_password
       post :update_password
     end
+    collection do
+      get '/page/:page', action: :index
+    end
   end
 
   resources :orders, only: %i[index new show] do
     collection do
       get :prefil_order_form
+      get '/page/:page', action: :index
     end
     member do
       patch :order_cancel_post

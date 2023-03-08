@@ -15,6 +15,7 @@ describe 'Vendedor informa os dados de um novo cliente' do
                                       .and_return(fake_response_customer)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '69274376146'
       click_on 'Pesquisar Cliente'
@@ -39,6 +40,7 @@ describe 'Vendedor informa os dados de um novo cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '69274376146'
       click_on 'Pesquisar Cliente'
@@ -70,6 +72,7 @@ describe 'Vendedor informa os dados de um novo cliente' do
                                       .and_return(fake_response_customer)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '36358603000107'
       click_on 'Pesquisar Cliente'
@@ -94,6 +97,7 @@ describe 'Vendedor informa os dados de um novo cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '36358603000107'
       click_on 'Pesquisar Cliente'

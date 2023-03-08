@@ -15,6 +15,7 @@ describe 'Vendedor navega até a confirmação do pedido' do
       allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -49,6 +50,7 @@ describe 'Vendedor navega até a confirmação do pedido' do
       allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('ABCDE12345')
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -83,6 +85,7 @@ describe 'Vendedor navega até a confirmação do pedido' do
       allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -113,6 +116,7 @@ describe 'Vendedor navega até a confirmação do pedido' do
       allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('')
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -144,6 +148,7 @@ describe 'Vendedor navega até a confirmação do pedido' do
       allow(Faraday).to receive(:get).with(url_api_product_prices('3')).and_return(fake_response_prices)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '36358603000107'
       click_on 'Pesquisar Cliente'

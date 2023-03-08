@@ -10,6 +10,7 @@ describe 'Vendedor navega até a escolha de um produto' do
     allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
 
     visit root_path
+    click_on 'Pedidos'
     click_on 'Criar Pedido'
     fill_in 'CPF (ou CNPJ)', with: '87591438786'
     click_on 'Pesquisar Cliente'
@@ -35,6 +36,7 @@ describe 'Vendedor navega até a escolha de um produto' do
     allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
 
     visit root_path
+    click_on 'Pedidos'
     click_on 'Criar Pedido'
     fill_in 'CPF (ou CNPJ)', with: '87591438786'
     click_on 'Pesquisar Cliente'
@@ -62,6 +64,7 @@ describe 'Vendedor navega até a escolha de um produto' do
     allow(Faraday).to receive(:get).with(url_api_product_plans('1')).and_return(fake_response_plans)
 
     visit root_path
+    click_on 'Pedidos'
     click_on 'Criar Pedido'
     fill_in 'CPF (ou CNPJ)', with: '87591438786'
     click_on 'Pesquisar Cliente'
@@ -83,6 +86,7 @@ describe 'Vendedor navega até a escolha de um produto' do
     allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
 
     visit root_path
+    click_on 'Pedidos'
     click_on 'Criar Pedido'
     fill_in 'CPF (ou CNPJ)', with: '87591438786'
     click_on 'Pesquisar Cliente'
@@ -104,6 +108,7 @@ describe 'Vendedor navega até a escolha de um produto' do
     allow(Faraday).to receive(:get).with(url_api_products).and_return(fake_response_products)
 
     visit root_path
+    click_on 'Pedidos'
     click_on 'Criar Pedido'
     fill_in 'CPF (ou CNPJ)', with: '87591438786'
     click_on 'Pesquisar Cliente'

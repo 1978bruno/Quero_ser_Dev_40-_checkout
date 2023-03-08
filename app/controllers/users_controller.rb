@@ -5,9 +5,9 @@ class UsersController < ApplicationController
 
   def index
     @users = if params['query'].nil?
-               User.all
+               User.all.page params[:page]
              else
-               User.where('name like ?', "%#{params['query']}%")
+               User.where('name like ?', "%#{params['query']}%").page params[:page]
              end
   end
 

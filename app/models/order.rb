@@ -25,6 +25,8 @@ class Order < ApplicationRecord
 
   validates :cancel_reason, if: :cancelled?, presence: true
 
+  paginates_per 8
+
   def renew_order
     new_order_data = attributes.symbolize_keys.except(:created_at, :updated_at, :status, :order_code, :price,
                                                       :discount, :id, :cancel_reason, :paid_at)
