@@ -17,9 +17,23 @@ class Api::V1::OrdersController < ActionController::API
   def pay
     @order = Order.find_by!(order_code: params[:id], status: :awaiting_payment)
 
-    @order.update!(payment_mode: params[:payment_mode], discount: params[:discount], paid_at: Time.current)
+    @order.update!(payment_mode: params[:payment_mode], paid_at: Time.current)
     @order.paid!
     PaidCommission.pay_commission_from_order_code(@order.order_code)
+    render status: :ok, json: @order.as_json(except: %i[id cancel_reason salesman_id],
+                                             include: { salesman: { only: %i[name email] } })
+  end
+
+  def discount
+    if params[:discount].empty?
+      render status: :bad_request,
+             json: { error: 'Desconto não informado' }.to_json and return
+    end
+
+    @order = Order.find_by!(order_code: params[:id], status: :pending)
+
+    @order.update!(discount: params[:discount])
+
     render status: :ok, json: @order.as_json(except: %i[id cancel_reason salesman_id],
                                              include: { salesman: { only: %i[name email] } })
   end

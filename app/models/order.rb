@@ -24,6 +24,7 @@ class Order < ApplicationRecord
             presence: true
 
   validates :cancel_reason, if: :cancelled?, presence: true
+  validates :discount, if: :price, numericality: { less_than_or_equal_to: :price }
 
   paginates_per 8
 

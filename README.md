@@ -26,6 +26,19 @@
 
 <br>
 
+## Configurando urls para integração com APIs externas:
+  - As configurações de url para APIs externas de clientes e produtos estão localizadas no arquivo ./config/apis.yml
+  
+  Exemplo:
+  ```yaml
+    products_api_url: 'http://localhost:400/api/v1'
+    customer_api_url: 'https://localhost:400/api/v1/customers'
+  ```
+  
+
+
+<br>
+
 ## API - Endpoints:
 
 <details>
@@ -97,6 +110,88 @@
 
 <details>
   <summary>
+    <b>Adiciona desconto ao pedido</b>
+  </summary>
+  <br>
+  <b>Método HTTP / URL</b>
+
+  `POST` /api/v1/orders/{order_code}/discount
+
+  **Parâmetros**
+
+- Content-Type: `application/json`
+- Passar o código do pedido como parâmetro na URL
+- Passar o desconto como parâmetro no `BODY` da requisição
+
+``` sh
+{
+	"discount": "10.99" 
+}
+```
+
+#### **Respostas**
+
+*- Sucesso:*
+
+- Código `200`
+
+``` sh
+{
+    "payment_mode": "credit_card",
+    "discount": "10.0",
+    "paid_at": "2023-03-05T17:17:29.840-03:00",
+    "status": "pending",
+    "price": "70.0",
+    "created_at": "2023-03-05T15:58:10.347-03:00",
+    "updated_at": "2023-03-05T17:17:29.873-03:00",
+    "order_code": "3UHEOUEGN1",
+    "product_plan_name": "Plano Ouro",
+    "product_plan_periodicity": "Anual",
+    "customer_doc_ident": "32100022201",
+    "product_group_id": 1,
+    "product_group_name": "Hospedagem de Sites",
+    "product_plan_id": 3,
+    "product_plan_periodicity_id": 3,
+    "salesman": {
+        "email": "vendedor2@locaweb.com.br",
+        "name": "vendedor2"
+    }
+}
+```
+
+*- Caso não sejam encontrados pedidos*
+
+- Código: `404`
+
+```sh
+{
+  "response": "Nenhum registro encontrado"
+}
+```
+
+*- Caso não seja enviado o modo de pagamento*
+
+- Código: `400`
+
+``` sh
+{
+  "error": "Desconto não informado"
+}
+```
+
+*- Caso exista um erro interno da api*
+
+- Código: `500`
+
+```sh
+{
+  "error": "Ocorreu um erro interno"
+}
+```
+</details>
+
+<details>
+  <summary>
     <b>Altera o status do pedido para pago</b>
   </summary>
   <br>
@@ -108,12 +203,11 @@
 
 - Content-Type: `application/json`
 - Passar o código do pedido como parâmetro na URL
-- Passar o modo de pagamento e o desconto (se houver) como parâmetro no `BODY` da requisição
+- Passar o modo de pagamento como parâmetro no `BODY` da requisição
 
 ``` sh
 {
 	"payment_mode": "credit_card",
-	"discount": "10.99" 
 }
 ```
 

@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 describe 'Order API' do
-  context 'GET /api/v1/orders' do
+  context 'POST /api/v1/orders/<order.order_code>/pay' do
     it 'atualiza status do pedido para pago' do
       salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
-      order = create(:order, salesman:, status: :awaiting_payment)
+      order = create(:order, salesman:, status: :awaiting_payment, discount: 10.99)
       create(:order, salesman:)
 
-      post "/api/v1/orders/#{order.order_code}/pay", params: { payment_mode: 'credit_card',
-                                                               discount: 10.99 }
+      post "/api/v1/orders/#{order.order_code}/pay", params: { payment_mode: 'credit_card' }
       json_response = response.parsed_body
 
       expect(response.status).to eq 200
@@ -40,8 +39,7 @@ describe 'Order API' do
     it 'e existe um erro interno' do
       allow(Order).to receive(:find_by).and_raise(ActiveRecord::QueryCanceled)
 
-      post '/api/v1/orders/9qeZ77Gih8/pay', params: { payment_mode: 'credit_card',
-                                                      discount: 10.99 }
+      post '/api/v1/orders/9qeZ77Gih8/pay', params: { payment_mode: 'credit_card' }
 
       expect(response).to have_http_status(500)
     end
