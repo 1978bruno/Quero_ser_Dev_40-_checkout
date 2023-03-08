@@ -41,8 +41,8 @@ describe 'Vendedor visualiza detalhes de um pedido' do
     expect(page).to have_field 'customer_identification', disabled: true, with: '875.914.387-86'
     expect(page).to have_field 'customer_name', disabled: true, with: 'José da Silva'
     expect(page).to have_field 'price', disabled: true, with: 'R$ 43,50'
-    expect(page).to have_field 'discount', disabled: true, with: '3,00%'
-    expect(page).to have_field 'price_with_discount', disabled: true, with: 'R$ 42,20'
+    expect(page).to have_field 'discount', disabled: true, with: 'R$ 3,00'
+    expect(page).to have_field 'price_after_discount', disabled: true, with: 'R$ 40,50'
     expect(page).not_to have_field 'cancel_reason', disabled: true
   end
 
@@ -65,8 +65,8 @@ describe 'Vendedor visualiza detalhes de um pedido' do
     expect(page).to have_field 'customer_identification', disabled: true, with: '875.914.387-86'
     expect(page).to have_field 'customer_name', disabled: true, with: 'José da Silva'
     expect(page).to have_field 'price', disabled: true, with: 'R$ 39,50'
-    expect(page).to have_field 'discount', disabled: true, with: '0,00%'
-    expect(page).to have_field 'price_with_discount', disabled: true, with: 'R$ 39,50'
+    expect(page).to have_field 'discount', disabled: true, with: 'R$ 0,00'
+    expect(page).to have_field 'price_after_discount', disabled: true, with: 'R$ 39,50'
     expect(page).to have_field 'cancel_reason', disabled: true, with: 'Cliente desistiu da compra'
   end
 
