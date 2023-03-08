@@ -11,7 +11,7 @@
         <b class="ls-label-text"><%= Order.human_attribute_name(:salesman) %></b>
         <input id="salesman" type="text" value="<%= @order.salesman.name %> (<%= @order.salesman.email %>)" disabled="disabled">
       </label>
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text"><%= Order.human_attribute_name('status') %></b><br>
         <span id="status" class="<%= tag_status(@order.status.to_sym) %> ls-xs-margin-top"><%= I18n.t(@order.status) %></span>            
       </label>
@@ -52,7 +52,7 @@
         </b>
         <input id="customer_identification" type="text" value="<%= @order.customer_doc_ident_formatted %>" disabled="disabled">
       </label>
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
           <%= CreationOrder.human_attribute_name('customer_name') %>
         </b>
@@ -78,7 +78,7 @@
         </b>
         <input id="customer_address" type="text" value="<%= @customer[:address] %>" disabled="disabled">
       </label>
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
           <%= CreationOrder.human_attribute_name('customer_city') %>
         </b>
@@ -105,13 +105,13 @@
 
   <form action class="ls-form-horizontal row">
     <fieldset class="ls-form-disable ls-form-text">
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
           <%= Order.human_attribute_name(:product_group_name) %>
         </b>
         <input id="product_group_name" type="text" value="<%= @order.product_group_name %>" disabled="disabled">
       </label>
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
           <%= Order.human_attribute_name(:product_plan_name) %>
         </b>
@@ -131,23 +131,23 @@
       </label>
     </fieldset>
     <fieldset class="ls-form-disable ls-form-text">
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
           <%= Order.human_attribute_name(:price) %>
         </b>
         <input id="price" type="text" value="<%= number_to_currency(@order.price) %>" disabled="disabled">
       </label>
-      <label class="ls-label col-md-2">
+      <label class="ls-label col-md-3">
         <b class="ls-label-text">
-          <%= Order.human_attribute_name(:discount) %> (%)
+          <%= Order.human_attribute_name(:discount) %>
         </b>
-        <input id="discount" type="text" value="<%= number_to_percentage(@order.discount, precision: 2) %>" disabled="disabled">
+        <input id="discount" type="text" value="<%= number_to_currency(@order.discount) %>" disabled="disabled">
       </label>
       <label class="ls-label col-md-2">
         <b class="ls-label-text">
-          <%= Order.human_attribute_name('price_with_discount') %>
+          <%= Order.human_attribute_name('price_after_discount') %>
         </b>
-        <input id="price_with_discount" type="text" value="<%= number_to_currency(@order.price_with_discount) %>" disabled="disabled">
+        <input id="price_after_discount" type="text" value="<%= number_to_currency(@order.price_after_discount) %>" disabled="disabled">
       </label>
     </fieldset>
   </form>

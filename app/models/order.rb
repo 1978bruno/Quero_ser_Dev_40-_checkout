@@ -47,8 +47,8 @@ class Order < ApplicationRecord
     end
   end
 
-  def price_with_discount
-    price - (price * (discount / 100.0))
+  def price_after_discount
+    price - discount
   end
 
   private
