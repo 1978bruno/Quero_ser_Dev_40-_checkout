@@ -9,7 +9,7 @@ class CreationOrder
                 :customer_corporate_name, :product_group_form, :product_group_id, :product_group_name,
                 :product_plan_form, :product_plan_id, :product_plan_name, :product_price_form,
                 :product_plan_periodicity_id, :product_plan_periodicity, :product_plan_price,
-                :no_error_found
+                :no_error_found, :customer_data_sent
 
   attr_writer :current_step
 

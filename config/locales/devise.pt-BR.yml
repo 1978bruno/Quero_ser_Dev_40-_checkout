@@ -2,8 +2,8 @@ pt-BR:
   activerecord:
     models:
       user:
-        one: Usuário
-        other: Usuários
+        one: Vendedor
+        other: Vendedores
     attributes:
       user:
         confirmation_sent_at: Confirmação enviada em

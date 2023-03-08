@@ -19,6 +19,8 @@ pt-BR:
     msg_order_created_select_one_option: Deve ser selecionada uma das opções
     msg_customer_blocklisted: Este cliente está bloqueado para solicitar novos pedidos
     msg_order_not_created: Ocorreu um problema na criação do pedido
+    msg_customer_data_sent_ok: Dados do cliente enviados com sucesso para o Portal de Clientes
+    msg_customer_api_error: Ocorreu um problema no envio dos dados do cliente para o Portal de Clientes
     msg_zipcode_wrong_format: deve estar no formato "99999-999"
     msg_phone_wrong_format: deve estar no formato "(99) 99999-9999" ou "(99) 9999-9999"
   bonus_commission:
