@@ -3,7 +3,11 @@ class OrdersController < ApplicationController
   before_action :retrieve_id, only: %i[show order_cancel_reason order_cancel_post]
 
   def index
-    @orders = current_user.admin? ? Order.all : current_user.orders
+    @orders = if current_user.admin?
+                Order.all.page params[:page]
+              else
+                current_user.orders.page params[:page]
+              end
   end
 
   def show

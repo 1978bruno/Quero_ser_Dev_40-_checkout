@@ -4,6 +4,8 @@ pt-BR:
   pending: 'Pendente'
   paid: 'Pago'
   cancelled: 'Cancelado'
+  awaiting_payment: 'Pgto a confirmar'
+  credit_card: 'Cartão de Crédito'
   activerecord:
     models:
       order:

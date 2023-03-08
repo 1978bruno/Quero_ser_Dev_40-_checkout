@@ -20,7 +20,7 @@ describe 'Orders Cancel' do
 
     login_as(salesman)
     visit(root_path)
-    click_on('Vendas')
+    click_on('Pedidos')
 
     expect(page).to have_css('button.button_cancel', count: 1, text: 'Cancelar')
   end
@@ -38,7 +38,7 @@ describe 'Orders Cancel' do
 
     login_as(salesman)
     visit(root_path)
-    click_on('Vendas')
+    click_on('Pedidos')
     click_on('Cancelar')
 
     expect(current_path).to eq(order_cancel_reason_order_path(order_pending.id))
@@ -57,7 +57,7 @@ describe 'Orders Cancel' do
 
     login_as(salesman)
     visit(root_path)
-    click_on('Vendas')
+    click_on('Pedidos')
     click_on('Cancelar')
     fill_in 'Motivo do cancelamento', with: 'O cliente desisitiu.'
     click_on('Enviar')
@@ -79,7 +79,7 @@ describe 'Orders Cancel' do
 
     login_as(salesman)
     visit(root_path)
-    click_on('Vendas')
+    click_on('Pedidos')
     click_on('Cancelar')
     click_on('Enviar')
 

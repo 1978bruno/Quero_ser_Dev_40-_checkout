@@ -4,12 +4,17 @@
       <ul>
         <% if user_signed_in? %>
           <% if current_user.try(:admin?) %>
-            <li><%= link_to 'Usuários', index_admin_users_admin_index_path, class: "ls-ico-users", title: 'Usuários' %></li>
-            <li><%= link_to 'Bloqueio de Clientes', blocklisted_customers_path, class: "ls-ico-users", title: 'Bloqueio de Clientes' %></li>
+            <li>
+              <a href="#" class="ls-ico-cog" title="Cadastros">Cadastros</a>
+              <ul>
+                <li><%= link_to 'Vendedores', users_path, title: 'Vendedores' %></li>
+                <li><%= link_to 'Bloqueio de Clientes', blocklisted_customers_path, title: 'Bloqueio de Clientes' %></li>
+                <li><%= link_to 'Campanha de Bonificação', bonus_commissions_path, title: 'Campanha de Bonificação' %></li>
+              </ul>
+            </li>
+            <li><%= link_to 'Relatório de Comissões', paid_commissions_path, class: "ls-ico-stats", title: 'Relatório de Comissões' %></li>
           <% end %>
-          <li><%= link_to 'Vendedores', users_path, class: "ls-ico-text", title: 'Vendedores' %></li>
-          <li><%= link_to 'Vendas', orders_path, class: "ls-ico-text", title: 'Vendas' %></li>
-          <li><%= link_to 'Criar Pedido', new_creation_order_path, class: "ls-ico-text", title: 'Criar Pedido' %></li>
+          <li><%= link_to 'Pedidos', orders_path, class: "ls-ico-cart", title: 'Pedidos' %></li>
         <% end %>
       </ul>
     </nav>

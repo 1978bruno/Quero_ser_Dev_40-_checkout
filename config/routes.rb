@@ -4,17 +4,21 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#show'
 
-  resources :users_admin, controller: 'users' do
-    patch 'lock_unlock', on: :member
-    get 'edit_password', on: :member
-    post 'update_password', on: :member
-    get 'index_admin', on: :collection
+  resources :users, only: %i[index new create edit update] do
+    member do
+      patch :lock_unlock
+      get :edit_password
+      post :update_password
+    end
+    collection do
+      get '/page/:page', action: :index
+    end
   end
-  
-  resources :users, only: [:index]
+
   resources :orders, only: %i[index new show] do
     collection do
       get :prefil_order_form
+      get '/page/:page', action: :index
     end
     member do
       patch :order_cancel_post
@@ -27,16 +31,23 @@ Rails.application.routes.draw do
     post 'save', on: :member
   end
 
+  resources :paid_commissions, only: [:index] do
+    get :salesman_detail, on: :collection
+  end
+
+  resources :bonus_commissions, only: %i[index new edit create update] do
+    post 'deactive', on: :member
+  end
+
   namespace :api do
     namespace :v1 do
-      resources :customers, only: [:show] do
-        resources :orders, only: [:index]
-      end
-      resource :customers, only: [:index] do
-        resources :orders, only: [:show] do
-          post :paid, on: :member
-          post :cancelled, on: :member
-        end
+      get '/customers/:customer_id/orders', to: 'orders#list_by_customer', as: 'list_by_customer'
+
+      resources :orders, only: [] do
+        post :pay, on: :member
+        post :cancel, on: :member
+        post :renew, on: :member
+        post :awaiting_payment, on: :member
       end
     end
   end
