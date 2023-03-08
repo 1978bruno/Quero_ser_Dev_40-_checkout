@@ -9,7 +9,7 @@
 
         <nav class="ls-dropdown-nav ls-user-menu">
           <ul>
-            <li><%= button_to 'Alterar Senha', edit_password_users_admin_path(current_user), method: :get, class: "ls-btn-primary ls-btn-block" %></li>
+            <li><%= button_to 'Alterar Senha', edit_password_user_path(current_user), method: :get, class: "ls-btn-primary ls-btn-block" %></li>
             <li><%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "ls-btn-primary ls-btn-block" %></li>
           </ul>
         </nav>
