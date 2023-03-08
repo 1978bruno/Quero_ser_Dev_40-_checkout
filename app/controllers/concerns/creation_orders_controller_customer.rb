@@ -33,11 +33,6 @@ module CreationOrdersControllerCustomer
     @creation_order.customer_email = ''
     @creation_order.customer_address = ''
     @creation_order.customer_city = ''
-
-    clear_creation_order_customer_data2
-  end
-
-  def clear_creation_order_customer_data2
     @creation_order.customer_state = ''
     @creation_order.customer_zipcode = ''
     @creation_order.customer_phone = ''
