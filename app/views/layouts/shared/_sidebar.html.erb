@@ -3,6 +3,7 @@
     <nav id="main-menu" class="ls-menu">
       <ul>
         <% if user_signed_in? %>
+          <li><%= link_to 'Dashboard', dashboard_path, class: "ls-ico-dashboard", title: 'Dashboard' %></li>
           <% if current_user.try(:admin?) %>
             <li>
               <a href="#" class="ls-ico-cog" title="Cadastros">Cadastros</a>

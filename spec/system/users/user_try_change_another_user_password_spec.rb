@@ -8,6 +8,6 @@ describe 'usuário tenta trocar senha de outro usuário' do
 
     visit(edit_password_user_path(user2.id))
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 end

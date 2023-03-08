@@ -7,7 +7,7 @@ describe 'Vendedor não admin não pode acessar área de vendedores' do
 
     visit users_path
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 
   it 'através da URL de cadastro de vendedores' do
@@ -16,7 +16,7 @@ describe 'Vendedor não admin não pode acessar área de vendedores' do
 
     visit new_user_path
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 
   it 'através da URL de alteração de cadastro de vendedores' do
@@ -26,7 +26,7 @@ describe 'Vendedor não admin não pode acessar área de vendedores' do
 
     visit edit_user_path(user_teste)
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 
   it 'para alterar a senha de outro vendedor' do
@@ -36,6 +36,6 @@ describe 'Vendedor não admin não pode acessar área de vendedores' do
 
     visit edit_password_user_path(user_teste)
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 end

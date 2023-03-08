@@ -19,21 +19,25 @@ prices = [[['Mensal', 1, 50], ['Trimestral', 2, 40], ['Anual', 3, 30]],
 (Time.zone.today.at_beginning_of_month..Date.current).each do |date|
   rand(30).times do
     salesmen_idx = rand(3)
-    c = rand(3)
-    prod = rand(3)
-    plan = rand(3)
-    price = rand(3)
-    st = rand(3)
+    customer_idx = rand(3)
+    prod_idx = rand(3)
+    plan_idx = rand(3)
+    price_idx = rand(3)
+    status_idx = rand(3)
 
     t = Time.zone.now
     dt = DateTime.new(date.year, date.month, date.day, t.hour, t.min, t.sec, t.zone)
 
-    o = Order.new(salesman_id: salesmen[s].id, customer_doc_ident: customers[c],
-                  product_group_id: products[prod][1], product_group_name: products[prod][0],
-                  product_plan_id: plans[prod][plan][1], product_plan_name: plans[prod][plan][0],
-                  product_plan_periodicity_id: prices[prod][price][1],
-                  product_plan_periodicity: prices[prod][price][0], price: prices[prod][price][2],
-                  status: statuses[st])
+    o = Order.new(salesman_id: salesmen[salesmen_idx].id,
+                  customer_doc_ident: customers[customer_idx],
+                  product_group_id: products[prod_idx][1],
+                  product_group_name: products[prod_idx][0],
+                  product_plan_id: plans[prod_idx][plan_idx][1],
+                  product_plan_name: plans[prod_idx][plan_idx][0],
+                  product_plan_periodicity_id: prices[prod_idx][price_idx][1],
+                  product_plan_periodicity: prices[prod_idx][price_idx][0],
+                  price: prices[prod_idx][price_idx][2],
+                  status: statuses[status_idx])
     o.created_at = dt
 
     if o.paid?
@@ -44,29 +48,35 @@ prices = [[['Mensal', 1, 50], ['Trimestral', 2, 40], ['Anual', 3, 30]],
 
     next if o.save
 
-User.create!(name: 'admin', email: 'admin@locaweb.com.br', password: '12345678', admin: true, active: true)
-User.create!(name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '87654321')
-salesman_one = User.create!(name: 'vendedor', email: 'vendedor@locaweb.com.br', password: '12345678',
-                            admin: false, active: true)
-salesman_two = User.create!(name: 'vendedor2', email: 'vendedor2@locaweb.com.br', password: '12345678',
-                            admin: false, active: true)
+    o.errors.each do |msg|
+      Rails.logger.info "  Error save order: #{msg.full_message}"
+    end
+  end
+end
+# rubocop:enable Metrics/BlockLength
 
-Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '22200022201',
-              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
-              product_plan_id: 1, product_plan_name: 'Plano Bronze',
-              product_plan_periodicity_id: 1, product_plan_periodicity: 'Mensal', price: 30.00)
-Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '32100022201',
-              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
-              product_plan_id: 2, product_plan_name: 'Plano Prata',
-              product_plan_periodicity_id: 2, product_plan_periodicity: 'Mensal', price: 50.00)
-Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '42600022201',
-              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
-              product_plan_id: 3, product_plan_name: 'Plano Ouro',
-              product_plan_periodicity_id: 3, product_plan_periodicity: 'Anual', price: 70.00)
-Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '92220022201',
-              product_group_id: 1, product_group_name: 'Hospedagem de Sites',
-              product_plan_id: 4, product_plan_name: 'Plano Platinum',
-              product_plan_periodicity_id: 4, product_plan_periodicity: 'Anual', price: 90.00)
+salesman_one = User.create!(name: 'André Matos', email: 'andrem@locaweb.com.br', password: '12345678',
+                            admin: false, active: true)
+salesman_two = User.create!(name: 'Beatriz Azevedo', email: 'beatriza@locaweb.com.br', password: '12345678',
+                            admin: false, active: true)
+salesman_three = User.create!(name: 'Carlos Santos', email: 'amatos@locaweb.com.br', password: '12345678',
+                              admin: false, active: true)
+order1 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '22200022201',
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 1, product_plan_name: 'Plano Bronze',
+                       product_plan_periodicity_id: 1, product_plan_periodicity: 'Mensal', price: 30.00)
+order2 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '32100022201',
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 2, product_plan_name: 'Plano Prata',
+                       product_plan_periodicity_id: 2, product_plan_periodicity: 'Mensal', price: 50.00)
+order3 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '42600022201',
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 3, product_plan_name: 'Plano Ouro',
+                       product_plan_periodicity_id: 3, product_plan_periodicity: 'Anual', price: 70.00)
+order4 = Order.create!(salesman_id: salesman_one.id, customer_doc_ident: '92220022201',
+                       product_group_id: 1, product_group_name: 'Hospedagem de Sites',
+                       product_plan_id: 4, product_plan_name: 'Plano Platinum',
+                       product_plan_periodicity_id: 4, product_plan_periodicity: 'Anual', price: 90.00)
 Order.create!(salesman_id: salesman_two.id, customer_doc_ident: '22200022201',
               product_group_id: 1, product_group_name: 'Hospedagem de Sites',
               product_plan_id: 2, product_plan_name: 'Plano Prata',
