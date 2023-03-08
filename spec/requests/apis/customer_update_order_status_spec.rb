@@ -9,7 +9,7 @@ describe 'Order API' do
 
       post "/api/v1/orders/#{order.order_code}/pay", params: { payment_mode: 'credit_card',
                                                                discount: 10.99 }
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(response.status).to eq 200
       expect(PaidCommission.count).to be(1)
