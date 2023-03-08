@@ -9,6 +9,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -26,6 +27,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '8759143878'
       click_on 'Pesquisar Cliente'
@@ -39,6 +41,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438780'
       click_on 'Pesquisar Cliente'
@@ -53,6 +56,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '87591438786'
       click_on 'Pesquisar Cliente'
@@ -70,6 +74,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       allow(Faraday).to receive(:get).with(url_api_customer('88212849000170')).and_return(fake_response_customer)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '88212849000170'
       click_on 'Pesquisar Cliente'
@@ -87,6 +92,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '8821284900017'
       click_on 'Pesquisar Cliente'
@@ -100,6 +106,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '88212849000179'
       click_on 'Pesquisar Cliente'
@@ -114,6 +121,7 @@ describe 'Vendedor informa o CPF/CNPJ do cliente' do
       login_as(salesman)
 
       visit root_path
+      click_on 'Pedidos'
       click_on 'Criar Pedido'
       fill_in 'CPF (ou CNPJ)', with: '88212849000170'
       click_on 'Pesquisar Cliente'
