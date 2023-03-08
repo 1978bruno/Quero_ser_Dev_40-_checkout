@@ -95,8 +95,6 @@ describe 'Vendedor navega até a confirmação do pedido' do
       click_on 'Continuar'
       click_on 'Voltar'
 
-      save_page
-
       expect(page).to have_content 'Preços'
       expect(find_field('creation_order_product_price_form_25trimestral80_97').checked?).to eq(true)
     end

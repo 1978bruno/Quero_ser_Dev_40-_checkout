@@ -11,7 +11,7 @@ describe 'Order API' do
 
       expect(response.status).to eq 200
       expect(response.content_type).to include 'application/json'
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       expect(json_response['status']).to eq('cancelled')
       expect(json_response['order_code']).to eq(order.order_code)
       expect(json_response['cancel_reason']).to eq('O cliente desistiu')
