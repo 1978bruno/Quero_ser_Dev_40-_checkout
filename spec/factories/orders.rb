@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :order do
     customer_doc_ident { '9999900001' }
-    price { rand(1..99.99).round(2) }
+    price { rand(100..999.99).round(2) }
     discount { rand(1..99.99).round(2) }
     payment_mode { nil }
     status { 0 }
