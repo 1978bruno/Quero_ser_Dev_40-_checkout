@@ -54,5 +54,5 @@ PaidCommission.create!(salesman: salesman_two, paid_at: '2022-04-03', amount: 50
 PaidCommission.create!(salesman: salesman_three, paid_at: '2022-06-06', amount: 300.00, order: order3,
                        bonus_commission: bonus_commission1)
 
-BonusCommission.create({ description: 'Bonus Especial', start_date: '2023-03-01',
-                         end_date: '2023-03-05', commission_perc: '5', amount_limit: 100 })
+BonusCommission.create({ description: 'Bonus Especial', start_date: Date.current,
+                         end_date: 2.days.from_now, commission_perc: '5', amount_limit: 100 })

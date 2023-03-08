@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     get :salesman_detail, on: :collection
   end
 
+  resources :bonus_commissions, only: %i[index new edit create update] do
+    post 'deactive', on: :member
+  end
+
   namespace :api do
     namespace :v1 do
       get '/customers/:customer_id/orders', to: 'orders#list_by_customer', as: 'list_by_customer'

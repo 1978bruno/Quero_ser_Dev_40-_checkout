@@ -23,4 +23,9 @@ pt-BR:
     msg_customer_api_error: Ocorreu um problema no envio dos dados do cliente para o Portal de Clientes
     msg_zipcode_wrong_format: deve estar no formato "99999-999"
     msg_phone_wrong_format: deve estar no formato "(99) 99999-9999" ou "(99) 9999-9999"
-
+  bonus_commission:
+    msg_create_success: Campanha de bonificação cadastrada com sucesso
+    msg_create_unsuccess: Campanha não cadastrada
+    msg_create_unsuccess_start_date: Campanha não cadastrada. Data de início deve estar fora do intervalo de uma campanha ativa.
+    msg_create_unsuccess_end_date: Campanha não cadastrada. Data fim deve estar fora do intervalo de uma campanha ativa.
+    msg_create_unsuccess_interval: Campanha não cadastrada. Intervalo da campanha em cadastro já tem uma campanha ativa.
