@@ -26,6 +26,19 @@
 
 <br>
 
+## Configurando urls para integração com APIs externas:
+  - As configurações de url para APIs externas de clientes e produtos estão localizadas no arquivo ./config/apis.yml
+  
+  Exemplo:
+  ```yaml
+    products_api_url: 'http://localhost:400/api/v1'
+    customer_api_url: 'https://localhost:400/api/v1/customers'
+  ```
+  
+
+
+<br>
+
 ## API - Endpoints:
 
 <details>
