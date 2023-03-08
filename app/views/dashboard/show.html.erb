@@ -1,5 +1,6 @@
 <h1 class="ls-title-intro ls-ico-dashboard">Dashboard</h1>
-  
+
+<div id="dashboard">  
 <% if current_user.try(:admin?) %>
   <div data-ls-module="collapse" data-target="#0" class="ls-box ls-collapse">
     <a href="#" class="ls-collapse-header">
@@ -36,11 +37,25 @@
 <% end %>
 
 <div class="row">
+  <div class="col-md-12">
+    <div class="ls-box ls-board-box">
+      <header class="ls-info-header">
+        <p class="ls-float-right ls-float-none-xs"> <strong><%= I18n.t('date.month_names')[Time.zone.today.month].capitalize %>/<%= Time.zone.today.year %></strong></p>
+        <h2 class="ls-title-4">Vendas pagas no mês (<%= number_to_currency(@orders_sales_month_by_day_sum) %>)</h2>
+      </header>
+
+      <div class="chart-container">
+        <%= column_chart @orders_sales_month_by_day, prefix: 'R$ ', decimal: ',', round: 2, zeros: true, id: "orders-sales-month-by-day-chart", height: "200px" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="col-md-6">
     <div class="ls-box ls-board-box">
       <header class="ls-info-header">
         <p class="ls-float-right ls-float-none-xs"> <strong><%= Time.zone.today.strftime('%Y-%m-%d') %></strong></p>
-        <h2 class="ls-title-4">Pedidos no dia</h2>
+        <h2 class="ls-title-4">Pedidos no dia (<%= @orders_day_by_status_sum %>)</h2>
       </header>
 
       <div id="order-status-stats" class="row">
@@ -62,8 +77,7 @@
         <% end %>
       </div>
 
-      <% array_sum = @orders_day_by_status.flatten.grep(Integer).reduce(:+) %>
-      <% if array_sum > 0 %>
+      <% if @orders_day_by_status_sum > 0 %>
         <div class="chart-container">
           <%= pie_chart @orders_day_by_status, donut: true, id: "orders-day-status-chart", height: "200px" %>
         </div>
@@ -74,7 +88,7 @@
     <div class="ls-box ls-board-box">
       <header class="ls-info-header">
         <p class="ls-float-right ls-float-none-xs"> <strong><%= I18n.t('date.month_names')[Time.zone.today.month].capitalize %>/<%= Time.zone.today.year %></strong></p>
-        <h2 class="ls-title-4">Pedidos no mês</h2>
+        <h2 class="ls-title-4">Pedidos no mês (<%= @orders_month_by_status_sum %>)</h2>
       </header>
 
       <div id="order-status-stats" class="row">
@@ -107,7 +121,7 @@
     <div class="ls-box ls-board-box">
       <header class="ls-info-header">
         <p class="ls-float-right ls-float-none-xs"> <strong><%= I18n.t('date.month_names')[Time.zone.today.month].capitalize %>/<%= Time.zone.today.year %></strong></p>
-        <h2 class="ls-title-4">Produtos no mês</h2>
+        <h2 class="ls-title-4">Produtos no mês (<%= @orders_month_by_status_sum %>)</h2>
       </header>
 
       <div id="order-status-stats" class="row">
@@ -138,7 +152,7 @@
     <div class="ls-box ls-board-box">
       <header class="ls-info-header">
         <p class="ls-float-right ls-float-none-xs"> <strong><%= I18n.t('date.month_names')[Time.zone.today.month].capitalize %>/<%= Time.zone.today.year %></strong></p>
-        <h2 class="ls-title-4">Periodicidades no mês</h2>
+        <h2 class="ls-title-4">Periodicidades no mês (<%= @orders_month_by_status_sum %>)</h2>
       </header>
 
       <div id="order-status-stats" class="row">
@@ -165,4 +179,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

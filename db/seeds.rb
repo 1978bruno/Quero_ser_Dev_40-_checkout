@@ -4,7 +4,7 @@ salesman2 = User.create!(name: 'Antônio Souza', email: 'asouza@locaweb.com.br',
 salesman3 = User.create!(name: 'Maria do Rosário', email: 'mrosario@locaweb.com.br', password: '12345678')
 
 customers = %w[66496875294 73787269231 98208142433]
-statuses = [0, 3, 5]
+statuses = [0, 2, 3, 5]
 
 salesmen = [salesman1, salesman2, salesman3]
 products = [['Hospedagem de Sites', 1], ['Email Locaweb', 2], ['Criador de Sites', 3]]
@@ -16,14 +16,15 @@ prices = [[['Mensal', 1, 50], ['Trimestral', 2, 40], ['Anual', 3, 30]],
           [['Mensal', 7, 60], ['Trimestral', 8, 65], ['Anual', 9, 70]]]
 
 # rubocop:disable Metrics/BlockLength
-(Time.zone.today.at_beginning_of_month..Date.current).each do |date|
-  rand(30).times do
+#(Time.zone.today.at_beginning_of_month..Date.current).each do |date|
+(Time.zone.today.at_beginning_of_month..Time.zone.today.at_end_of_month).each do |date|
+  rand(20).times do
     salesmen_idx = rand(3)
     customer_idx = rand(3)
     prod_idx = rand(3)
     plan_idx = rand(3)
     price_idx = rand(3)
-    status_idx = rand(3)
+    status_idx = rand(4)
 
     t = Time.zone.now
     dt = DateTime.new(date.year, date.month, date.day, t.hour, t.min, t.sec, t.zone)
