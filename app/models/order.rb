@@ -24,6 +24,7 @@ class Order < ApplicationRecord
             presence: true
 
   validates :cancel_reason, if: :cancelled?, presence: true
+  validates :discount, if: :price, numericality: { less_than_or_equal_to: :price }
 
   def renew_order
     new_order_data = attributes.symbolize_keys.except(:created_at, :updated_at, :status, :order_code, :price,

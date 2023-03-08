@@ -3,8 +3,8 @@ require 'rails_helper'
 describe 'Vendedor visualiza detalhes de um pedido' do
   it 'pendente com sucesso' do
     salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
-    create(:order, price: 10, customer_doc_ident: '87591438786', salesman_id: salesman.id)
-    order = create(:order, price: 50, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    create(:order, price: 100, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    order = create(:order, price: 150, customer_doc_ident: '87591438786', salesman_id: salesman.id)
     fake_response_customer = double(api_result_customer)
     allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
 
@@ -17,7 +17,7 @@ describe 'Vendedor visualiza detalhes de um pedido' do
     expect(page).to have_css '#status', text: 'Pendente'
     expect(page).to have_field 'customer_identification', disabled: true, with: '875.914.387-86'
     expect(page).to have_field 'customer_name', disabled: true, with: 'José da Silva'
-    expect(page).to have_field 'price', disabled: true, with: 'R$ 50,00'
+    expect(page).to have_field 'price', disabled: true, with: 'R$ 150,00'
     expect(page).not_to have_field 'cancel_reason', disabled: true
   end
 
@@ -72,8 +72,8 @@ describe 'Vendedor visualiza detalhes de um pedido' do
 
   it 'sem conseguir os dados do cliente por não encontrá-lo no sistema de clientes' do
     salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
-    create(:order, price: 15, customer_doc_ident: '87591438786', salesman_id: salesman.id)
-    order = create(:order, price: 45, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    create(:order, price: 150, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    order = create(:order, price: 450, customer_doc_ident: '87591438786', salesman_id: salesman.id)
     fake_response_customer = double(api_result_customer_not_found)
     allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
 
@@ -89,13 +89,13 @@ describe 'Vendedor visualiza detalhes de um pedido' do
     expect(page).to have_css '#status', text: 'Pendente'
     expect(page).to have_field 'customer_identification', disabled: true, with: '875.914.387-86'
     expect(page).to have_field 'customer_name', disabled: true, with: ''
-    expect(page).to have_field 'price', disabled: true, with: 'R$ 45,00'
+    expect(page).to have_field 'price', disabled: true, with: 'R$ 450,00'
   end
 
   it 'sem conseguir os dados do cliente por falha na API' do
     salesman = create(:user, email: 'user@locaweb.com.br', password: '12345678', admin: false)
-    create(:order, price: 10, customer_doc_ident: '87591438786', salesman_id: salesman.id)
-    order = create(:order, price: 50, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    create(:order, price: 100, customer_doc_ident: '87591438786', salesman_id: salesman.id)
+    order = create(:order, price: 500, customer_doc_ident: '87591438786', salesman_id: salesman.id)
     fake_response_customer = double(api_result_failed)
     allow(Faraday).to receive(:get).with(url_api_customer('87591438786')).and_return(fake_response_customer)
 
@@ -111,6 +111,6 @@ describe 'Vendedor visualiza detalhes de um pedido' do
     expect(page).to have_css '#status', text: 'Pendente'
     expect(page).to have_field 'customer_identification', disabled: true, with: '875.914.387-86'
     expect(page).to have_field 'customer_name', disabled: true, with: ''
-    expect(page).to have_field 'price', disabled: true, with: 'R$ 50,00'
+    expect(page).to have_field 'price', disabled: true, with: 'R$ 500,00'
   end
 end
