@@ -5,17 +5,17 @@ class DashboardController < ApplicationController
     orders_status_data
     orders_products_data
     orders_periodicity_data
-    #orders_sales_data
+    # orders_sales_data
   end
 
   private
 
   def orders_status_data
     orders_day = orders_status_day_data
-    @orders_day_by_status = Order.statuses.map { |k, _v| [I18n.t(k), orders_day[k] || 0] }.to_h
+    @orders_day_by_status = Order.statuses.to_h { |k, _v| [I18n.t(k), orders_day[k] || 0] }
 
     orders_month = orders_status_month_data
-    @orders_month_by_status = Order.statuses.map { |k, _v| [I18n.t(k), orders_month[k] || 0] }.to_h
+    @orders_month_by_status = Order.statuses.to_h { |k, _v| [I18n.t(k), orders_month[k] || 0] }
   end
 
   def orders_status_month_data
