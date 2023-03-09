@@ -1,13 +1,60 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+User.create!(name: 'admin', email: 'admin@locaweb.com.br', password: '12345678', admin: true)
+salesman1 = User.create!(name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '12345678')
+salesman2 = User.create!(name: 'Antônio Souza', email: 'asouza@locaweb.com.br', password: '12345678')
+salesman3 = User.create!(name: 'Maria do Rosário', email: 'mrosario@locaweb.com.br', password: '12345678')
 
-User.create!(name: 'admin', email: 'admin@locaweb.com.br', password: '12345678', admin: true, active: true)
-User.create!(name: 'José Silva', email: 'jsilva@locaweb.com.br', password: '87654321')
+customers = %w[66496875294 73787269231 98208142433]
+statuses = [0, 2, 3, 5]
+
+salesmen = [salesman1, salesman2, salesman3]
+products = [['Hospedagem de Sites', 1], ['Email Locaweb', 2], ['Criador de Sites', 3]]
+plans = [[['Hospedagem GO', 1], ['Hospedagem I', 2], ['Hospedagem II', 3]],
+         [['Initial 25', 4], ['Initial 50', 5], ['Initial 100', 6]],
+         [['Básico', 7], ['Intermediário', 8], ['Avançado', 9]]]
+prices = [[['Mensal', 1, 50], ['Trimestral', 2, 40], ['Anual', 3, 30]],
+          [['Mensal', 4, 55], ['Trimestral', 5, 45], ['Anual', 6, 35]],
+          [['Mensal', 7, 60], ['Trimestral', 8, 65], ['Anual', 9, 70]]]
+
+# rubocop:disable Metrics/BlockLength
+(Time.zone.today.at_beginning_of_month..Time.zone.today.at_end_of_month).each do |date|
+  rand(20).times do
+    salesmen_idx = rand(3)
+    customer_idx = rand(3)
+    prod_idx = rand(3)
+    plan_idx = rand(3)
+    price_idx = rand(3)
+    status_idx = rand(4)
+
+    t = Time.zone.now
+    dt = DateTime.new(date.year, date.month, date.day, t.hour, t.min, t.sec, t.zone)
+
+    o = Order.new(salesman_id: salesmen[salesmen_idx].id,
+                  customer_doc_ident: customers[customer_idx],
+                  product_group_id: products[prod_idx][1],
+                  product_group_name: products[prod_idx][0],
+                  product_plan_id: plans[prod_idx][plan_idx][1],
+                  product_plan_name: plans[prod_idx][plan_idx][0],
+                  product_plan_periodicity_id: prices[prod_idx][price_idx][1],
+                  product_plan_periodicity: prices[prod_idx][price_idx][0],
+                  price: prices[prod_idx][price_idx][2],
+                  status: statuses[status_idx])
+    o.created_at = dt
+
+    if o.paid?
+      o.paid_at = o.created_at + 1.day
+    elsif o.cancelled?
+      o.cancel_reason = 'Motivo cancelamento'
+    end
+
+    next if o.save
+
+    o.errors.each do |msg|
+      Rails.logger.info "  Error save order: #{msg.full_message}"
+    end
+  end
+end
+# rubocop:enable Metrics/BlockLength
+
 salesman_one = User.create!(name: 'André Matos', email: 'andrem@locaweb.com.br', password: '12345678',
                             admin: false, active: true)
 salesman_two = User.create!(name: 'Beatriz Azevedo', email: 'beatriza@locaweb.com.br', password: '12345678',
